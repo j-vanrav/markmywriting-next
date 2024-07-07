@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 253 44% 98%;
+    --foreground: 253 58% 0%;
+    --muted: 253 7% 87%;
+    --muted-foreground: 253 13% 37%;
+    --popover: 253 44% 98%;
+    --popover-foreground: 253 58% 0%;
+    --card: 253 44% 97%;
+    --card-foreground: 0 0% 0%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --primary: 253 91% 58%;
+    --primary-foreground: 253 91% 98%;
+    --secondary: 253 5% 89%;
+    --secondary-foreground: 253 5% 29%;
+    --accent: 253 12% 82%;
+    --accent-foreground: 253 12% 22%;
+    /* --destructive: 339.2 90.36% 51.18%;
+    --destructive-foreground: 0 0% 100%; */
+    --ring: 253 91% 58%;
+    --radius: 0.5rem;
+
+    --destructive: 344 100% 62%;
+    --destructive-foreground: 351 91% 5%;
+    --success: 155 100% 40%;
+    --success-foreground: 140 100% 3%;
+    --warning: 32 100% 50%;
+    --warning-foreground: 16 100% 4%;
+    --info: 200 100% 50%;
+    --info-foreground: 210 100% 4%;
+  }
+
+  .dark {
+    --background: 253 43% 3%;
+    --foreground: 253 31% 98%;
+    --muted: 253 7% 13%;
+    --muted-foreground: 253 13% 63%;
+    --popover: 253 43% 3%;
+    --popover-foreground: 253 31% 98%;
+    --card: 253 43% 4%;
+    --card-foreground: 253 31% 99%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --primary: 253 91% 58%;
+    --primary-foreground: 253 91% 98%;
+    --secondary: 253 7% 9%;
+    --secondary-foreground: 253 7% 69%;
+    --accent: 253 13% 14%;
+    --accent-foreground: 253 13% 74%;
+    /* --destructive: 339.2 90.36% 51.18%;
+    --destructive-foreground: 0 0% 100%; */
+    --ring: 253 91% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+}
+
+@layer base {
+  :root {
+    --belt-white: 27 64% 95%;
+    --belt-white-foreground: 0 0% 0%;
+    --belt-blue: 238 37% 57%;
+    --belt-blue-foreground: 0 0% 0%;
+    --belt-purple: 279 33% 51%;
+    --belt-purple-foreground: 0 0% 0%;
+    --belt-brown: 32 25% 30%;
+    --belt-brown-foreground: 0 0% 100%;
+    --belt-black: 152 100% 3%;
+    --belt-black-foreground: 0 0% 100%;
+  }
+}
+
+@layer utilities {
+  .countdown-single {
+    line-height: 1em;
+    display: inline-flex;
+  }
+
+  .countdown-single-item {
+    height: 1em;
+    @apply inline-block overflow-y-hidden;
+  }
+
+  .countdown-single-item-before {
+    text-align: center;
+    transition: all 1s cubic-bezier(1, 0, 0, 1);
+    position: relative;
+    content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9\A";
+    white-space: pre;
+    top: calc(var(--value) * -1em);
+  }
+  .belt-gradient {
+    background: hsla(239, 37%, 57%, 1);
+    background: linear-gradient(
+      90deg,
+      hsla(26, 62%, 95%, 1) 0%,
+      hsla(239, 37%, 57%, 1) 25%,
+      hsla(279, 33%, 51%, 1) 50%,
+      hsla(32, 25%, 30%, 1) 75%,
+      hsla(152, 100%, 3%, 1) 100%
+    );
+  }
+}

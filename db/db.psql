@@ -1,0 +1,22 @@
+CREATE TYPE technique_ruleset AS ENUM ('gi', 'nogi');
+CREATE TABLE technique (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    name TEXT NOT NULL,
+    information TEXT NOT NULL,
+    ruleset technique_ruleset NOT NULL
+);
+CREATE TYPE technique_relation_type AS ENUM ('transition');
+CREATE TYPE technique_actor AS ENUM ('one', 'two');
+CREATE TABLE technique_relation (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    source_id UUID NOT NULL REFERENCES technique (id),
+    source_actor technique_actor NOT NULL,
+    target_id UUID NOT NULL REFERENCES technique (id),
+    target_actor technique_actor NOT NULL,
+    type technique_relation_type NOT NULL
+);
+CREATE TABLE technique_tag (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    technique_id UUID NOT NULL REFERENCES technique (id),
+    tag TEXT NOT NULL
+);
