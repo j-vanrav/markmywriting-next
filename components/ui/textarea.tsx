@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { useAutoResizeTextarea } from "@/lib/hooks";
+// import { useAutoResizeTextarea } from "@/lib/hooks";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -12,7 +12,7 @@ export interface TextareaProps
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, autoResize = false, ...props }, ref) => {
-    const { textAreaRef } = useAutoResizeTextarea(ref, autoResize);
+    // const { textAreaRef } = useAutoResizeTextarea(ref, autoResize);
     return (
       <textarea
         className={cn(
@@ -20,7 +20,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           className,
           autoResize && "resize-none "
         )}
-        ref={textAreaRef}
+        ref={ref}
         {...props}
       />
     );
