@@ -1,4 +1,3 @@
-import { Schema } from "@effect/schema";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -13,10 +12,6 @@ export const log = {
   warn: (msg: string) => console.warn(new Date().toISOString() + ":" + msg),
   error: (msg: string) => console.error(new Date().toISOString() + ":" + msg),
 };
-
-export { Schema as S };
-
-export type ST<T> = Schema.Schema.Type<T>;
 
 export function objectMap<K extends string, V, R>(
   object: Partial<Record<K, V>>,

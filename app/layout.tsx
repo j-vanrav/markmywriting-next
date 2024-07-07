@@ -7,7 +7,6 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import TailwindIndicator from "@/components/tailwind-indicator";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Analytics } from "@vercel/analytics/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -46,7 +45,6 @@ export default function RootLayout({
             <TailwindIndicator />
           </TooltipProvider>
         </ThemeProvider>
-        <Analytics />
       </body>
     </html>
   );
