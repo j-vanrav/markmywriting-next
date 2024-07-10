@@ -32,10 +32,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="no-scrollbar">
+    <html lang="en" className="no-scrollbar overflow-x-hidden w-screen">
       <body
         className={cn(
-          "min-h-svh bg-background font-sans antialiased",
+          "min-h-svh bg-background font-sans antialiased overflow-x-hidden w-screen",
           fontSans.variable
         )}
       >
