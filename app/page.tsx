@@ -8,12 +8,12 @@ type PageName = "review" | "compose" | "profile";
 function Nav() {
   const [selectedPage, setSelectedPage] = useState("compose" as PageName);
   return (
-    <nav className="w-full mt-auto p-4 flex flex-row justify-center">
+    <nav className="w-full mt-auto p-2 flex flex-row justify-center">
       <div className="rounded-full bg-black p-1 gap-1 flex flex-row text-white">
         <button
           className={cn(
             "bg-nbgreen rounded-full size-16 transition-all flex flex-row justify-center items-center",
-            selectedPage === "review" && "w-40"
+            selectedPage === "review" && "w-48"
           )}
           onClick={() => setSelectedPage("review")}
         >
@@ -34,7 +34,7 @@ function Nav() {
         <button
           className={cn(
             "bg-nborange rounded-full size-16 transition-all flex flex-row justify-center items-center",
-            selectedPage === "compose" && "w-40"
+            selectedPage === "compose" && "w-48"
           )}
           onClick={() => setSelectedPage("compose")}
         >
@@ -51,7 +51,7 @@ function Nav() {
         <button
           className={cn(
             "bg-nbpurple rounded-full size-16 transition-all flex flex-row justify-center items-center",
-            selectedPage === "profile" && "w-40"
+            selectedPage === "profile" && "w-48"
           )}
           onClick={() => setSelectedPage("profile")}
         >
