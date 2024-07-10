@@ -52,26 +52,6 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        beltwhite: {
-          DEFAULT: "hsl(var(--belt-white))",
-          foreground: "hsl(var(--belt-white-foreground))",
-        },
-        beltblue: {
-          DEFAULT: "hsl(var(--belt-blue))",
-          foreground: "hsl(var(--belt-blue-foreground))",
-        },
-        beltpurple: {
-          DEFAULT: "hsl(var(--belt-purple))",
-          foreground: "hsl(var(--belt-purple-foreground))",
-        },
-        beltbrown: {
-          DEFAULT: "hsl(var(--belt-brown))",
-          foreground: "hsl(var(--belt-brown-foreground))",
-        },
-        beltblack: {
-          DEFAULT: "hsl(var(--belt-black))",
-          foreground: "hsl(var(--belt-black-foreground))",
-        },
         success: {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
@@ -83,6 +63,30 @@ const config = {
         info: {
           DEFAULT: "hsl(var(--info))",
           foreground: "hsl(var(--info-foreground))",
+        },
+        nbbgblue: {
+          DEFAULT: "hsl(var(--nbbgblue))",
+          foreground: "hsl(var(--nbforeground))",
+        },
+        nbyellow: {
+          DEFAULT: "hsl(var(--nbyellow))",
+          foreground: "hsl(var(--nbforeground))",
+        },
+        nborange: {
+          DEFAULT: "hsl(var(--nborange))",
+          foreground: "hsl(var(--nbforeground))",
+        },
+        nbpurple: {
+          DEFAULT: "hsl(var(--nbpurple))",
+          foreground: "hsl(var(--nbforeground))",
+        },
+        nbgreen: {
+          DEFAULT: "hsl(var(--nbgreen))",
+          foreground: "hsl(var(--nbforeground))",
+        },
+        nbblue: {
+          DEFAULT: "hsl(var(--nbblue))",
+          foreground: "hsl(var(--nbforeground))",
         },
       },
       borderRadius: {

@@ -76,16 +76,13 @@
 
 @layer base {
   :root {
-    --belt-white: 27 64% 95%;
-    --belt-white-foreground: 0 0% 0%;
-    --belt-blue: 238 37% 57%;
-    --belt-blue-foreground: 0 0% 0%;
-    --belt-purple: 279 33% 51%;
-    --belt-purple-foreground: 0 0% 0%;
-    --belt-brown: 32 25% 30%;
-    --belt-brown-foreground: 0 0% 100%;
-    --belt-black: 152 100% 3%;
-    --belt-black-foreground: 0 0% 100%;
+    --nbbgblue: 162.67 63.38% 86.08%;
+    --nbyellow: 52.71 95.89% 71.37%;
+    --nborange: 32.09 100% 66.27%;
+    --nbpurple: 252.63 100% 73.92%;
+    --nbgreen: 156.35 59.83% 55.1%;
+    --nbblue: 201.63 72.88% 76.86%;
+    --nbforeground: 0 0% 0%;
   }
 }
 
