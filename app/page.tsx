@@ -50,16 +50,23 @@ function NavButton({
           selectedPage === name && "w-24"
         )}
       >
-        {name === "review" && <span>Review</span>}
-        {name === "compose" && <span>Compose</span>}
-        {name === "profile" && <span>Profile</span>}
+        <span className="font-medium">
+          {name === "review" && "Review"}
+          {name === "compose" && "Compose"}
+          {name === "profile" && "Profile"}
+        </span>
       </div>
     </button>
   );
 }
 
-function Nav() {
-  const [selectedPage, setSelectedPage] = useState("compose" as PageName);
+function Nav({
+  selectedPage,
+  setSelectedPage,
+}: {
+  selectedPage: PageName;
+  setSelectedPage: (name: PageName) => void;
+}) {
   return (
     <nav className="w-full mt-auto p-2 flex flex-row justify-center">
       <div className="rounded-full bg-black p-1 gap-1 flex flex-row text-black w-full justify-between">
@@ -83,34 +90,56 @@ function Nav() {
   );
 }
 
+function ReviewPage() {
+  return (
+    <div className="flex flex-col justify-center w-full h-full">review</div>
+  );
+}
+
+function ComposePage() {
+  return (
+    <div className="flex flex-col justify-center w-full h-full">
+      <Button
+        className="m-2 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
+        onClick={() => {}}
+      >
+        <div className="bg-nborange size-12 rounded-md flex flex-row justify-center items-center">
+          <Camera />
+        </div>
+        <h2 className="text-lg">Take a photo of your writing</h2>
+      </Button>
+      <div className="flex flex-row justify-center w-full p-4">
+        <span className="text-lg">OR</span>
+      </div>
+      <Button
+        className="m-2 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
+        onClick={() => {}}
+      >
+        <div className="bg-nbyellow size-12 rounded-md flex flex-row justify-center items-center">
+          <Feather />
+        </div>
+        <h2 className="text-lg">Type your writing</h2>
+      </Button>
+    </div>
+  );
+}
+
+function ProfilePage() {
+  return (
+    <div className="flex flex-col justify-center w-full h-full">profile</div>
+  );
+}
+
 export default function Main() {
+  const [selectedPage, setSelectedPage] = useState("compose" as PageName);
+
   return (
     <main className="flex flex-col w-screen h-svh bg-nbbgblue text-black">
-      <div className="flex flex-col justify-center w-full h-full">
-        <Button
-          className="m-2 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
-          onClick={() => {}}
-        >
-          <div className="bg-nborange size-12 rounded-md flex flex-row justify-center items-center">
-            <Camera />
-          </div>
-          <h2>Take a photo of your writing</h2>
-        </Button>
-        <div className="flex flex-row justify-center w-full p-4">
-          <span>OR</span>
-        </div>
-        <Button
-          className="m-2 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
-          onClick={() => {}}
-        >
-          <div className="bg-nbyellow size-12 rounded-md flex flex-row justify-center items-center">
-            <Feather />
-          </div>
-          <h2>Type your writing</h2>
-        </Button>
-      </div>
+      {selectedPage === "review" && <ReviewPage />}
+      {selectedPage === "compose" && <ComposePage />}
+      {selectedPage === "profile" && <ProfilePage />}
 
-      <Nav />
+      <Nav selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
     </main>
   );
 }
