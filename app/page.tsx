@@ -143,7 +143,7 @@ function ReviewCard({
     >
       <div
         className={cn(
-          "w-full h-4 rounded-t-2xl -translate-y-4 absolute left-0 right-0",
+          "w-full h-4 rounded-t-2xl -translate-y-4 absolute left-0 right-0 border-t-2 border-x-2",
           colour === "yellow" && "bg-nbyellow",
           colour === "orange" && "bg-nborange",
           colour === "purple" && "bg-nbpurple",
@@ -153,7 +153,7 @@ function ReviewCard({
       />
       <div
         className={cn(
-          "w-full bg-nbyellow h-24 flex flex-col items-start gap-3 pb-4 px-4",
+          "w-full bg-nbyellow h-24 flex flex-col items-start gap-3 pb-4 px-4 border-x-2",
           colour === "yellow" && "bg-nbyellow",
           colour === "orange" && "bg-nborange",
           colour === "purple" && "bg-nbpurple",
@@ -223,7 +223,7 @@ function ReviewCard({
       </div>
       <div
         className={cn(
-          "w-full h-4 rounded-b-2xl absolute left-0 right-0",
+          "w-full h-4 rounded-b-2xl absolute left-0 right-0 border-b-2 border-x-2",
           colour === "yellow" && "bg-nbyellow",
           colour === "orange" && "bg-nborange",
           colour === "purple" && "bg-nbpurple",
