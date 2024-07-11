@@ -419,9 +419,12 @@ function ReviewPage() {
 
 function ComposePage() {
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full">
+    <div className="w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll">
+      <div className="flex flex-row justify-between items-center p-4 w-full">
+        <h1 className="text-2xl">Compose new writing</h1>
+      </div>
       <Button
-        className="m-4 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
+        className="p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4 w-full"
         onClick={() => {}}
       >
         <div className="bg-nborange size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
@@ -429,11 +432,11 @@ function ComposePage() {
         </div>
         <h2 className="text-lg">Take a photo of your writing</h2>
       </Button>
-      <div className="flex flex-row justify-center w-full p-4">
+      <div className="flex flex-row justify-center w-full">
         <span className="text-lg">OR</span>
       </div>
       <Button
-        className="m-4 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
+        className="p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4 w-full"
         onClick={() => {}}
       >
         <div className="bg-nbyellow size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
@@ -447,8 +450,11 @@ function ComposePage() {
 
 function ProfilePage() {
   return (
-    <div className="w-full h-full p-2 flex flex-col items-center gap-4">
-      <div className="bg-white rounded-2xl p-4 flex flex-row w-full items-center gap-4">
+    <div className="w-full h-full p-4 flex flex-col items-center gap-4">
+      <div className="flex flex-row justify-between items-center p-4 w-full">
+        <h1 className="text-2xl">Your Profile</h1>
+      </div>
+      <div className="bg-white rounded-2xl p-3 flex flex-row w-full items-center gap-4">
         <div className="bg-nbpurple size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
           <Mail />
         </div>
@@ -457,7 +463,7 @@ function ProfilePage() {
           <span>mail@example.com</span>
         </div>
       </div>
-      <div className="bg-white rounded-2xl p-4 flex flex-row w-full items-center gap-4">
+      <div className="bg-white rounded-2xl p-3 flex flex-row w-full items-center gap-4">
         <div className="bg-nbblue size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
           <Calendar />
         </div>
@@ -466,7 +472,7 @@ function ProfilePage() {
           <span>{new Date().toDateString()}</span>
         </div>
       </div>
-      <div className="bg-white rounded-2xl p-4 flex flex-row w-full items-center gap-4">
+      <div className="bg-white rounded-2xl p-3 flex flex-row w-full items-center gap-4">
         <div className="bg-nbgreen size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
           <Ticket />
         </div>
@@ -493,9 +499,9 @@ function ProfilePage() {
           <span className="text-xs ml-auto">3</span>
         </div>
       </div> */}
-      <div className="rounded-2xl flex flex-col items-center gap-4 w-full mb-16">
+      <div className="rounded-2xl flex flex-col items-center gap-4 w-full mb-16 mt-4">
         <span className="font-bold">Buy more tokens</span>
-        <Button onClick={() => {}} className="bg-nbblue rounded-2xl w-full">
+        <Button onClick={() => {}} className="bg-nbgreen rounded-2xl w-full">
           <div className="flex flex-row items-center gap-4 w-full justify-between">
             <Ticket className="size-12" absoluteStrokeWidth strokeWidth={1} />
             <div className="flex flex-col items-start">
