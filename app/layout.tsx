@@ -2,15 +2,21 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
-import { Inter as FontSans } from "next/font/google";
+import { Inter, Nunito } from "next/font/google";
 
 import { cn } from "@/lib/utils";
 import TailwindIndicator from "@/components/tailwind-indicator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const fontSans = FontSans({
+const fontSans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+const fontNunito = Nunito({
+  subsets: ["latin"],
+  variable: "--font-nunito",
 });
 
 export const metadata: Metadata = {
@@ -35,8 +41,8 @@ export default function RootLayout({
     <html lang="en" className="no-scrollbar">
       <body
         className={cn(
-          "min-h-svh bg-background font-sans antialiased",
-          fontSans.variable
+          "min-h-svh bg-background font-nunito antialiased",
+          fontNunito.className
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
