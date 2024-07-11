@@ -19,7 +19,13 @@ import {
   Ticket,
   User,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "@/components/neobrutalist/tabs-animated";
 
 type PageName = "review" | "compose" | "profile";
 function NavButton({
@@ -241,6 +247,107 @@ function ReviewCard({
   );
 }
 
+const reviewCards: {
+  marked: MarkingStatus;
+  wordCount: number;
+  creationDate: Date;
+  prompt: string;
+  fromCamera: boolean;
+  id: string;
+  colour: CardColour;
+}[] = [
+  {
+    marked: "unmarked",
+    wordCount: 200,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: true,
+    id: "1",
+    colour: "yellow",
+  },
+  {
+    marked: "marking",
+    wordCount: 300,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: false,
+    id: "2",
+    colour: "orange",
+  },
+  {
+    marked: "marked",
+    wordCount: 450,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: false,
+    id: "3",
+    colour: "green",
+  },
+  {
+    marked: "unmarked",
+    wordCount: 100,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: true,
+    id: "4",
+    colour: "purple",
+  },
+  {
+    marked: "marking",
+    wordCount: 600,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: true,
+    id: "5",
+    colour: "blue",
+  },
+  {
+    marked: "unmarked",
+    wordCount: 200,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: true,
+    id: "6",
+    colour: "yellow",
+  },
+  {
+    marked: "marking",
+    wordCount: 300,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: false,
+    id: "7",
+    colour: "orange",
+  },
+  {
+    marked: "marked",
+    wordCount: 450,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: false,
+    id: "8",
+    colour: "green",
+  },
+  {
+    marked: "unmarked",
+    wordCount: 100,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: true,
+    id: "9",
+    colour: "purple",
+  },
+  {
+    marked: "marking",
+    wordCount: 600,
+    creationDate: new Date(),
+    prompt: "The Box",
+    fromCamera: true,
+    id: "10",
+    colour: "blue",
+  },
+];
+type ReviewTabs = "all" | "unmarked" | "in progress" | "marked";
 function SelectCardPage({
   selectedCard,
   setSelectedCard,
@@ -248,6 +355,7 @@ function SelectCardPage({
   selectedCard: string;
   setSelectedCard: (id: string) => void;
 }) {
+  const [selecedTab, setSelectedTab] = useState("all" as ReviewTabs);
   return (
     <div className="w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden">
       <div className="flex flex-row justify-between items-center p-4">
@@ -255,137 +363,59 @@ function SelectCardPage({
         <ListFilter />
       </div>
 
+      <Tabs
+        value={selecedTab}
+        onValueChange={(s) => setSelectedTab(s as ReviewTabs)}
+        className="h-24"
+      >
+        <TabsList className="flex flex-col translate-y-7">
+          <div className="flex flex-row bg-white rounded-t-3xl p-2 pb-0">
+            <TabsTrigger value="all" active={selecedTab === "all"}>
+              All
+            </TabsTrigger>
+            <TabsTrigger value="unmarked" active={selecedTab === "unmarked"}>
+              Unmarked
+            </TabsTrigger>
+          </div>
+          <div className="flex flex-row bg-white rounded-b-3xl p-2 pt-0">
+            <TabsTrigger
+              value="in progress"
+              active={selecedTab === "in progress"}
+            >
+              In progress
+            </TabsTrigger>
+            <TabsTrigger value="marked" active={selecedTab === "marked"}>
+              Marked
+            </TabsTrigger>
+          </div>
+        </TabsList>
+      </Tabs>
+
       <div className="relative flex-col justify-center py-6 text-lg">
-        <ReviewCard
-          colour="yellow"
-          opts={{
-            marked: "unmarked",
-            wordCount: 200,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: true,
-            id: "1",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "1"}
-        />
-        <ReviewCard
-          colour="orange"
-          opts={{
-            marked: "marking",
-            wordCount: 300,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: false,
-            id: "2",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "2"}
-        />
-        <ReviewCard
-          colour="purple"
-          opts={{
-            marked: "marked",
-            wordCount: 450,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: false,
-            id: "3",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "3"}
-        />
-        <ReviewCard
-          colour="green"
-          opts={{
-            marked: "unmarked",
-            wordCount: 100,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: true,
-            id: "4",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "4"}
-        />
-        <ReviewCard
-          colour="blue"
-          opts={{
-            marked: "marking",
-            wordCount: 600,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: true,
-            id: "5",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "5"}
-        />
-        <ReviewCard
-          colour="yellow"
-          opts={{
-            marked: "unmarked",
-            wordCount: 200,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: true,
-            id: "6",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "6"}
-        />
-        <ReviewCard
-          colour="orange"
-          opts={{
-            marked: "marking",
-            wordCount: 300,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: false,
-            id: "7",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "7"}
-        />
-        <ReviewCard
-          colour="purple"
-          opts={{
-            marked: "marked",
-            wordCount: 450,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: false,
-            id: "8",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "8"}
-        />
-        <ReviewCard
-          colour="green"
-          opts={{
-            marked: "unmarked",
-            wordCount: 100,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: true,
-            id: "9",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "9"}
-        />
-        <ReviewCard
-          colour="blue"
-          opts={{
-            marked: "marking",
-            wordCount: 600,
-            creationDate: new Date(),
-            prompt: "The Box",
-            fromCamera: true,
-            id: "10",
-          }}
-          trigger={setSelectedCard}
-          selected={selectedCard === "10"}
-        />
+        {reviewCards.map((card) => {
+          const visible =
+            selecedTab === "all" ||
+            (selecedTab === "in progress" && card.marked === "marking") ||
+            (selecedTab === "unmarked" && card.marked === "unmarked") ||
+            (selecedTab === "marked" && card.marked === "marked");
+          return (
+            <div
+              key={`reviewcard-${card.id}`}
+              className={cn(
+                "h-0 transition-all invisible duration-700",
+                visible && "h-24 visible"
+              )}
+            >
+              <ReviewCard
+                colour={card.colour}
+                opts={card}
+                trigger={setSelectedCard}
+                selected={selectedCard === card.id}
+                className={cn(visible ? "visible" : "invisible duration-0")}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
