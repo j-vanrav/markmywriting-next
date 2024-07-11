@@ -7,13 +7,16 @@ import {
   ArrowRight,
   Bot,
   BotOff,
+  Calendar,
   Camera,
   Eye,
   Feather,
   ListFilter,
   LoaderCircle,
+  Mail,
   NotebookPen,
   SquareChevronRight,
+  Ticket,
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -416,12 +419,12 @@ function ReviewPage() {
 
 function ComposePage() {
   return (
-    <div className="flex flex-col justify-center w-full h-full">
+    <div className="flex flex-col justify-center items-center w-full h-full">
       <Button
-        className="m-2 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
+        className="m-4 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
         onClick={() => {}}
       >
-        <div className="bg-nborange size-12 rounded-md flex flex-row justify-center items-center">
+        <div className="bg-nborange size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
           <Camera />
         </div>
         <h2 className="text-lg">Take a photo of your writing</h2>
@@ -430,10 +433,10 @@ function ComposePage() {
         <span className="text-lg">OR</span>
       </div>
       <Button
-        className="m-2 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
+        className="m-4 p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4"
         onClick={() => {}}
       >
-        <div className="bg-nbyellow size-12 rounded-md flex flex-row justify-center items-center">
+        <div className="bg-nbyellow size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
           <Feather />
         </div>
         <h2 className="text-lg">Type your writing</h2>
@@ -444,7 +447,68 @@ function ComposePage() {
 
 function ProfilePage() {
   return (
-    <div className="flex flex-col justify-center w-full h-full">profile</div>
+    <div className="w-full h-full p-2 flex flex-col items-center gap-4">
+      <div className="bg-white rounded-2xl p-4 flex flex-row w-full items-center gap-4">
+        <div className="bg-nbpurple size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
+          <Mail />
+        </div>
+        <div className="flex flex-col">
+          <span className="font-bold">Email</span>
+          <span>mail@example.com</span>
+        </div>
+      </div>
+      <div className="bg-white rounded-2xl p-4 flex flex-row w-full items-center gap-4">
+        <div className="bg-nbblue size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
+          <Calendar />
+        </div>
+        <div className="flex flex-col">
+          <span className="font-bold">Account created</span>
+          <span>{new Date().toDateString()}</span>
+        </div>
+      </div>
+      <div className="bg-white rounded-2xl p-4 flex flex-row w-full items-center gap-4">
+        <div className="bg-nbgreen size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
+          <Ticket />
+        </div>
+        <div className="flex flex-col">
+          <span className="font-bold">Tokens</span>
+          <span>12</span>
+        </div>
+      </div>
+      {/* <div className="bg-white rounded-2xl p-4 flex flex-col w-full gap-2">
+        <div className="flex flex-row items-center gap-2">
+          <Mail />
+          <span className="text-sm">Email</span>
+          <span className="text-xs ml-auto">mail@example.com</span>
+        </div>
+        <div className="flex flex-row items-center gap-2">
+          <Calendar />
+          <span className="text-sm">Account created</span>
+
+          <span className="text-xs ml-auto">{new Date().toDateString()}</span>
+        </div>
+        <div className="flex flex-row items-center gap-2">
+          <Ticket />
+          <span className="text-sm">Tokens</span>{" "}
+          <span className="text-xs ml-auto">3</span>
+        </div>
+      </div> */}
+      <div className="rounded-2xl flex flex-col items-center gap-4 w-full mb-16">
+        <span className="font-bold">Buy more tokens</span>
+        <Button onClick={() => {}} className="bg-nbblue rounded-2xl w-full">
+          <div className="flex flex-row items-center gap-4 w-full justify-between">
+            <Ticket className="size-12" absoluteStrokeWidth strokeWidth={1} />
+            <div className="flex flex-col items-start">
+              <span>20 Tokens</span>
+              <span className="text-xl font-bold">$10</span>
+            </div>
+            <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
+              <ArrowRight />
+            </div>
+          </div>
+        </Button>
+      </div>
+    </div>
   );
 }
 
