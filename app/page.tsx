@@ -3,10 +3,12 @@
 import Button from "@/components/neobrutalist/button";
 import { cn } from "@/lib/utils";
 import {
+  ArrowLeft,
   ArrowRight,
   Bot,
   BotOff,
   Camera,
+  Eye,
   Feather,
   ListFilter,
   LoaderCircle,
@@ -14,7 +16,7 @@ import {
   SquareChevronRight,
   User,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type PageName = "review" | "compose" | "profile";
 function NavButton({
@@ -79,7 +81,7 @@ function Nav({
   setSelectedPage: (name: PageName) => void;
 }) {
   return (
-    <nav className="absolute bottom-0 w-full p-2 flex flex-row justify-center">
+    <nav className="fixed bottom-0 w-full p-2 flex flex-row justify-center">
       <div className="rounded-full bg-black p-1 gap-1 flex flex-row text-black w-full justify-between">
         <NavButton
           selectedPage={selectedPage}
@@ -129,8 +131,8 @@ function ReviewCard({
     <button
       className={cn(
         "translate-x-0 transition-all w-full",
-        pressed && "scale-90 translate-x-6",
-        selected && "translate-x-96",
+        pressed && "scale-90 -translate-y-6",
+        selected && "-translate-y-12 scale-110",
         className
       )}
       onPointerDown={() => setPressed(true)}
@@ -200,11 +202,12 @@ function ReviewCard({
               Marking...
             </div>
           )}
-          <ArrowRight
-            absoluteStrokeWidth
-            strokeWidth={1.5}
-            className="size-7"
-          />
+          {(opts.marked === "marked" || opts.marked === "marking") && (
+            <Eye absoluteStrokeWidth strokeWidth={1.5} className="size-7" />
+          )}
+          {opts.marked === "unmarked" && (
+            <Feather absoluteStrokeWidth strokeWidth={1.5} className="size-7" />
+          )}
         </div>
         {/* <span className="justify-self-end">200 words</span>
         <div />
@@ -235,8 +238,13 @@ function ReviewCard({
   );
 }
 
-function ReviewPage() {
-  const [selectedCard, setSelectedCard] = useState("0");
+function SelectCardPage({
+  selectedCard,
+  setSelectedCard,
+}: {
+  selectedCard: string;
+  setSelectedCard: (id: string) => void;
+}) {
   return (
     <div className="w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden">
       <div className="flex flex-row justify-between items-center p-4">
@@ -380,6 +388,32 @@ function ReviewPage() {
   );
 }
 
+function ReviewPage() {
+  const [selectedCard, setSelectedCard] = useState("0");
+  const [cardPage, setCardPage] = useState("0");
+  useEffect(() => {
+    setTimeout(() => setCardPage(selectedCard), 400);
+  }, [selectedCard]);
+  return cardPage !== "0" ? (
+    <div className="w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden">
+      <div className="flex flex-row items-center gap-4">
+        <Button
+          className="size-12 rounded-full p-0 flex flex-row items-center justify-center bg-white"
+          onClick={() => setSelectedCard("0")}
+        >
+          <ArrowLeft className="size-7 min-w-7 min-h-7" />
+        </Button>
+        <h1 className="text-2xl">Reviewing: {cardPage}</h1>
+      </div>
+    </div>
+  ) : (
+    <SelectCardPage
+      selectedCard={selectedCard}
+      setSelectedCard={setSelectedCard}
+    />
+  );
+}
+
 function ComposePage() {
   return (
     <div className="flex flex-col justify-center w-full h-full">
@@ -418,7 +452,7 @@ export default function Main() {
   const [selectedPage, setSelectedPage] = useState("compose" as PageName);
 
   return (
-    <main className="flex flex-col w-screen h-svh bg-nbbgblue text-black overflow-hidden">
+    <main className="flex flex-col w-screen h-screen bg-nbbgblue text-black overflow-hidden">
       {selectedPage === "review" && <ReviewPage />}
       {selectedPage === "compose" && <ComposePage />}
       {selectedPage === "profile" && <ProfilePage />}
