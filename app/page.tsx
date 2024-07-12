@@ -319,7 +319,7 @@ function TabAnimated<T extends string>({
         size === "sm" && "w-24",
         size === "icon" && "w-8",
         className,
-        disabled && "pointer-events-none -z-50"
+        disabled && "pointer-events-none"
       )}
     >
       {active && (
@@ -330,7 +330,7 @@ function TabAnimated<T extends string>({
             size === "md" && "w-32",
             size === "sm" && "w-24",
             size === "icon" && "h-8",
-            disabled && "pointer-events-none -z-50"
+            disabled && "pointer-events-none"
           )}
           layoutId={"tabs-highlight-" + id}
         />
@@ -344,7 +344,7 @@ function TabAnimated<T extends string>({
           active && "-mt-8 text-white",
           size === "icon" &&
             "flex flex-row items-center justify-center text-xs",
-          disabled && "pointer-events-none -z-50"
+          disabled && "pointer-events-none"
         )}
         disabled={disabled}
         aria-disabled={disabled}
@@ -515,9 +515,8 @@ function SelectCardPage({
 
       <div
         className={cn(
-          "z-20 relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
-          showFilters ? "h-14 opacity-100" : "h-0 opacity-0",
-          !filterCollapsed || !sortCollapsed ? "opacity" : ""
+          "relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
+          showFilters ? "h-14 opacity-100 z-20" : "h-0 opacity-0 z-0"
         )}
       >
         <div
@@ -741,9 +740,8 @@ function SelectCardPage({
       </div>
       <div
         className={cn(
-          "z-10 relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
-          showFilters ? "h-12 opacity-100" : "h-0 opacity-0",
-          !filterCollapsed || !sortCollapsed ? "opacity" : ""
+          "relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
+          showFilters ? "h-12 opacity-100 z-10" : "h-0 opacity-0 z-0"
         )}
       >
         <div
@@ -805,7 +803,7 @@ function SelectCardPage({
 
       <div
         className={cn(
-          "relative flex-col justify-center py-6 text-lg",
+          "z-10 relative flex-col justify-center py-6 text-lg",
           selectedCard !== "0" && "z-30"
         )}
       >
