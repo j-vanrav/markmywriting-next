@@ -514,7 +514,7 @@ function SelectCardPage({
       )}
     >
       <div className="flex flex-row justify-between items-center p-4 gap-4">
-        <h1 className="text-2xl mr-auto">Your Writing</h1>
+        <h1 className="text-2xl mr-auto">Your writing</h1>
         <Button
           onClick={() => setShowFilters((p) => !p)}
           className="rounded-2xl bg-white size-12 flex flex-row items-center justify-center"
@@ -929,31 +929,45 @@ function ComposePage({
         />
       </div>
       <Button
-        className="p-4 border-2 bg-nborange rounded-2xl text-black flex flex-row gap-4 w-full"
+        className="p-4 border-2 bg-nborange rounded-2xl text-black flex flex-row gap-4 justify-between w-full"
         onClick={() => {}}
         disabled={disabled}
       >
-        <Camera absoluteStrokeWidth strokeWidth={1} className="size-12" />
+        <Camera absoluteStrokeWidth strokeWidth={0.5} className="size-24" />
         <h2 className="text-lg">Take a photo</h2>
+        <div />
       </Button>
-      <div className="flex flex-row justify-center w-full">
-        <span className="text-lg">OR</span>
+      <div className="flex flex-row justify-around items-center w-full p-4">
+        <div className="scale-x-150">
+          <Image
+            src="/brutalist-elements/SVG/Frame-241.svg"
+            alt={"Shape 57"}
+            width={32}
+            height={32}
+            className="text-nborange fill-nborange rotate-90 scale-y-150 opacity-20"
+          />
+        </div>
+
+        <span className="text-lg font-bold">OR</span>
+        <div className="scale-x-150">
+          <Image
+            src="/brutalist-elements/SVG/Frame-241.svg"
+            alt={"Shape 57"}
+            width={32}
+            height={32}
+            className="text-nborange fill-nborange rotate-90 scale-y-150 opacity-20"
+          />
+        </div>
       </div>
       <Button
-        className="p-4 border-2 bg-nbyellow rounded-2xl text-black flex flex-row gap-4 w-full"
+        className="p-4 border-2 bg-nbyellow rounded-2xl text-black flex flex-row gap-4 justify-between w-full"
         onClick={() => {}}
         disabled={disabled}
       >
-        <Pencil absoluteStrokeWidth strokeWidth={1} className="size-12" />
-        <h2 className="text-lg">Type in</h2>
+        <Pencil absoluteStrokeWidth strokeWidth={0.5} className="size-24" />
+        <h2 className="text-lg">Type it in</h2>
+        <div />
       </Button>
-      <Image
-        src="/brutalist-elements/SVG/Frame-241.svg"
-        alt={"Shape 57"}
-        width={96}
-        height={96}
-        className="text-nborange fill-nborange rotate-90 mt-16"
-      />
     </div>
   );
 }
@@ -973,7 +987,7 @@ function ProfilePage({
       )}
     >
       <div className="flex flex-row justify-between items-center p-4 w-full">
-        <h1 className="text-2xl mr-auto">Your Profile</h1>
+        <h1 className="text-2xl mr-auto">Your profile</h1>
         <Image
           src="/brutalist-elements/SVG/Frame-79.svg"
           alt={"Shape 57"}
