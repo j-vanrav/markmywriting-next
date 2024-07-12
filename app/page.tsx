@@ -284,6 +284,7 @@ function TabAnimated<T extends string>({
     <div className={cn("grid h-8 w-28 grid-cols-1 items-center", className)}>
       {active && (
         <motion.div
+          key={"tabs-highlight-" + id}
           className={cn(
             "z-0 col-span-1 col-start-1 h-8 w-28 rounded-full bg-black"
           )}
@@ -477,20 +478,21 @@ function SelectCardPage({
         <div
           ref={filterTabsRef}
           className={cn(
-            "h-12 w-32 p-2 py-6 bg-white rounded-3xl transition-all duration-300",
-            filterCollapsed ? "h-12" : "h-40"
+            "h-fit w-32 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
+            filterCollapsed ? "h-12" : "h-36"
           )}
         >
-          <div className={cn("relative py-8 h-full w-full flex flex-col")}>
+          <div
+            className={cn(
+              "relative w-full flex flex-col transition-all duration-300",
+              filterCollapsed ? "h-0" : "h-32"
+            )}
+          >
             <TabAnimated
               id={"filter-tabs"}
               className={cn(
-                filterCollapsed
-                  ? "absolute top-0 -translate-y-1/2"
-                  : "absolute top-0 -translate-y-1/2",
-
-                filterCollapsed &&
-                  (selectedTab === "all" ? "visible z-20" : "invisible z-10")
+                "bg-white rounded-full absolute top-0",
+                selectedTab === "all" ? "z-20" : "z-10"
               )}
               active={selectedTab === "all"}
               name={"all"}
@@ -511,13 +513,8 @@ function SelectCardPage({
             <TabAnimated
               id={"filter-tabs"}
               className={cn(
-                filterCollapsed
-                  ? "absolute top-0 -translate-y-1/2"
-                  : "absolute top-1/3 -translate-y-1/2",
-                filterCollapsed &&
-                  (selectedTab === "unmarked"
-                    ? "visible z-20"
-                    : "invisible z-10")
+                "bg-white rounded-full absolute top-1/4",
+                selectedTab === "unmarked" ? "z-20" : "z-10"
               )}
               active={selectedTab === "unmarked"}
               name={"unmarked"}
@@ -538,14 +535,8 @@ function SelectCardPage({
             <TabAnimated
               id={"filter-tabs"}
               className={cn(
-                filterCollapsed
-                  ? "absolute top-0 -translate-y-1/2"
-                  : "absolute bottom-1/3 translate-y-1/2",
-
-                filterCollapsed &&
-                  (selectedTab === "marking"
-                    ? "visible z-20"
-                    : "invisible z-10")
+                "bg-white rounded-full absolute top-1/2",
+                selectedTab === "marking" ? "z-20" : "z-10"
               )}
               active={selectedTab === "marking"}
               name={"marking"}
@@ -566,12 +557,8 @@ function SelectCardPage({
             <TabAnimated
               id={"filter-tabs"}
               className={cn(
-                filterCollapsed
-                  ? "absolute top-0 -translate-y-1/2"
-                  : "absolute bottom-0 translate-y-1/2",
-
-                filterCollapsed &&
-                  (selectedTab === "marked" ? "visible z-20" : "invisible z-10")
+                "bg-white rounded-full absolute top-3/4",
+                selectedTab === "marked" ? "z-20" : "z-10"
               )}
               active={selectedTab === "marked"}
               name={"marked"}
@@ -590,20 +577,21 @@ function SelectCardPage({
         <div
           ref={sortTabsRef}
           className={cn(
-            "h-12 w-32 p-2 py-6 bg-white rounded-3xl transition-all duration-300",
-            sortCollapsed ? "h-12" : "h-40 z-10"
+            "h-fit w-32 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
+            sortCollapsed ? "h-12" : "h-36"
           )}
         >
-          <div className="relative py-8 h-full w-full flex flex-col">
+          <div
+            className={cn(
+              "relative w-full flex flex-col transition-all duration-300",
+              sortCollapsed ? "h-0" : "h-32"
+            )}
+          >
             <TabAnimated
               id={"sort-tabs"}
               className={cn(
-                sortCollapsed
-                  ? "absolute top-0 -translate-y-1/2"
-                  : "absolute top-0 -translate-y-1/2",
-
-                sortCollapsed &&
-                  (sortMode === "date-desc" ? "visible z-20" : "invisible z-10")
+                "bg-white rounded-full absolute top-0",
+                sortMode === "date-desc" ? "z-20" : "z-10"
               )}
               active={sortMode === "date-desc"}
               name={"date-desc"}
@@ -624,11 +612,8 @@ function SelectCardPage({
             <TabAnimated
               id={"sort-tabs"}
               className={cn(
-                sortCollapsed
-                  ? "absolute top-0 -translate-y-1/2"
-                  : "absolute top-1/3 -translate-y-1/2",
-                sortCollapsed &&
-                  (sortMode === "date-asc" ? "visible z-20" : "invisible z-10")
+                "bg-white rounded-full absolute top-1/4",
+                sortMode === "date-asc" ? "z-20" : "z-10"
               )}
               active={sortMode === "date-asc"}
               name={"date-asc"}
@@ -649,14 +634,8 @@ function SelectCardPage({
             <TabAnimated
               id={"sort-tabs"}
               className={cn(
-                sortCollapsed
-                  ? "absolute top-0 -translate-y-1/2"
-                  : "absolute bottom-1/3 translate-y-1/2",
-
-                sortCollapsed &&
-                  (sortMode === "score-desc"
-                    ? "visible z-20"
-                    : "invisible z-10")
+                "bg-white rounded-full absolute top-1/2",
+                sortMode === "score-desc" ? "z-20" : "z-10"
               )}
               active={sortMode === "score-desc"}
               name={"score-desc"}
@@ -677,12 +656,8 @@ function SelectCardPage({
             <TabAnimated
               id={"sort-tabs"}
               className={cn(
-                sortCollapsed
-                  ? "absolute top-0 -translate-y-1/2"
-                  : "absolute bottom-0 translate-y-1/2",
-
-                sortCollapsed &&
-                  (sortMode === "score-asc" ? "visible z-20" : "invisible z-10")
+                "bg-white rounded-full absolute top-3/4",
+                sortMode === "score-asc" ? "z-20" : "z-10"
               )}
               active={sortMode === "score-asc"}
               name={"score-asc"}
