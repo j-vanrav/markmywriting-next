@@ -20,6 +20,7 @@ import {
   Slash,
   Ticket,
   User,
+  Squircle,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -200,7 +201,7 @@ function ReviewCard({
             </div>
           )}
           {opts.marked === "unmarked" && (
-            <div className="flex flex-row items-center gap-1">
+            <div className="flex flex-row items-center gap-1 bg-black text-white rounded-full px-2">
               <BotOff
                 absoluteStrokeWidth
                 strokeWidth={1.5}
@@ -210,13 +211,13 @@ function ReviewCard({
             </div>
           )}
           {opts.marked === "marking" && (
-            <div className="flex flex-row items-center gap-1 animate-pulse-strong">
+            <div className="flex flex-row items-center gap-1">
               <BrainCircuit
                 absoluteStrokeWidth
                 strokeWidth={1.5}
-                className="size-4"
+                className="size-4 animate-pulse-strong"
               />
-              Marking...
+              <span className="animate-pulse-strong">Marking...</span>
             </div>
           )}
           {opts.marked === "marked" && (
@@ -268,7 +269,7 @@ function ReviewCard({
   );
 }
 
-type TabAnimatedSize = "sm" | "md";
+type TabAnimatedSize = "sm" | "md" | "icon";
 function TabAnimated<T extends string>({
   id,
   className,
@@ -292,6 +293,7 @@ function TabAnimated<T extends string>({
         "grid h-8 w-28 grid-cols-1 items-center",
         size === "md" && "w-28",
         size === "sm" && "w-20",
+        size === "icon" && "w-8",
         className
       )}
     >
@@ -301,7 +303,8 @@ function TabAnimated<T extends string>({
           className={cn(
             "z-0 col-span-1 col-start-1 h-8 rounded-full bg-black",
             size === "md" && "w-28",
-            size === "sm" && "w-20"
+            size === "sm" && "w-20",
+            size === "icon" && "h-8"
           )}
           layoutId={"tabs-highlight-" + id}
         />
@@ -312,7 +315,8 @@ function TabAnimated<T extends string>({
         onClick={() => select(name)}
         className={cn(
           "z-40 col-span-1 col-start-1 inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-          active && "-mt-8 text-white"
+          active && "-mt-8 text-white",
+          size === "icon" && "flex flex-row items-center justify-center"
         )}
       >
         {children}
@@ -435,6 +439,7 @@ const reviewCards: ReviewCard[] = [
 ];
 type ReviewTabs = "all" | "unmarked" | "marking" | "marked";
 type SortMode = "date-desc" | "date-asc" | "score-desc" | "score-asc";
+type FilterCameraMode = "all" | "camera" | "written";
 function SelectCardPage({
   selectedCard,
   setSelectedCard,
@@ -447,6 +452,7 @@ function SelectCardPage({
   const [filterCollapsed, setFilterCollapsed] = useState(false);
   const [sortMode, setSortMode] = useState("date-desc" as SortMode);
   const [sortCollapsed, setSortCollapsed] = useState(false);
+  const [filterCamera, setFilterCamera] = useState("all" as FilterCameraMode);
   const filterTabsRef = useRef(null);
   useOnClickOutside(filterTabsRef, () => {
     setFilterCollapsed(true);
@@ -470,13 +476,7 @@ function SelectCardPage({
       <div className="flex flex-row justify-between items-center p-4">
         <h1 className="text-2xl">Your Writing</h1>
         <Button
-          onClick={() => {
-            if (showFilters) {
-              setSelectedTab("all");
-              setSortMode("date-desc");
-            }
-            setShowFilters((p) => !p);
-          }}
+          onClick={() => setShowFilters((p) => !p)}
           className="rounded-lg bg-white size-12 flex flex-row items-center justify-center"
         >
           <ListFilter className="size-7 min-w-7" />
@@ -485,8 +485,8 @@ function SelectCardPage({
 
       <div
         className={cn(
-          "z-30 relative w-full flex flex-row gap-2 transition-all duration-300",
-          showFilters ? "h-16 opacity-100" : "h-0 opacity-0",
+          "z-50 relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
+          showFilters ? "h-14 opacity-100" : "h-0 opacity-0",
           !filterCollapsed || !sortCollapsed ? "opacity" : ""
         )}
       >
@@ -518,7 +518,7 @@ function SelectCardPage({
               size="md"
             >
               <span className="flex flex-row items-center w-full gap-1">
-                <Circle
+                <Squircle
                   absoluteStrokeWidth
                   strokeWidth={1.5}
                   className="size-4 invisible"
@@ -701,15 +701,79 @@ function SelectCardPage({
           </div>
         </div>
       </div>
+      <div
+        className={cn(
+          "relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
+          showFilters ? "h-12 opacity-100" : "h-0 opacity-0",
+          !filterCollapsed || !sortCollapsed ? "opacity" : ""
+        )}
+      >
+        <div
+          className={cn(
+            "w-28 h-12 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden"
+          )}
+        >
+          <div
+            className={cn(
+              "h-32 relative w-full flex flex-row transition-all duration-300"
+            )}
+          >
+            <TabAnimated
+              id={"filter-camera-tabs"}
+              className={cn("bg-white rounded-full")}
+              active={filterCamera === "all"}
+              name={"all"}
+              select={setFilterCamera}
+              size="icon"
+            >
+              <span className="flex flex-row items-center justify-center">
+                All
+              </span>
+            </TabAnimated>
+            <TabAnimated
+              id={"filter-camera-tabs"}
+              className={cn("bg-white rounded-full")}
+              active={filterCamera === "camera"}
+              name={"camera"}
+              select={setFilterCamera}
+              size="icon"
+            >
+              <Camera
+                absoluteStrokeWidth
+                strokeWidth={1.5}
+                className="size-5 min-w-5"
+              />
+            </TabAnimated>
+            <TabAnimated
+              id={"filter-camera-tabs"}
+              className={cn("bg-white rounded-full")}
+              active={filterCamera === "written"}
+              name={"written"}
+              select={setFilterCamera}
+              size="icon"
+            >
+              <Pencil
+                absoluteStrokeWidth
+                strokeWidth={1.5}
+                className="size-5 min-w-5"
+              />
+            </TabAnimated>
+          </div>
+        </div>
+      </div>
 
       <div className="relative flex-col justify-center py-6 text-lg">
         {reviewCards.sort(sortFn).map((card) => {
-          const visible =
-            !showFilters ||
+          const markingFilter =
             selectedTab === "all" ||
             (selectedTab === "marking" && card.marked === "marking") ||
             (selectedTab === "unmarked" && card.marked === "unmarked") ||
             (selectedTab === "marked" && card.marked === "marked");
+          const cameraFilter =
+            filterCamera === "all" ||
+            (filterCamera === "camera" && card.fromCamera) ||
+            (filterCamera === "written" && !card.fromCamera);
+          const visible = !showFilters || (markingFilter && cameraFilter);
           return (
             <div
               key={`reviewcard-${card.id}`}
