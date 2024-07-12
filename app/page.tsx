@@ -516,10 +516,10 @@ function SelectCardPage({
     >
       <div className="flex flex-row justify-between items-center p-4 gap-4">
         <div className="relative mr-auto">
-          <h1 className="relative left-0 top-0 text-2xl mr-auto z-50">
+          <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
             Your writing
           </h1>
-          <svg
+          {/* <svg
             width="512"
             height="512"
             viewBox="0 0 200 200"
@@ -531,7 +531,7 @@ function SelectCardPage({
               clip-rule="evenodd"
               d="M115 160H85V136.213L68.1802 153.033L46.967 131.82L63.7869 115H40V85H61.8069L45.8283 70.1602L66.2437 48.1781L85 65.5977V40H115V63.7869L131.82 46.967L153.033 68.1802L136.213 85H160V115H138.193L154.172 129.84L133.756 151.822L115 134.402V160Z"
             />
-          </svg>
+          </svg> */}
         </div>
 
         <Button
@@ -905,10 +905,10 @@ function ReviewPage({
           <ArrowLeft className="size-7 min-w-7 min-h-7" />
         </Button>
         <div className="relative mr-auto">
-          <h1 className="relative left-0 top-0 text-2xl mr-auto z-50">
+          <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
             Reviewing: {cardPage}
           </h1>
-          <svg
+          {/* <svg
             width="512"
             height="512"
             viewBox="0 0 200 200"
@@ -931,7 +931,7 @@ function ReviewPage({
             <path d="M160 100L160 70L130 70L160 100Z" />
             <path d="M160 130L160 100L130 100L160 130Z" />
             <path d="M160 160L160 130L130 130L160 160Z" />
-          </svg>
+          </svg> */}
         </div>
       </div>
     </div>
@@ -961,10 +961,10 @@ function ComposePage({
     >
       <div className="flex flex-row justify-between items-center p-4 w-full">
         <div className="relative mr-auto">
-          <h1 className="relative left-0 top-0 text-2xl mr-auto z-50">
+          <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
             Compose new writing
           </h1>
-          <svg
+          {/* <svg
             width="512"
             height="512"
             viewBox="0 0 200 200"
@@ -972,18 +972,20 @@ function ComposePage({
             className="absolute left-0 top-0 -z-10 fill-current text-nborange -translate-y-1/2 -translate-x-1/2 opacity-20"
           >
             <path d="M100 40L107.199 63.809L122.961 44.5672L120.501 69.3188L142.426 57.5736L130.681 79.4995L155.433 77.039L136.191 92.8012L160 100L136.191 107.199L155.433 122.961L130.681 120.501L142.426 142.426L120.501 130.681L122.961 155.433L107.199 136.191L100 160L92.8012 136.191L77.039 155.433L79.4995 130.681L57.5736 142.426L69.3188 120.501L44.5672 122.961L63.809 107.199L40 100L63.809 92.8012L44.5672 77.039L69.3188 79.4995L57.5736 57.5736L79.4995 69.3188L77.039 44.5672L92.8012 63.809L100 40Z" />
-          </svg>
+          </svg> */}
         </div>
         <Decoration frames={["132", "32", "54", "71"]} id={makeid(4)} />
       </div>
       <Button
-        className="p-4 border-2 bg-nborange rounded-2xl text-black flex flex-row gap-4 justify-between w-full"
+        className="p-4 border-2 bg-nborange rounded-2xl text-black flex flex-row gap-4 justify-between w-full items-center"
         onClick={() => {}}
         disabled={disabled}
       >
         <Camera absoluteStrokeWidth strokeWidth={0.5} className="size-24" />
         <h2 className="text-lg">Take a photo</h2>
-        <div />
+        <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
+          <ArrowRight />
+        </div>
       </Button>
       <div className="flex flex-row justify-around items-center w-full p-4">
         <div className="scale-x-150">
@@ -1008,13 +1010,15 @@ function ComposePage({
         </div>
       </div>
       <Button
-        className="p-4 border-2 bg-nbyellow rounded-2xl text-black flex flex-row gap-4 justify-between w-full"
+        className="p-4 border-2 bg-nbyellow rounded-2xl text-black flex flex-row gap-4 justify-between w-full items-center"
         onClick={() => {}}
         disabled={disabled}
       >
         <Pencil absoluteStrokeWidth strokeWidth={0.5} className="size-24" />
         <h2 className="text-lg">Type it in</h2>
-        <div />
+        <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
+          <ArrowRight />
+        </div>
       </Button>
     </div>
   );
@@ -1036,10 +1040,10 @@ function ProfilePage({
     >
       <div className="flex flex-row justify-between items-center p-4 w-full">
         <div className="relative mr-auto">
-          <h1 className="relative left-0 top-0 text-2xl mr-auto z-50">
+          <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
             Your profile
           </h1>
-          <svg
+          {/* <svg
             width="512"
             height="512"
             viewBox="0 0 200 200"
@@ -1078,7 +1082,7 @@ function ProfilePage({
               d="M144.238 100C156.875 87.363 156.875 66.8743 144.238 54.2372L98.4749 100C111.112 112.637 131.601 112.637 144.238 100Z"
               stroke-width="4"
             />
-          </svg>
+          </svg> */}
         </div>
         <Decoration frames={["79", "120", "225", "115"]} id={makeid(4)} />
       </div>
