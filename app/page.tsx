@@ -243,7 +243,7 @@ function ReviewCard({
           )}
           {opts.marked === "marked" && (
             <div className="relative bg-black rounded-full text-white size-12">
-              <span className="absolute top-2 left-2 text-xs">
+              <span className="absolute top-1.5 left-1.5 text-xs">
                 {opts.score}
               </span>
               <Slash
@@ -251,7 +251,7 @@ function ReviewCard({
                 strokeWidth={1}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
               />
-              <span className="absolute bottom-2 right-2 text-xs">47</span>
+              <span className="absolute bottom-1.5 right-1.5 text-xs">47</span>
             </div>
           )}
           {opts.marked === "unmarked" && (
