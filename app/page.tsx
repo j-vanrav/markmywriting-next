@@ -25,6 +25,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { HapticsClick } from "@/lib/client-utils";
 import { useOnClickOutside } from "@/lib/hooks";
+import Image from "next/image";
 
 type PageName = "review" | "compose" | "profile";
 function NavButton({
@@ -503,14 +504,21 @@ function SelectCardPage({
   };
   return (
     <div className="w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden">
-      <div className="flex flex-row justify-between items-center p-4">
-        <h1 className="text-2xl">Your Writing</h1>
+      <div className="flex flex-row justify-between items-center p-4 gap-4">
+        <h1 className="text-2xl mr-auto">Your Writing</h1>
         <Button
           onClick={() => setShowFilters((p) => !p)}
           className="rounded-lg bg-white size-12 flex flex-row items-center justify-center"
         >
           <ListFilter className="size-7 min-w-7" />
         </Button>
+        <Image
+          src="/brutalist-elements/SVG/Frame-90.svg"
+          alt={"Shape 57"}
+          width={64}
+          height={64}
+          className="text-nborange fill-nborange rotate-90"
+        />
       </div>
 
       <div
@@ -877,6 +885,13 @@ function ComposePage() {
     <div className="w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll">
       <div className="flex flex-row justify-between items-center p-4 w-full">
         <h1 className="text-2xl">Compose new writing</h1>
+        <Image
+          src="/brutalist-elements/SVG/Frame-132.svg"
+          alt={"Shape 57"}
+          width={64}
+          height={64}
+          className="text-nborange fill-nborange"
+        />
       </div>
       <Button
         className="p-4 border-2 bg-nborange rounded-2xl text-black flex flex-row gap-4 w-full"
@@ -899,6 +914,13 @@ function ComposePage() {
         </div>
         <h2 className="text-lg">Type in</h2>
       </Button>
+      <Image
+        src="/brutalist-elements/SVG/Frame-241.svg"
+        alt={"Shape 57"}
+        width={96}
+        height={96}
+        className="text-nborange fill-nborange rotate-90 mt-16"
+      />
     </div>
   );
 }
@@ -907,7 +929,14 @@ function ProfilePage() {
   return (
     <div className="w-full h-full p-4 flex flex-col items-center gap-4">
       <div className="flex flex-row justify-between items-center p-4 w-full">
-        <h1 className="text-2xl">Your Profile</h1>
+        <h1 className="text-2xl mr-auto">Your Profile</h1>
+        <Image
+          src="/brutalist-elements/SVG/Frame-79.svg"
+          alt={"Shape 57"}
+          width={64}
+          height={64}
+          className="text-nborange fill-nborange"
+        />
       </div>
       <div className="bg-white rounded-2xl p-3 flex flex-row w-full items-center gap-4">
         <div className="bg-nbpurple size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
