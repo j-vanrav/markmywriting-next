@@ -12,7 +12,6 @@ import {
   BrainCircuit,
   Calendar,
   Camera,
-  Circle,
   Pencil,
   ListFilter,
   Mail,
@@ -136,9 +135,9 @@ function ReviewCard({
   return (
     <button
       className={cn(
-        "translate-x-0 transition-all w-full",
+        "translate-x-0 transition-all w-full z-50",
         pressed && "scale-90 -translate-y-6",
-        selected && "-translate-y-12 scale-110",
+        selected && "-translate-y-12 scale-110 z-50",
         className
       )}
       onPointerDown={() => setPressed(true)}
@@ -485,7 +484,7 @@ function SelectCardPage({
 
       <div
         className={cn(
-          "z-50 relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
+          "z-20 relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
           showFilters ? "h-14 opacity-100" : "h-0 opacity-0",
           !filterCollapsed || !sortCollapsed ? "opacity" : ""
         )}
@@ -507,7 +506,7 @@ function SelectCardPage({
               id={"filter-tabs"}
               className={cn(
                 "bg-white rounded-full absolute top-0",
-                selectedTab === "all" ? "z-20" : "z-10"
+                selectedTab === "all" ? "z-10" : "z-0"
               )}
               active={selectedTab === "all"}
               name={"all"}
@@ -530,7 +529,7 @@ function SelectCardPage({
               id={"filter-tabs"}
               className={cn(
                 "bg-white rounded-full absolute top-1/4",
-                selectedTab === "unmarked" ? "z-20" : "z-10"
+                selectedTab === "unmarked" ? "z-10" : "z-0"
               )}
               active={selectedTab === "unmarked"}
               name={"unmarked"}
@@ -553,7 +552,7 @@ function SelectCardPage({
               id={"filter-tabs"}
               className={cn(
                 "bg-white rounded-full absolute top-1/2",
-                selectedTab === "marking" ? "z-20" : "z-10"
+                selectedTab === "marking" ? "z-10" : "z-0"
               )}
               active={selectedTab === "marking"}
               name={"marking"}
@@ -576,7 +575,7 @@ function SelectCardPage({
               id={"filter-tabs"}
               className={cn(
                 "bg-white rounded-full absolute top-3/4",
-                selectedTab === "marked" ? "z-20" : "z-10"
+                selectedTab === "marked" ? "z-10" : "z-0"
               )}
               active={selectedTab === "marked"}
               name={"marked"}
@@ -703,7 +702,7 @@ function SelectCardPage({
       </div>
       <div
         className={cn(
-          "relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
+          "z-10 relative w-full flex flex-row justify-center gap-2 transition-all duration-300",
           showFilters ? "h-12 opacity-100" : "h-0 opacity-0",
           !filterCollapsed || !sortCollapsed ? "opacity" : ""
         )}
@@ -762,7 +761,12 @@ function SelectCardPage({
         </div>
       </div>
 
-      <div className="relative flex-col justify-center py-6 text-lg">
+      <div
+        className={cn(
+          "relative flex-col justify-center py-6 text-lg",
+          selectedCard !== "0" && "z-30"
+        )}
+      >
         {reviewCards.sort(sortFn).map((card) => {
           const markingFilter =
             selectedTab === "all" ||
@@ -791,6 +795,7 @@ function SelectCardPage({
                 selected={selectedCard === card.id}
                 disabled={!visible}
                 aria-disabled={!visible}
+                className="z-50"
                 // className={cn(visible ? "visible" : "invisible duration-0")}
               />
             </div>
