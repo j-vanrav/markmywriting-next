@@ -13,7 +13,7 @@ import {
   Calendar,
   Camera,
   Circle,
-  Feather,
+  Pencil,
   ListFilter,
   Mail,
   NotebookPen,
@@ -179,7 +179,7 @@ function ReviewCard({
                 className="size-6"
               />
             ) : (
-              <Feather
+              <Pencil
                 absoluteStrokeWidth
                 strokeWidth={1.5}
                 className="size-6"
@@ -268,6 +268,7 @@ function ReviewCard({
   );
 }
 
+type TabAnimatedSize = "sm" | "md";
 function TabAnimated<T extends string>({
   id,
   className,
@@ -275,6 +276,7 @@ function TabAnimated<T extends string>({
   name,
   select,
   children,
+  size,
 }: {
   id: string;
   className?: string;
@@ -282,14 +284,24 @@ function TabAnimated<T extends string>({
   name: T;
   select: (name: T) => void;
   children: React.ReactNode;
+  size: TabAnimatedSize;
 }) {
   return (
-    <div className={cn("grid h-8 w-28 grid-cols-1 items-center", className)}>
+    <div
+      className={cn(
+        "grid h-8 w-28 grid-cols-1 items-center",
+        size === "md" && "w-28",
+        size === "sm" && "w-20",
+        className
+      )}
+    >
       {active && (
         <motion.div
           key={"tabs-highlight-" + id}
           className={cn(
-            "z-0 col-span-1 col-start-1 h-8 w-28 rounded-full bg-black"
+            "z-0 col-span-1 col-start-1 h-8 rounded-full bg-black",
+            size === "md" && "w-28",
+            size === "sm" && "w-20"
           )}
           layoutId={"tabs-highlight-" + id}
         />
@@ -473,7 +485,7 @@ function SelectCardPage({
 
       <div
         className={cn(
-          "z-30 relative w-full flex flex-row gap-4 transition-all duration-300",
+          "z-30 relative w-full flex flex-row gap-2 transition-all duration-300",
           showFilters ? "h-16 opacity-100" : "h-0 opacity-0",
           !filterCollapsed || !sortCollapsed ? "opacity" : ""
         )}
@@ -503,6 +515,7 @@ function SelectCardPage({
                 if (!filterCollapsed) setSelectedTab(t);
                 setFilterCollapsed((p) => !p);
               }}
+              size="md"
             >
               <span className="flex flex-row items-start w-full gap-1">
                 <Circle
@@ -525,6 +538,7 @@ function SelectCardPage({
                 if (!filterCollapsed) setSelectedTab(t);
                 setFilterCollapsed((p) => !p);
               }}
+              size="md"
             >
               <span className="flex flex-row items-start w-full gap-1">
                 <BotOff
@@ -547,6 +561,7 @@ function SelectCardPage({
                 if (!filterCollapsed) setSelectedTab(t);
                 setFilterCollapsed((p) => !p);
               }}
+              size="md"
             >
               <span className="flex flex-row items-start w-full gap-1">
                 <BrainCircuit
@@ -569,6 +584,7 @@ function SelectCardPage({
                 if (!filterCollapsed) setSelectedTab(t);
                 setFilterCollapsed((p) => !p);
               }}
+              size="md"
             >
               <span className="flex flex-row items-start w-full gap-1">
                 <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
@@ -580,7 +596,7 @@ function SelectCardPage({
         <div
           ref={sortTabsRef}
           className={cn(
-            "h-fit w-32 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
+            "h-fit w-24 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
             sortCollapsed ? "h-12" : "h-36"
           )}
         >
@@ -602,6 +618,7 @@ function SelectCardPage({
                 if (!sortCollapsed) setSortMode(t);
                 setSortCollapsed((p) => !p);
               }}
+              size="sm"
             >
               <span className="flex flex-row items-start w-full gap-1">
                 Date
@@ -624,6 +641,7 @@ function SelectCardPage({
                 if (!sortCollapsed) setSortMode(t);
                 setSortCollapsed((p) => !p);
               }}
+              size="sm"
             >
               <span className="flex flex-row items-start w-full gap-1">
                 Date
@@ -646,6 +664,7 @@ function SelectCardPage({
                 if (!sortCollapsed) setSortMode(t);
                 setSortCollapsed((p) => !p);
               }}
+              size="sm"
             >
               <span className="flex flex-row items-start w-full gap-1">
                 Score
@@ -668,6 +687,7 @@ function SelectCardPage({
                 if (!sortCollapsed) setSortMode(t);
                 setSortCollapsed((p) => !p);
               }}
+              size="sm"
             >
               <span className="flex flex-row items-start w-full gap-1">
                 Score
@@ -766,7 +786,7 @@ function ComposePage() {
         onClick={() => {}}
       >
         <div className="bg-nbyellow size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
-          <Feather />
+          <Pencil />
         </div>
         <h2 className="text-lg">Type your writing</h2>
       </Button>
