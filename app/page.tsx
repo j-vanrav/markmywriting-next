@@ -10,27 +10,19 @@ import {
   BrainCircuit,
   Calendar,
   Camera,
-  Eye,
+  Circle,
   Feather,
   ListFilter,
-  LoaderCircle,
   Mail,
   NotebookPen,
-  Pencil,
   Slash,
-  SquareChevronRight,
   Ticket,
   User,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "@/components/neobrutalist/tabs-animated";
-import { Haptics, ImpactStyle } from "@capacitor/haptics";
-import { HapticsClick, HapticsSelection } from "@/lib/client-utils";
+import { HapticsClick } from "@/lib/client-utils";
+import { useOnClickOutside } from "@/lib/hooks";
 
 type PageName = "review" | "compose" | "profile";
 function NavButton({
@@ -277,6 +269,73 @@ function ReviewCard({
   );
 }
 
+function TabAnimated({
+  className,
+  active,
+  name,
+  select,
+}: {
+  className?: string;
+  active: boolean;
+  name: ReviewTabs;
+  select: (name: ReviewTabs) => void;
+}) {
+  return (
+    <div className={cn("grid h-8 w-28 grid-cols-1 items-center", className)}>
+      {active && (
+        <motion.div
+          className={cn(
+            "z-0 col-span-1 col-start-1 h-8 w-28 rounded-full bg-black"
+          )}
+          layoutId={"tabs-highlight"}
+        />
+      )}
+      <button
+        value={name}
+        data-active={active}
+        onClick={() => select(name)}
+        className={cn(
+          "z-40 col-span-1 col-start-1 inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+          active && "-mt-8 text-white"
+        )}
+      >
+        {name === "all" && (
+          <span className="flex flex-row items-start w-full gap-1">
+            <Circle
+              absoluteStrokeWidth
+              strokeWidth={1.5}
+              className="size-4 invisible"
+            />
+            All
+          </span>
+        )}
+        {name === "unmarked" && (
+          <span className="flex flex-row items-start w-full gap-1">
+            <BotOff absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
+            Unmarked
+          </span>
+        )}
+        {name === "marking" && (
+          <span className="flex flex-row items-start w-full gap-1">
+            <BrainCircuit
+              absoluteStrokeWidth
+              strokeWidth={1.5}
+              className="size-4"
+            />
+            Marking
+          </span>
+        )}
+        {name === "marked" && (
+          <span className="flex flex-row items-start w-full gap-1">
+            <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
+            Marked
+          </span>
+        )}
+      </button>
+    </div>
+  );
+}
+
 const reviewCards: {
   marked: MarkingStatus;
   wordCount: number;
@@ -377,7 +436,8 @@ const reviewCards: {
     colour: "blue",
   },
 ];
-type ReviewTabs = "all" | "unmarked" | "in progress" | "marked";
+type ReviewTabs = "all" | "unmarked" | "marking" | "marked";
+type SortMode = "date-desc" | "date-asc" | "score-desc" | "score-asc";
 function SelectCardPage({
   selectedCard,
   setSelectedCard,
@@ -385,7 +445,14 @@ function SelectCardPage({
   selectedCard: string;
   setSelectedCard: (id: string) => void;
 }) {
-  const [selecedTab, setSelectedTab] = useState("all" as ReviewTabs);
+  const [selectedTab, setSelectedTab] = useState("all" as ReviewTabs);
+  const [filterCollapsed, setFilterCollapsed] = useState(false);
+  const [sortMode, setSortMode] = useState("date-desc" as SortMode);
+  const tabsRef = useRef(null);
+  useOnClickOutside(tabsRef, () => {
+    setFilterCollapsed(true);
+  });
+  console.log(selectedTab);
   return (
     <div className="w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden">
       <div className="flex flex-row justify-between items-center p-4">
@@ -393,41 +460,93 @@ function SelectCardPage({
         <ListFilter />
       </div>
 
-      <Tabs
-        value={selecedTab}
-        onValueChange={(s) => setSelectedTab(s as ReviewTabs)}
-        className="h-24"
-      >
-        <TabsList className="flex flex-col translate-y-7">
-          <div className="flex flex-row bg-white rounded-t-3xl p-2 pb-0">
-            <TabsTrigger value="all" active={selecedTab === "all"}>
-              All
-            </TabsTrigger>
-            <TabsTrigger value="unmarked" active={selecedTab === "unmarked"}>
-              Unmarked
-            </TabsTrigger>
+      <div className="relative w-full flex flex-row h-16">
+        <div
+          ref={tabsRef}
+          className={cn(
+            "absolute z-10 h-40 w-32 p-2 py-6 bg-white rounded-3xl transition-all",
+            filterCollapsed && "h-12"
+          )}
+        >
+          <div className="relative py-8 h-full w-full flex flex-col">
+            <TabAnimated
+              className={cn(
+                filterCollapsed
+                  ? "absolute top-0 -translate-y-1/2"
+                  : "absolute top-0 -translate-y-1/2",
+
+                filterCollapsed &&
+                  (selectedTab === "all" ? "visible z-20" : "invisible z-10")
+              )}
+              active={selectedTab === "all"}
+              name={"all"}
+              select={(t) => {
+                if (!filterCollapsed) setSelectedTab(t);
+                setFilterCollapsed((p) => !p);
+              }}
+            />
+            <TabAnimated
+              className={cn(
+                filterCollapsed
+                  ? "absolute top-0 -translate-y-1/2"
+                  : "absolute top-1/3 -translate-y-1/2",
+                filterCollapsed &&
+                  (selectedTab === "unmarked"
+                    ? "visible z-20"
+                    : "invisible z-10")
+              )}
+              active={selectedTab === "unmarked"}
+              name={"unmarked"}
+              select={(t) => {
+                if (!filterCollapsed) setSelectedTab(t);
+                setFilterCollapsed((p) => !p);
+              }}
+            />
+            <TabAnimated
+              className={cn(
+                filterCollapsed
+                  ? "absolute top-0 -translate-y-1/2"
+                  : "absolute bottom-1/3 translate-y-1/2",
+
+                filterCollapsed &&
+                  (selectedTab === "marking"
+                    ? "visible z-20"
+                    : "invisible z-10")
+              )}
+              active={selectedTab === "marking"}
+              name={"marking"}
+              select={(t) => {
+                if (!filterCollapsed) setSelectedTab(t);
+                setFilterCollapsed((p) => !p);
+              }}
+            />
+            <TabAnimated
+              className={cn(
+                filterCollapsed
+                  ? "absolute top-0 -translate-y-1/2"
+                  : "absolute bottom-0 translate-y-1/2",
+
+                filterCollapsed &&
+                  (selectedTab === "marked" ? "visible z-20" : "invisible z-10")
+              )}
+              active={selectedTab === "marked"}
+              name={"marked"}
+              select={(t) => {
+                if (!filterCollapsed) setSelectedTab(t);
+                setFilterCollapsed((p) => !p);
+              }}
+            />
           </div>
-          <div className="flex flex-row bg-white rounded-b-3xl p-2 pt-0">
-            <TabsTrigger
-              value="in progress"
-              active={selecedTab === "in progress"}
-            >
-              In progress
-            </TabsTrigger>
-            <TabsTrigger value="marked" active={selecedTab === "marked"}>
-              Marked
-            </TabsTrigger>
-          </div>
-        </TabsList>
-      </Tabs>
+        </div>
+      </div>
 
       <div className="relative flex-col justify-center py-6 text-lg">
         {reviewCards.map((card) => {
           const visible =
-            selecedTab === "all" ||
-            (selecedTab === "in progress" && card.marked === "marking") ||
-            (selecedTab === "unmarked" && card.marked === "unmarked") ||
-            (selecedTab === "marked" && card.marked === "marked");
+            selectedTab === "all" ||
+            (selectedTab === "marking" && card.marked === "marking") ||
+            (selectedTab === "unmarked" && card.marked === "unmarked") ||
+            (selectedTab === "marked" && card.marked === "marked");
           return (
             <div
               key={`reviewcard-${card.id}`}
