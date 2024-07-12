@@ -26,6 +26,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/neobrutalist/tabs-animated";
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
+import { HapticsClick, HapticsSelection } from "@/lib/client-utils";
 
 type PageName = "review" | "compose" | "profile";
 function NavButton({
@@ -54,7 +56,10 @@ function NavButton({
       onTouchStart={() => setPressed(true)}
       onTouchCancel={() => setPressed(false)}
       onTouchMove={() => setPressed(false)}
-      onClick={() => trigger(name)}
+      onClick={() => {
+        HapticsClick();
+        trigger(name);
+      }}
     >
       {name === "review" && (
         <NotebookPen absoluteStrokeWidth strokeWidth={1.5} className="size-8" />
@@ -150,7 +155,10 @@ function ReviewCard({
       onTouchStart={() => setPressed(true)}
       onTouchCancel={() => setPressed(false)}
       onTouchMove={() => setPressed(false)}
-      onClick={() => trigger(opts.id)}
+      onClick={() => {
+        HapticsClick();
+        trigger(opts.id);
+      }}
     >
       <div
         className={cn(

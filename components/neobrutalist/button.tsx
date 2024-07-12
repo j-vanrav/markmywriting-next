@@ -4,6 +4,7 @@ import { ClassValue } from "clsx";
 
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { HapticsClick } from "@/lib/client-utils";
 
 type Props = {
   className?: ClassValue;
@@ -36,6 +37,7 @@ export default function Button({ className, children, onClick }: Props) {
       onClick={(e) => {
         onClick(e);
         setClicked(true);
+        HapticsClick();
         setTimeout(() => setClicked(false), 400);
       }}
     >
