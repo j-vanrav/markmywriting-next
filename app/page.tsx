@@ -40,8 +40,8 @@ function NavButton({
   return (
     <button
       className={cn(
-        "rounded-full size-16 transition-all flex flex-row justify-center items-center",
-        selectedPage === name && "w-40",
+        "rounded-full size-16 transition-all duration-200 flex flex-row justify-center items-center",
+        selectedPage === name && "w-48",
         name === "review" && "bg-nbgreen",
         name === "compose" && "bg-nborange",
         name === "profile" && "bg-nbpurple",
@@ -59,19 +59,40 @@ function NavButton({
       }}
     >
       {name === "review" && (
-        <NotebookPen absoluteStrokeWidth strokeWidth={1.5} className="size-8" />
+        <NotebookPen
+          absoluteStrokeWidth
+          strokeWidth={1.5}
+          className={cn(
+            "size-8 min-w-8 transition-all duration-200",
+            selectedPage === name ? "size-6 min-w-6" : "ml-4"
+          )}
+        />
       )}
       {name === "compose" && (
-        <Camera absoluteStrokeWidth strokeWidth={1.5} className="size-8" />
+        <Camera
+          absoluteStrokeWidth
+          strokeWidth={1.5}
+          className={cn(
+            "size-8 min-w-8 transition-all duration-200",
+            selectedPage === name ? "size-6 min-w-6" : "ml-4"
+          )}
+        />
       )}
       {name === "profile" && (
-        <User absoluteStrokeWidth strokeWidth={1.5} className="size-8" />
+        <User
+          absoluteStrokeWidth
+          strokeWidth={1.5}
+          className={cn(
+            "size-8 min-w-8 transition-all duration-200",
+            selectedPage === name ? "size-6 min-w-6" : "ml-4"
+          )}
+        />
       )}
-
+      <div className={cn(selectedPage === name ? "w-2" : "w-0")} />
       <div
         className={cn(
-          "font-normal text-xl w-0 overflow-hidden transition-all flex flex-row justify-center",
-          selectedPage === name && "w-24"
+          "font-normal text-xl opacity-0 overflow-hidden transition-all duration-200 flex flex-row justify-center",
+          selectedPage === name && "w-fit opacity-100"
         )}
       >
         <span className="font-medium">
@@ -154,7 +175,7 @@ function ReviewCard({
     >
       <div
         className={cn(
-          "w-full h-4 rounded-t-2xl -translate-y-4 absolute left-0 right-0",
+          "w-full h-4 rounded-t-2xl -translate-y-3 absolute left-0 right-0",
           opts.marked === "unmarked" && "bg-nbyellow",
           opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
           opts.marked === "marking" && "bg-gray-500",
@@ -163,7 +184,7 @@ function ReviewCard({
       />
       <div
         className={cn(
-          "w-full bg-nbyellow h-24 flex flex-col items-start pb-6 px-4",
+          "w-full bg-nbyellow h-28 flex flex-col items-start pb-6 px-4",
           opts.marked === "unmarked" && "bg-nbyellow",
           opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
           opts.marked === "marking" && "bg-gray-500",
@@ -220,14 +241,16 @@ function ReviewCard({
             </div>
           )}
           {opts.marked === "marked" && (
-            <div className="relative bg-black rounded-full text-white size-10">
-              <span className="absolute top-1 left-1">{opts.score}</span>
+            <div className="relative bg-black rounded-full text-white size-12">
+              <span className="absolute top-2 left-2 text-xs">
+                {opts.score}
+              </span>
               <Slash
                 absoluteStrokeWidth
                 strokeWidth={1}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
               />
-              <span className="absolute bottom-1 right-1">47</span>
+              <span className="absolute bottom-2 right-2 text-xs">47</span>
             </div>
           )}
           {opts.marked === "unmarked" && (
@@ -257,7 +280,7 @@ function ReviewCard({
       </div>
       <div
         className={cn(
-          "w-full h-4 rounded-b-2xl absolute left-0 right-0",
+          "w-full h-4 rounded-b-2xl -translate-y-1 absolute left-0 right-0",
           opts.marked === "unmarked" && "bg-nbyellow",
           opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
           opts.marked === "marking" && "bg-gray-500",
@@ -277,6 +300,7 @@ function TabAnimated<T extends string>({
   select,
   children,
   size,
+  disabled,
 }: {
   id: string;
   className?: string;
@@ -285,15 +309,17 @@ function TabAnimated<T extends string>({
   select: (name: T) => void;
   children: React.ReactNode;
   size: TabAnimatedSize;
+  disabled: boolean;
 }) {
   return (
     <div
       className={cn(
-        "grid h-8 w-28 grid-cols-1 items-center",
-        size === "md" && "w-28",
-        size === "sm" && "w-20",
+        "grid h-8 w-32 grid-cols-1 items-center",
+        size === "md" && "w-32",
+        size === "sm" && "w-24",
         size === "icon" && "w-8",
-        className
+        className,
+        disabled && "pointer-events-none -z-50"
       )}
     >
       {active && (
@@ -301,9 +327,10 @@ function TabAnimated<T extends string>({
           key={"tabs-highlight-" + id}
           className={cn(
             "z-0 col-span-1 col-start-1 h-8 rounded-full bg-black",
-            size === "md" && "w-28",
-            size === "sm" && "w-20",
-            size === "icon" && "h-8"
+            size === "md" && "w-32",
+            size === "sm" && "w-24",
+            size === "icon" && "h-8",
+            disabled && "pointer-events-none -z-50"
           )}
           layoutId={"tabs-highlight-" + id}
         />
@@ -315,8 +342,12 @@ function TabAnimated<T extends string>({
         className={cn(
           "z-40 col-span-1 col-start-1 inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
           active && "-mt-8 text-white",
-          size === "icon" && "flex flex-row items-center justify-center"
+          size === "icon" &&
+            "flex flex-row items-center justify-center text-xs",
+          disabled && "pointer-events-none -z-50"
         )}
+        disabled={disabled}
+        aria-disabled={disabled}
       >
         {children}
       </button>
@@ -492,13 +523,13 @@ function SelectCardPage({
         <div
           ref={filterTabsRef}
           className={cn(
-            "h-fit w-32 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
+            "h-fit w-36 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
             filterCollapsed ? "h-12" : "h-36"
           )}
         >
           <div
             className={cn(
-              "relative w-full flex flex-col transition-all duration-300",
+              "relative h-0 w-full flex flex-col transition-all duration-300",
               filterCollapsed ? "h-0" : "h-32"
             )}
           >
@@ -515,6 +546,7 @@ function SelectCardPage({
                 setFilterCollapsed((p) => !p);
               }}
               size="md"
+              disabled={!showFilters}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 <Squircle
@@ -538,6 +570,7 @@ function SelectCardPage({
                 setFilterCollapsed((p) => !p);
               }}
               size="md"
+              disabled={!showFilters}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 <BotOff
@@ -561,6 +594,7 @@ function SelectCardPage({
                 setFilterCollapsed((p) => !p);
               }}
               size="md"
+              disabled={!showFilters}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 <BrainCircuit
@@ -584,6 +618,7 @@ function SelectCardPage({
                 setFilterCollapsed((p) => !p);
               }}
               size="md"
+              disabled={!showFilters}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
@@ -595,13 +630,13 @@ function SelectCardPage({
         <div
           ref={sortTabsRef}
           className={cn(
-            "h-fit w-24 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
+            "h-fit w-28 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
             sortCollapsed ? "h-12" : "h-36"
           )}
         >
           <div
             className={cn(
-              "relative w-full flex flex-col transition-all duration-300",
+              "relative h-0 w-full flex flex-col transition-all duration-300",
               sortCollapsed ? "h-0" : "h-32"
             )}
           >
@@ -618,6 +653,7 @@ function SelectCardPage({
                 setSortCollapsed((p) => !p);
               }}
               size="sm"
+              disabled={!showFilters}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 Date
@@ -641,6 +677,7 @@ function SelectCardPage({
                 setSortCollapsed((p) => !p);
               }}
               size="sm"
+              disabled={!showFilters}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 Date
@@ -664,6 +701,7 @@ function SelectCardPage({
                 setSortCollapsed((p) => !p);
               }}
               size="sm"
+              disabled={!showFilters}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 Score
@@ -687,6 +725,7 @@ function SelectCardPage({
                 setSortCollapsed((p) => !p);
               }}
               size="sm"
+              disabled={!showFilters}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 Score
@@ -724,6 +763,7 @@ function SelectCardPage({
               name={"all"}
               select={setFilterCamera}
               size="icon"
+              disabled={!showFilters}
             >
               <span className="flex flex-row items-center justify-center">
                 All
@@ -736,6 +776,7 @@ function SelectCardPage({
               name={"camera"}
               select={setFilterCamera}
               size="icon"
+              disabled={!showFilters}
             >
               <Camera
                 absoluteStrokeWidth
@@ -750,6 +791,7 @@ function SelectCardPage({
               name={"written"}
               select={setFilterCamera}
               size="icon"
+              disabled={!showFilters}
             >
               <Pencil
                 absoluteStrokeWidth
