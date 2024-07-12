@@ -515,7 +515,25 @@ function SelectCardPage({
       )}
     >
       <div className="flex flex-row justify-between items-center p-4 gap-4">
-        <h1 className="text-2xl mr-auto">Your writing</h1>
+        <div className="relative mr-auto">
+          <h1 className="relative left-0 top-0 text-2xl mr-auto z-50">
+            Your writing
+          </h1>
+          <svg
+            width="512"
+            height="512"
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute left-0 top-0 -z-10 fill-current text-nbgreen -translate-y-1/2 -translate-x-1/2 opacity-20"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M115 160H85V136.213L68.1802 153.033L46.967 131.82L63.7869 115H40V85H61.8069L45.8283 70.1602L66.2437 48.1781L85 65.5977V40H115V63.7869L131.82 46.967L153.033 68.1802L136.213 85H160V115H138.193L154.172 129.84L133.756 151.822L115 134.402V160Z"
+            />
+          </svg>
+        </div>
+
         <Button
           onClick={() => setShowFilters((p) => !p)}
           className="rounded-2xl bg-white size-12 flex flex-row items-center justify-center"
@@ -886,7 +904,35 @@ function ReviewPage({
         >
           <ArrowLeft className="size-7 min-w-7 min-h-7" />
         </Button>
-        <h1 className="text-2xl">Reviewing: {cardPage}</h1>
+        <div className="relative mr-auto">
+          <h1 className="relative left-0 top-0 text-2xl mr-auto z-50">
+            Reviewing: {cardPage}
+          </h1>
+          <svg
+            width="512"
+            height="512"
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute left-0 top-0 -z-10 fill-current text-nbgreen -translate-y-1/2 -translate-x-1/2 opacity-20"
+          >
+            <path d="M160 70L160 40L130 40L160 70Z" />
+            <path d="M130 70L130 40L100 40L130 70Z" />
+            <path d="M100 70L100 40L70 40L100 70Z" />
+            <path d="M70 70L70 40L40 40L70 70Z" />
+            <path d="M70 100L70 70L40 70L70 100Z" />
+            <path d="M70 130L70 100L40 100L70 130Z" />
+            <path d="M70 160L70 130L40 130L70 160Z" />
+            <path d="M100 100L100 70L70 70L100 100Z" />
+            <path d="M100 130L100 100L70 100L100 130Z" />
+            <path d="M100 160L100 130L70 130L100 160Z" />
+            <path d="M130 100L130 70L100 70L130 100Z" />
+            <path d="M130 130L130 100L100 100L130 130Z" />
+            <path d="M130 160L130 130L100 130L130 160Z" />
+            <path d="M160 100L160 70L130 70L160 100Z" />
+            <path d="M160 130L160 100L130 100L160 130Z" />
+            <path d="M160 160L160 130L130 130L160 160Z" />
+          </svg>
+        </div>
       </div>
     </div>
   ) : (
@@ -914,7 +960,20 @@ function ComposePage({
       )}
     >
       <div className="flex flex-row justify-between items-center p-4 w-full">
-        <h1 className="text-2xl">Compose new writing</h1>
+        <div className="relative mr-auto">
+          <h1 className="relative left-0 top-0 text-2xl mr-auto z-50">
+            Compose new writing
+          </h1>
+          <svg
+            width="512"
+            height="512"
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute left-0 top-0 -z-10 fill-current text-nborange -translate-y-1/2 -translate-x-1/2 opacity-20"
+          >
+            <path d="M100 40L107.199 63.809L122.961 44.5672L120.501 69.3188L142.426 57.5736L130.681 79.4995L155.433 77.039L136.191 92.8012L160 100L136.191 107.199L155.433 122.961L130.681 120.501L142.426 142.426L120.501 130.681L122.961 155.433L107.199 136.191L100 160L92.8012 136.191L77.039 155.433L79.4995 130.681L57.5736 142.426L69.3188 120.501L44.5672 122.961L63.809 107.199L40 100L63.809 92.8012L44.5672 77.039L69.3188 79.4995L57.5736 57.5736L79.4995 69.3188L77.039 44.5672L92.8012 63.809L100 40Z" />
+          </svg>
+        </div>
         <Decoration frames={["132", "32", "54", "71"]} id={makeid(4)} />
       </div>
       <Button
@@ -976,7 +1035,51 @@ function ProfilePage({
       )}
     >
       <div className="flex flex-row justify-between items-center p-4 w-full">
-        <h1 className="text-2xl mr-auto">Your profile</h1>
+        <div className="relative mr-auto">
+          <h1 className="relative left-0 top-0 text-2xl mr-auto z-50">
+            Your profile
+          </h1>
+          <svg
+            width="512"
+            height="512"
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute left-0 top-0 -z-10 fill-current text-nbpurple -translate-y-1/2 -translate-x-1/2 opacity-20"
+          >
+            <path
+              d="M131.281 131.281C149.153 131.281 163.64 116.793 163.64 98.9215L98.9219 98.9216C98.9219 116.793 113.41 131.281 131.281 131.281Z"
+              stroke-width="4"
+            />
+            <path
+              d="M68.7201 68.7197C50.8486 68.7197 36.3608 83.2074 36.3608 101.079L101.079 101.079C101.079 83.2075 86.5916 68.7197 68.7201 68.7197Z"
+              stroke-width="4"
+            />
+            <path
+              d="M68.72 131.281C68.72 149.152 83.2077 163.64 101.079 163.64L101.079 98.9217C83.2077 98.9217 68.72 113.409 68.72 131.281Z"
+              stroke-width="4"
+            />
+            <path
+              d="M131.281 68.7196C131.281 50.8481 116.794 36.3603 98.922 36.3603L98.922 101.079C116.794 101.079 131.281 86.5911 131.281 68.7196Z"
+              stroke-width="4"
+            />
+            <path
+              d="M100 144.238C112.637 156.875 133.126 156.875 145.763 144.238L100 98.4749C87.3634 111.112 87.3634 131.601 100 144.238Z"
+              stroke-width="4"
+            />
+            <path
+              d="M100.001 55.7628C87.3635 43.1257 66.8748 43.1257 54.2377 55.7628L100.001 101.526C112.638 88.8886 112.638 68.3998 100.001 55.7628Z"
+              stroke-width="4"
+            />
+            <path
+              d="M55.763 100C43.126 112.637 43.126 133.126 55.763 145.763L101.526 100C88.8888 87.3634 68.4001 87.3634 55.763 100Z"
+              stroke-width="4"
+            />
+            <path
+              d="M144.238 100C156.875 87.363 156.875 66.8743 144.238 54.2372L98.4749 100C111.112 112.637 131.601 112.637 144.238 100Z"
+              stroke-width="4"
+            />
+          </svg>
+        </div>
         <Decoration frames={["79", "120", "225", "115"]} id={makeid(4)} />
       </div>
       <div className="bg-white rounded-2xl p-3 flex flex-row w-full items-center gap-4">
