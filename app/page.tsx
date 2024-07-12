@@ -92,7 +92,7 @@ function Nav({
   setSelectedPage: (name: PageName) => void;
 }) {
   return (
-    <nav className="fixed bottom-0 w-full p-2 flex flex-row justify-center">
+    <nav className="fixed bottom-0 w-full p-2 px-4 flex flex-row justify-center z-50">
       <div className="rounded-full bg-black p-1 gap-1 flex flex-row text-black w-full justify-between">
         <NavButton
           selectedPage={selectedPage}
@@ -469,18 +469,19 @@ function SelectCardPage({
 
       <div
         className={cn(
-          "relative w-full flex flex-row gap-4 transition-all",
-          showFilters ? "h-16" : "h-0 overflow-hidden"
+          "z-30 relative w-full flex flex-row gap-4 transition-all duration-300",
+          showFilters ? "h-16 opacity-100" : "h-0 opacity-0",
+          !filterCollapsed || !sortCollapsed ? "opacity" : ""
         )}
       >
         <div
           ref={filterTabsRef}
           className={cn(
-            "z-10 h-12 w-32 p-2 py-6 bg-white rounded-3xl transition-all",
+            "h-12 w-32 p-2 py-6 bg-white rounded-3xl transition-all duration-300",
             filterCollapsed ? "h-12" : "h-40"
           )}
         >
-          <div className="relative py-8 h-full w-full flex flex-col">
+          <div className={cn("relative py-8 h-full w-full flex flex-col")}>
             <TabAnimated
               id={"filter-tabs"}
               className={cn(
@@ -589,8 +590,8 @@ function SelectCardPage({
         <div
           ref={sortTabsRef}
           className={cn(
-            "z-10 h-12 w-32 p-2 py-6 bg-white rounded-3xl transition-all",
-            sortCollapsed ? "h-12" : "h-40"
+            "h-12 w-32 p-2 py-6 bg-white rounded-3xl transition-all duration-300",
+            sortCollapsed ? "h-12" : "h-40 z-10"
           )}
         >
           <div className="relative py-8 h-full w-full flex flex-col">
@@ -868,7 +869,7 @@ export default function Main() {
       {selectedPage === "review" && <ReviewPage />}
       {selectedPage === "compose" && <ComposePage />}
       {selectedPage === "profile" && <ProfilePage />}
-      <div className="h-9" />
+      <div className="fixed bottom-0 h-10 z-40 bg-nbbgblue left-0 right-0" />
       <Nav selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
     </main>
   );
