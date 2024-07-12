@@ -977,15 +977,19 @@ function ComposePage({
         <Decoration frames={["132", "32", "54", "71"]} id={makeid(4)} />
       </div>
       <Button
-        className="p-4 border-2 bg-nborange rounded-2xl text-black flex flex-row gap-4 justify-between w-full items-center"
+        className="p-4 border-2 bg-white rounded-3xl text-black flex flex-row gap-4 justify-between w-full items-center"
         onClick={() => {}}
         disabled={disabled}
       >
-        <Camera absoluteStrokeWidth strokeWidth={0.5} className="size-24" />
-        <h2 className="text-lg">Take a photo</h2>
-        <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
-          <ArrowRight />
+        <div className="flex flex-row items-center justify-center rounded-xl bg-nborange p-4">
+          <Camera absoluteStrokeWidth strokeWidth={0.5} className="size-16" />
         </div>
+
+        <h2 className="text-2xl font-light">Take a photo</h2>
+        <div />
+        {/* <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
+          <ArrowRight />
+        </div> */}
       </Button>
       <div className="flex flex-row justify-around items-center w-full p-4">
         <div className="scale-x-150">
@@ -1010,15 +1014,18 @@ function ComposePage({
         </div>
       </div>
       <Button
-        className="p-4 border-2 bg-nbyellow rounded-2xl text-black flex flex-row gap-4 justify-between w-full items-center"
+        className="p-4 border-2 bg-white rounded-3xl text-black flex flex-row gap-4 justify-between w-full items-center"
         onClick={() => {}}
         disabled={disabled}
       >
-        <Pencil absoluteStrokeWidth strokeWidth={0.5} className="size-24" />
-        <h2 className="text-lg">Type it in</h2>
-        <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
-          <ArrowRight />
+        <div className="flex flex-row items-center justify-center rounded-xl bg-nbyellow p-4">
+          <Pencil absoluteStrokeWidth strokeWidth={0.5} className="size-16" />
         </div>
+        <h2 className="text-2xl font-light">Type it in</h2>
+        <div />
+        {/* <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
+          <ArrowRight />
+        </div> */}
       </Button>
     </div>
   );
