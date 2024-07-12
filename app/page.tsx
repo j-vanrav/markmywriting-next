@@ -7,6 +7,7 @@ import {
   ArrowRight,
   Bot,
   BotOff,
+  BrainCircuit,
   Calendar,
   Camera,
   Eye,
@@ -15,6 +16,8 @@ import {
   LoaderCircle,
   Mail,
   NotebookPen,
+  Pencil,
+  Slash,
   SquareChevronRight,
   Ticket,
   User,
@@ -121,7 +124,7 @@ type CardColour = "yellow" | "orange" | "purple" | "green" | "blue";
 type MarkingStatus = "marked" | "marking" | "unmarked";
 interface ReviewOpts {
   marked: MarkingStatus;
-  fromCamera?: boolean;
+  fromCamera: boolean;
   wordCount: number;
   creationDate: Date;
   prompt: string;
@@ -163,39 +166,45 @@ function ReviewCard({
       <div
         className={cn(
           "w-full h-4 rounded-t-2xl -translate-y-4 absolute left-0 right-0",
-          colour === "yellow" && "bg-nbyellow",
-          colour === "orange" && "bg-nborange",
-          colour === "purple" && "bg-nbpurple",
-          colour === "green" && "bg-nbgreen",
-          colour === "blue" && "bg-nbblue"
+          opts.marked === "unmarked" && "bg-nbyellow",
+          opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
+          opts.marked === "marking" && "bg-gray-500",
+          opts.marked === "marked" && "bg-nbgreen"
         )}
       />
       <div
         className={cn(
-          "w-full bg-nbyellow h-24 flex flex-col items-start gap-3 pb-4 px-4",
-          colour === "yellow" && "bg-nbyellow",
-          colour === "orange" && "bg-nborange",
-          colour === "purple" && "bg-nbpurple",
-          colour === "green" && "bg-nbgreen",
-          colour === "blue" && "bg-nbblue"
+          "w-full bg-nbyellow h-24 flex flex-col items-start pb-6 px-4",
+          opts.marked === "unmarked" && "bg-nbyellow",
+          opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
+          opts.marked === "marking" && "bg-gray-500",
+          opts.marked === "marked" && "bg-nbgreen"
         )}
       >
-        <div className="flex flex-row justify-between w-full">
-          <div className="flex flex-row items-center gap-1 text-xl">
-            <SquareChevronRight
-              absoluteStrokeWidth
-              strokeWidth={1.5}
-              className="size-5"
-            />{" "}
+        <div className="flex flex-row justify-between w-full items-start h-12">
+          <div className="flex flex-row items-center gap-2 text-xl">
+            {opts.fromCamera ? (
+              <Camera
+                absoluteStrokeWidth
+                strokeWidth={1.5}
+                className="size-6"
+              />
+            ) : (
+              <Feather
+                absoluteStrokeWidth
+                strokeWidth={1.5}
+                className="size-6"
+              />
+            )}
             The Box
           </div>
 
           <span className="text-sm">22.10.24</span>
         </div>
-        <div className="flex flex-row justify-between w-full items-center gap-1 text-sm">
+        <div className="flex flex-row justify-between w-full items-end gap-1 h-12 text-sm">
           {opts.marked === "marked" && (
             <div className="flex flex-row items-center gap-1">
-              <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-5" />
+              <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
               Marked
             </div>
           )}
@@ -204,26 +213,40 @@ function ReviewCard({
               <BotOff
                 absoluteStrokeWidth
                 strokeWidth={1.5}
-                className="size-5"
+                className="size-4"
               />
               Unmarked
             </div>
           )}
           {opts.marked === "marking" && (
-            <div className="flex flex-row items-center gap-1">
-              <LoaderCircle
+            <div className="flex flex-row items-center gap-1 animate-pulse-strong">
+              <BrainCircuit
                 absoluteStrokeWidth
                 strokeWidth={1.5}
-                className="size-5 animate-spin"
+                className="size-4"
               />
               Marking...
             </div>
           )}
-          {(opts.marked === "marked" || opts.marked === "marking") && (
-            <Eye absoluteStrokeWidth strokeWidth={1.5} className="size-7" />
+          {opts.marked === "marked" && (
+            <div className="relative bg-black rounded-full text-white size-10">
+              <span className="absolute top-1 left-1">27</span>
+              <Slash
+                absoluteStrokeWidth
+                strokeWidth={1}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              />
+              <span className="absolute bottom-1 right-1">47</span>
+            </div>
           )}
           {opts.marked === "unmarked" && (
-            <Feather absoluteStrokeWidth strokeWidth={1.5} className="size-7" />
+            <div className="flex flex-row items-center justify-center rounded-full text-black size-8">
+              <ArrowRight
+                absoluteStrokeWidth
+                strokeWidth={1.5}
+                className="size-6"
+              />
+            </div>
           )}
         </div>
         {/* <span className="justify-self-end">200 words</span>
@@ -244,11 +267,10 @@ function ReviewCard({
       <div
         className={cn(
           "w-full h-4 rounded-b-2xl absolute left-0 right-0",
-          colour === "yellow" && "bg-nbyellow",
-          colour === "orange" && "bg-nborange",
-          colour === "purple" && "bg-nbpurple",
-          colour === "green" && "bg-nbgreen",
-          colour === "blue" && "bg-nbblue"
+          opts.marked === "unmarked" && "bg-nbyellow",
+          opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
+          opts.marked === "marking" && "bg-gray-500",
+          opts.marked === "marked" && "bg-nbgreen"
         )}
       />
     </button>
@@ -296,7 +318,7 @@ const reviewCards: {
     wordCount: 100,
     creationDate: new Date(),
     prompt: "The Box",
-    fromCamera: true,
+    fromCamera: false,
     id: "4",
     colour: "purple",
   },
@@ -314,7 +336,7 @@ const reviewCards: {
     wordCount: 200,
     creationDate: new Date(),
     prompt: "The Box",
-    fromCamera: true,
+    fromCamera: false,
     id: "6",
     colour: "yellow",
   },
