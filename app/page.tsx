@@ -178,8 +178,8 @@ function ReviewCard({
           "w-full h-4 rounded-t-2xl -translate-y-3 absolute left-0 right-0",
           opts.marked === "unmarked" && "bg-nbyellow",
           opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
-          opts.marked === "marking" && "bg-gray-500",
-          opts.marked === "marked" && "bg-nbgreen"
+          opts.marked === "marking" && "bg-nbblue",
+          opts.marked === "marked" && "bg-nbpurple"
         )}
       />
       <div
@@ -187,8 +187,8 @@ function ReviewCard({
           "w-full bg-nbyellow h-28 flex flex-col items-start pb-6 px-4",
           opts.marked === "unmarked" && "bg-nbyellow",
           opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
-          opts.marked === "marking" && "bg-gray-500",
-          opts.marked === "marked" && "bg-nbgreen"
+          opts.marked === "marking" && "bg-nbblue",
+          opts.marked === "marked" && "bg-nbpurple"
         )}
       >
         <div className="flex flex-row justify-between w-full items-start h-12">
@@ -283,8 +283,8 @@ function ReviewCard({
           "w-full h-4 rounded-b-2xl -translate-y-1 absolute left-0 right-0",
           opts.marked === "unmarked" && "bg-nbyellow",
           opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
-          opts.marked === "marking" && "bg-gray-500",
-          opts.marked === "marked" && "bg-nbgreen"
+          opts.marked === "marking" && "bg-nbblue",
+          opts.marked === "marked" && "bg-nbpurple"
         )}
       />
     </button>
@@ -879,25 +879,25 @@ function ComposePage() {
         <h1 className="text-2xl">Compose new writing</h1>
       </div>
       <Button
-        className="p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4 w-full"
+        className="p-4 border-2 bg-nborange rounded-2xl text-black flex flex-row gap-4 w-full"
         onClick={() => {}}
       >
         <div className="bg-nborange size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
-          <Camera />
+          <Camera absoluteStrokeWidth strokeWidth={1} className="size-12" />
         </div>
-        <h2 className="text-lg">Take a photo of your writing</h2>
+        <h2 className="text-lg">Take a photo</h2>
       </Button>
       <div className="flex flex-row justify-center w-full">
         <span className="text-lg">OR</span>
       </div>
       <Button
-        className="p-4 border-2 bg-white rounded-2xl text-black flex flex-row gap-4 w-full"
+        className="p-4 border-2 bg-nbyellow rounded-2xl text-black flex flex-row gap-4 w-full"
         onClick={() => {}}
       >
         <div className="bg-nbyellow size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
-          <Pencil />
+          <Pencil absoluteStrokeWidth strokeWidth={1} className="size-12" />
         </div>
-        <h2 className="text-lg">Type your writing</h2>
+        <h2 className="text-lg">Type in</h2>
       </Button>
     </div>
   );
