@@ -682,6 +682,7 @@ function SelectCardPage({
       <div className="relative flex-col justify-center py-6 text-lg">
         {reviewCards.sort(sortFn).map((card) => {
           const visible =
+            !showFilters ||
             selectedTab === "all" ||
             (selectedTab === "marking" && card.marked === "marking") ||
             (selectedTab === "unmarked" && card.marked === "unmarked") ||
@@ -690,8 +691,9 @@ function SelectCardPage({
             <div
               key={`reviewcard-${card.id}`}
               className={cn(
-                "h-0 transition-all invisible duration-700",
-                visible && "h-24 visible"
+                "h-0 transition-all duration-700",
+                visible && "h-24",
+                !visible && "-translate-x-full scale-0"
               )}
             >
               <ReviewCard
@@ -699,7 +701,7 @@ function SelectCardPage({
                 opts={card}
                 trigger={setSelectedCard}
                 selected={selectedCard === card.id}
-                className={cn(visible ? "visible" : "invisible duration-0")}
+                // className={cn(visible ? "visible" : "invisible duration-0")}
               />
             </div>
           );
