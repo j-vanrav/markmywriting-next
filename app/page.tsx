@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/neobrutalist/button";
-import { cn } from "@/lib/utils";
+import { cn, makeid } from "@/lib/utils";
 import {
   ArrowDown,
   ArrowLeft,
@@ -26,6 +26,7 @@ import { motion } from "framer-motion";
 import { HapticsClick } from "@/lib/client-utils";
 import { useOnClickOutside } from "@/lib/hooks";
 import Image from "next/image";
+import Decoration from "@/components/neobrutalist/decoration";
 
 type PageName = "review" | "compose" | "profile";
 function NavButton({
@@ -522,13 +523,7 @@ function SelectCardPage({
         >
           <ListFilter className="size-7 min-w-7" />
         </Button>
-        <Image
-          src="/brutalist-elements/SVG/Frame-90.svg"
-          alt={"Shape 57"}
-          width={64}
-          height={64}
-          className="text-nborange fill-nborange rotate-90"
-        />
+        <Decoration frames={["90", "29", "78", "83"]} id={makeid(4)} />
       </div>
 
       <div
@@ -920,13 +915,7 @@ function ComposePage({
     >
       <div className="flex flex-row justify-between items-center p-4 w-full">
         <h1 className="text-2xl">Compose new writing</h1>
-        <Image
-          src="/brutalist-elements/SVG/Frame-132.svg"
-          alt={"Shape 57"}
-          width={64}
-          height={64}
-          className="text-nborange fill-nborange"
-        />
+        <Decoration frames={["132", "32", "54", "71"]} id={makeid(4)} />
       </div>
       <Button
         className="p-4 border-2 bg-nborange rounded-2xl text-black flex flex-row gap-4 justify-between w-full"
@@ -988,13 +977,7 @@ function ProfilePage({
     >
       <div className="flex flex-row justify-between items-center p-4 w-full">
         <h1 className="text-2xl mr-auto">Your profile</h1>
-        <Image
-          src="/brutalist-elements/SVG/Frame-79.svg"
-          alt={"Shape 57"}
-          width={64}
-          height={64}
-          className="text-nborange fill-nborange"
-        />
+        <Decoration frames={["79", "120", "225", "115"]} id={makeid(4)} />
       </div>
       <div className="bg-white rounded-2xl p-3 flex flex-row w-full items-center gap-4">
         <div className="bg-nbpurple size-12 min-w-12 rounded-md flex flex-row justify-center items-center">

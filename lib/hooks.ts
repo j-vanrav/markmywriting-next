@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const useOnClickOutside = (
   ref: {
@@ -24,4 +24,28 @@ export const useOnClickOutside = (
       document.removeEventListener("touchstart", listener);
     };
   }, [ref, handler]);
+};
+
+export const useIntervalEffect = (callback: Function, delay: number) => {
+  const savedCallback = useRef(null as any);
+
+  // Remember the latest callback if it changes.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    if (delay === null) {
+      return;
+    }
+
+    const tick = () => {
+      savedCallback.current();
+    };
+
+    const id = setInterval(tick, delay);
+
+    return () => clearInterval(id);
+  }, [delay]);
 };
