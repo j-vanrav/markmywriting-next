@@ -3,8 +3,10 @@
 import Button from "@/components/neobrutalist/button";
 import { cn } from "@/lib/utils";
 import {
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
+  ArrowUp,
   Bot,
   BotOff,
   BrainCircuit,
@@ -114,14 +116,6 @@ function Nav({
 
 type CardColour = "yellow" | "orange" | "purple" | "green" | "blue";
 type MarkingStatus = "marked" | "marking" | "unmarked";
-interface ReviewOpts {
-  marked: MarkingStatus;
-  fromCamera: boolean;
-  wordCount: number;
-  creationDate: Date;
-  prompt: string;
-  id: string;
-}
 function ReviewCard({
   colour,
   className,
@@ -131,7 +125,7 @@ function ReviewCard({
 }: {
   colour: CardColour;
   className?: string;
-  opts: ReviewOpts;
+  opts: ReviewCard;
   trigger: (id: string) => void;
   selected: boolean;
 }) {
@@ -191,7 +185,9 @@ function ReviewCard({
             The Box
           </div>
 
-          <span className="text-sm">22.10.24</span>
+          <span className="text-sm opacity-70">
+            {opts.creationDate.toLocaleDateString()}
+          </span>
         </div>
         <div className="flex flex-row justify-between w-full items-end gap-1 h-12 text-sm">
           {opts.marked === "marked" && (
@@ -222,7 +218,7 @@ function ReviewCard({
           )}
           {opts.marked === "marked" && (
             <div className="relative bg-black rounded-full text-white size-10">
-              <span className="absolute top-1 left-1">27</span>
+              <span className="absolute top-1 left-1">{opts.score}</span>
               <Slash
                 absoluteStrokeWidth
                 strokeWidth={1}
@@ -269,16 +265,20 @@ function ReviewCard({
   );
 }
 
-function TabAnimated({
+function TabAnimated<T extends string>({
+  id,
   className,
   active,
   name,
   select,
+  children,
 }: {
+  id: string;
   className?: string;
   active: boolean;
-  name: ReviewTabs;
-  select: (name: ReviewTabs) => void;
+  name: T;
+  select: (name: T) => void;
+  children: React.ReactNode;
 }) {
   return (
     <div className={cn("grid h-8 w-28 grid-cols-1 items-center", className)}>
@@ -287,7 +287,7 @@ function TabAnimated({
           className={cn(
             "z-0 col-span-1 col-start-1 h-8 w-28 rounded-full bg-black"
           )}
-          layoutId={"tabs-highlight"}
+          layoutId={"tabs-highlight-" + id}
         />
       )}
       <button
@@ -299,44 +299,13 @@ function TabAnimated({
           active && "-mt-8 text-white"
         )}
       >
-        {name === "all" && (
-          <span className="flex flex-row items-start w-full gap-1">
-            <Circle
-              absoluteStrokeWidth
-              strokeWidth={1.5}
-              className="size-4 invisible"
-            />
-            All
-          </span>
-        )}
-        {name === "unmarked" && (
-          <span className="flex flex-row items-start w-full gap-1">
-            <BotOff absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
-            Unmarked
-          </span>
-        )}
-        {name === "marking" && (
-          <span className="flex flex-row items-start w-full gap-1">
-            <BrainCircuit
-              absoluteStrokeWidth
-              strokeWidth={1.5}
-              className="size-4"
-            />
-            Marking
-          </span>
-        )}
-        {name === "marked" && (
-          <span className="flex flex-row items-start w-full gap-1">
-            <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
-            Marked
-          </span>
-        )}
+        {children}
       </button>
     </div>
   );
 }
 
-const reviewCards: {
+type ReviewCard = {
   marked: MarkingStatus;
   wordCount: number;
   creationDate: Date;
@@ -344,96 +313,108 @@ const reviewCards: {
   fromCamera: boolean;
   id: string;
   colour: CardColour;
-}[] = [
+  score: number;
+};
+const reviewCards: ReviewCard[] = [
   {
     marked: "unmarked",
     wordCount: 200,
-    creationDate: new Date(),
+    creationDate: new Date("2024-06-05"),
     prompt: "The Box",
     fromCamera: true,
     id: "1",
     colour: "yellow",
+    score: 15,
   },
   {
     marked: "marking",
     wordCount: 300,
-    creationDate: new Date(),
+    creationDate: new Date("2024-06-04"),
     prompt: "The Box",
     fromCamera: false,
     id: "2",
     colour: "orange",
+    score: 16,
   },
   {
     marked: "marked",
     wordCount: 450,
-    creationDate: new Date(),
+    creationDate: new Date("2024-06-02"),
     prompt: "The Box",
     fromCamera: false,
     id: "3",
     colour: "green",
+    score: 10,
   },
   {
     marked: "unmarked",
     wordCount: 100,
-    creationDate: new Date(),
+    creationDate: new Date("2024-02-01"),
     prompt: "The Box",
     fromCamera: false,
     id: "4",
     colour: "purple",
+    score: 25,
   },
   {
     marked: "marking",
     wordCount: 600,
-    creationDate: new Date(),
+    creationDate: new Date("2024-01-01"),
     prompt: "The Box",
     fromCamera: true,
     id: "5",
     colour: "blue",
+    score: 40,
   },
   {
     marked: "unmarked",
     wordCount: 200,
-    creationDate: new Date(),
+    creationDate: new Date("2023-06-05"),
     prompt: "The Box",
     fromCamera: false,
     id: "6",
     colour: "yellow",
+    score: 30,
   },
   {
     marked: "marking",
     wordCount: 300,
-    creationDate: new Date(),
+    creationDate: new Date("2022-06-05"),
     prompt: "The Box",
     fromCamera: false,
     id: "7",
     colour: "orange",
+    score: 5,
   },
   {
     marked: "marked",
     wordCount: 450,
-    creationDate: new Date(),
+    creationDate: new Date("2021-02-01"),
     prompt: "The Box",
     fromCamera: false,
     id: "8",
     colour: "green",
+    score: 20,
   },
   {
     marked: "unmarked",
     wordCount: 100,
-    creationDate: new Date(),
+    creationDate: new Date("2021-02-01"),
     prompt: "The Box",
     fromCamera: true,
     id: "9",
     colour: "purple",
+    score: 20,
   },
   {
     marked: "marking",
     wordCount: 600,
-    creationDate: new Date(),
+    creationDate: new Date("2021-01-02"),
     prompt: "The Box",
     fromCamera: true,
     id: "10",
     colour: "blue",
+    score: 35,
   },
 ];
 type ReviewTabs = "all" | "unmarked" | "marking" | "marked";
@@ -445,31 +426,63 @@ function SelectCardPage({
   selectedCard: string;
   setSelectedCard: (id: string) => void;
 }) {
+  const [showFilters, setShowFilters] = useState(false);
   const [selectedTab, setSelectedTab] = useState("all" as ReviewTabs);
   const [filterCollapsed, setFilterCollapsed] = useState(false);
   const [sortMode, setSortMode] = useState("date-desc" as SortMode);
-  const tabsRef = useRef(null);
-  useOnClickOutside(tabsRef, () => {
+  const [sortCollapsed, setSortCollapsed] = useState(false);
+  const filterTabsRef = useRef(null);
+  useOnClickOutside(filterTabsRef, () => {
     setFilterCollapsed(true);
   });
-  console.log(selectedTab);
+  const sortTabsRef = useRef(null);
+  useOnClickOutside(sortTabsRef, () => {
+    setSortCollapsed(true);
+  });
+
+  const sortFn = (a: ReviewCard, b: ReviewCard) => {
+    if (sortMode === "date-desc")
+      return b.creationDate.getTime() - a.creationDate.getTime();
+    if (sortMode === "date-asc")
+      return a.creationDate.getTime() - b.creationDate.getTime();
+    if (sortMode === "score-desc") return b.score - a.score;
+    if (sortMode === "score-asc") return a.score - b.score;
+    return 0;
+  };
   return (
     <div className="w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden">
       <div className="flex flex-row justify-between items-center p-4">
         <h1 className="text-2xl">Your Writing</h1>
-        <ListFilter />
+        <Button
+          onClick={() => {
+            if (showFilters) {
+              setSelectedTab("all");
+              setSortMode("date-desc");
+            }
+            setShowFilters((p) => !p);
+          }}
+          className="rounded-lg bg-white size-12 flex flex-row items-center justify-center"
+        >
+          <ListFilter className="size-7 min-w-7" />
+        </Button>
       </div>
 
-      <div className="relative w-full flex flex-row h-16">
+      <div
+        className={cn(
+          "relative w-full flex flex-row gap-4 transition-all",
+          showFilters ? "h-16" : "h-0 overflow-hidden"
+        )}
+      >
         <div
-          ref={tabsRef}
+          ref={filterTabsRef}
           className={cn(
-            "absolute z-10 h-40 w-32 p-2 py-6 bg-white rounded-3xl transition-all",
-            filterCollapsed && "h-12"
+            "z-10 h-12 w-32 p-2 py-6 bg-white rounded-3xl transition-all",
+            filterCollapsed ? "h-12" : "h-40"
           )}
         >
           <div className="relative py-8 h-full w-full flex flex-col">
             <TabAnimated
+              id={"filter-tabs"}
               className={cn(
                 filterCollapsed
                   ? "absolute top-0 -translate-y-1/2"
@@ -484,8 +497,18 @@ function SelectCardPage({
                 if (!filterCollapsed) setSelectedTab(t);
                 setFilterCollapsed((p) => !p);
               }}
-            />
+            >
+              <span className="flex flex-row items-start w-full gap-1">
+                <Circle
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-4 invisible"
+                />
+                All
+              </span>
+            </TabAnimated>
             <TabAnimated
+              id={"filter-tabs"}
               className={cn(
                 filterCollapsed
                   ? "absolute top-0 -translate-y-1/2"
@@ -501,8 +524,18 @@ function SelectCardPage({
                 if (!filterCollapsed) setSelectedTab(t);
                 setFilterCollapsed((p) => !p);
               }}
-            />
+            >
+              <span className="flex flex-row items-start w-full gap-1">
+                <BotOff
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-4"
+                />
+                Unmarked
+              </span>
+            </TabAnimated>
             <TabAnimated
+              id={"filter-tabs"}
               className={cn(
                 filterCollapsed
                   ? "absolute top-0 -translate-y-1/2"
@@ -519,8 +552,18 @@ function SelectCardPage({
                 if (!filterCollapsed) setSelectedTab(t);
                 setFilterCollapsed((p) => !p);
               }}
-            />
+            >
+              <span className="flex flex-row items-start w-full gap-1">
+                <BrainCircuit
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-4"
+                />
+                Marking
+              </span>
+            </TabAnimated>
             <TabAnimated
+              id={"filter-tabs"}
               className={cn(
                 filterCollapsed
                   ? "absolute top-0 -translate-y-1/2"
@@ -535,13 +578,133 @@ function SelectCardPage({
                 if (!filterCollapsed) setSelectedTab(t);
                 setFilterCollapsed((p) => !p);
               }}
-            />
+            >
+              <span className="flex flex-row items-start w-full gap-1">
+                <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
+                Marked
+              </span>
+            </TabAnimated>
+          </div>
+        </div>
+        <div
+          ref={sortTabsRef}
+          className={cn(
+            "z-10 h-12 w-32 p-2 py-6 bg-white rounded-3xl transition-all",
+            sortCollapsed ? "h-12" : "h-40"
+          )}
+        >
+          <div className="relative py-8 h-full w-full flex flex-col">
+            <TabAnimated
+              id={"sort-tabs"}
+              className={cn(
+                sortCollapsed
+                  ? "absolute top-0 -translate-y-1/2"
+                  : "absolute top-0 -translate-y-1/2",
+
+                sortCollapsed &&
+                  (sortMode === "date-desc" ? "visible z-20" : "invisible z-10")
+              )}
+              active={sortMode === "date-desc"}
+              name={"date-desc"}
+              select={(t) => {
+                if (!sortCollapsed) setSortMode(t);
+                setSortCollapsed((p) => !p);
+              }}
+            >
+              <span className="flex flex-row items-start w-full gap-1">
+                Date
+                <ArrowDown
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-4"
+                />
+              </span>
+            </TabAnimated>
+            <TabAnimated
+              id={"sort-tabs"}
+              className={cn(
+                sortCollapsed
+                  ? "absolute top-0 -translate-y-1/2"
+                  : "absolute top-1/3 -translate-y-1/2",
+                sortCollapsed &&
+                  (sortMode === "date-asc" ? "visible z-20" : "invisible z-10")
+              )}
+              active={sortMode === "date-asc"}
+              name={"date-asc"}
+              select={(t) => {
+                if (!sortCollapsed) setSortMode(t);
+                setSortCollapsed((p) => !p);
+              }}
+            >
+              <span className="flex flex-row items-start w-full gap-1">
+                Date
+                <ArrowUp
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-4"
+                />
+              </span>
+            </TabAnimated>
+            <TabAnimated
+              id={"sort-tabs"}
+              className={cn(
+                sortCollapsed
+                  ? "absolute top-0 -translate-y-1/2"
+                  : "absolute bottom-1/3 translate-y-1/2",
+
+                sortCollapsed &&
+                  (sortMode === "score-desc"
+                    ? "visible z-20"
+                    : "invisible z-10")
+              )}
+              active={sortMode === "score-desc"}
+              name={"score-desc"}
+              select={(t) => {
+                if (!sortCollapsed) setSortMode(t);
+                setSortCollapsed((p) => !p);
+              }}
+            >
+              <span className="flex flex-row items-start w-full gap-1">
+                Score
+                <ArrowDown
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-4"
+                />
+              </span>
+            </TabAnimated>
+            <TabAnimated
+              id={"sort-tabs"}
+              className={cn(
+                sortCollapsed
+                  ? "absolute top-0 -translate-y-1/2"
+                  : "absolute bottom-0 translate-y-1/2",
+
+                sortCollapsed &&
+                  (sortMode === "score-asc" ? "visible z-20" : "invisible z-10")
+              )}
+              active={sortMode === "score-asc"}
+              name={"score-asc"}
+              select={(t) => {
+                if (!sortCollapsed) setSortMode(t);
+                setSortCollapsed((p) => !p);
+              }}
+            >
+              <span className="flex flex-row items-start w-full gap-1">
+                Score
+                <ArrowUp
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-4"
+                />
+              </span>
+            </TabAnimated>
           </div>
         </div>
       </div>
 
       <div className="relative flex-col justify-center py-6 text-lg">
-        {reviewCards.map((card) => {
+        {reviewCards.sort(sortFn).map((card) => {
           const visible =
             selectedTab === "all" ||
             (selectedTab === "marking" && card.marked === "marking") ||
