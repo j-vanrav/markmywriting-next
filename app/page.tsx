@@ -185,14 +185,14 @@ function ReviewCard({
       />
       <div
         className={cn(
-          "w-full bg-nbyellow h-28 flex flex-col items-start pb-6 px-4",
+          "w-full bg-nbyellow h-32 flex flex-col justify-between items-start pb-6 px-4",
           opts.marked === "unmarked" && "bg-nbyellow",
           opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
           opts.marked === "marking" && "bg-nbblue",
           opts.marked === "marked" && "bg-nbpurple"
         )}
       >
-        <div className="flex flex-row justify-between w-full items-start h-12">
+        <div className="flex flex-row justify-between w-full items-start">
           <div className="flex flex-row items-center gap-2 text-xl">
             {opts.fromCamera ? (
               <Camera
@@ -214,7 +214,7 @@ function ReviewCard({
             {opts.creationDate.toLocaleDateString()}
           </span>
         </div>
-        <div className="flex flex-row justify-between w-full items-end gap-1 h-12 text-sm">
+        <div className="flex flex-row justify-between w-full items-end gap-1 text-sm mb-4">
           {opts.marked === "marked" && (
             <div className="flex flex-row items-center gap-1">
               <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
@@ -841,7 +841,7 @@ function SelectCardPage({
               key={`reviewcard-${card.id}`}
               className={cn(
                 "h-0 transition-all duration-700",
-                visible && "h-24",
+                visible && "h-32",
                 !visible && "-translate-x-full opacity-0 pointer-events-none"
               )}
               aria-disabled={!visible}
