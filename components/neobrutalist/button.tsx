@@ -10,9 +10,15 @@ type Props = {
   className?: ClassValue;
   children: React.ReactNode;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
 };
 
-export default function Button({ className, children, onClick }: Props) {
+export default function Button({
+  className,
+  children,
+  onClick,
+  disabled,
+}: Props) {
   const [clicked, setClicked] = useState(false);
   const [active, setActive] = useState(false);
   return (
@@ -40,6 +46,8 @@ export default function Button({ className, children, onClick }: Props) {
         HapticsClick();
         setTimeout(() => setClicked(false), 400);
       }}
+      disabled={disabled}
+      aria-disabled={disabled}
     >
       {children}
     </button>

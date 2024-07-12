@@ -474,9 +474,13 @@ type FilterCameraMode = "all" | "camera" | "written";
 function SelectCardPage({
   selectedCard,
   setSelectedCard,
+  className,
+  disabled = false,
 }: {
   selectedCard: string;
   setSelectedCard: (id: string) => void;
+  className?: string;
+  disabled?: boolean;
 }) {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedTab, setSelectedTab] = useState("all" as ReviewTabs);
@@ -503,12 +507,18 @@ function SelectCardPage({
     return 0;
   };
   return (
-    <div className="w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden">
+    <div
+      className={cn(
+        "w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden",
+        className
+      )}
+    >
       <div className="flex flex-row justify-between items-center p-4 gap-4">
         <h1 className="text-2xl mr-auto">Your Writing</h1>
         <Button
           onClick={() => setShowFilters((p) => !p)}
-          className="rounded-lg bg-white size-12 flex flex-row items-center justify-center"
+          className="rounded-2xl bg-white size-12 flex flex-row items-center justify-center"
+          disabled={disabled}
         >
           <ListFilter className="size-7 min-w-7" />
         </Button>
@@ -553,7 +563,7 @@ function SelectCardPage({
                 setFilterCollapsed((p) => !p);
               }}
               size="md"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 <Squircle
@@ -577,7 +587,7 @@ function SelectCardPage({
                 setFilterCollapsed((p) => !p);
               }}
               size="md"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 <BotOff
@@ -601,7 +611,7 @@ function SelectCardPage({
                 setFilterCollapsed((p) => !p);
               }}
               size="md"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 <BrainCircuit
@@ -625,7 +635,7 @@ function SelectCardPage({
                 setFilterCollapsed((p) => !p);
               }}
               size="md"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
@@ -660,7 +670,7 @@ function SelectCardPage({
                 setSortCollapsed((p) => !p);
               }}
               size="sm"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 Date
@@ -684,7 +694,7 @@ function SelectCardPage({
                 setSortCollapsed((p) => !p);
               }}
               size="sm"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 Date
@@ -708,7 +718,7 @@ function SelectCardPage({
                 setSortCollapsed((p) => !p);
               }}
               size="sm"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 Score
@@ -732,7 +742,7 @@ function SelectCardPage({
                 setSortCollapsed((p) => !p);
               }}
               size="sm"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <span className="flex flex-row items-center w-full gap-1">
                 Score
@@ -769,7 +779,7 @@ function SelectCardPage({
               name={"all"}
               select={setFilterCamera}
               size="icon"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <span className="flex flex-row items-center justify-center">
                 All
@@ -782,7 +792,7 @@ function SelectCardPage({
               name={"camera"}
               select={setFilterCamera}
               size="icon"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <Camera
                 absoluteStrokeWidth
@@ -797,7 +807,7 @@ function SelectCardPage({
               name={"written"}
               select={setFilterCamera}
               size="icon"
-              disabled={!showFilters}
+              disabled={!showFilters || disabled}
             >
               <Pencil
                 absoluteStrokeWidth
@@ -854,18 +864,30 @@ function SelectCardPage({
   );
 }
 
-function ReviewPage() {
+function ReviewPage({
+  className,
+  disabled = false,
+}: {
+  className?: string;
+  disabled?: boolean;
+}) {
   const [selectedCard, setSelectedCard] = useState("0");
   const [cardPage, setCardPage] = useState("0");
   useEffect(() => {
     setTimeout(() => setCardPage(selectedCard), 400);
   }, [selectedCard]);
   return cardPage !== "0" ? (
-    <div className="w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden">
+    <div
+      className={cn(
+        "w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden",
+        className
+      )}
+    >
       <div className="flex flex-row items-center gap-4">
         <Button
-          className="size-12 rounded-full p-0 flex flex-row items-center justify-center bg-white"
+          className="size-12 rounded-2xl p-0 flex flex-row items-center justify-center bg-white"
           onClick={() => setSelectedCard("0")}
+          disabled={disabled}
         >
           <ArrowLeft className="size-7 min-w-7 min-h-7" />
         </Button>
@@ -876,13 +898,26 @@ function ReviewPage() {
     <SelectCardPage
       selectedCard={selectedCard}
       setSelectedCard={setSelectedCard}
+      className={className as any}
+      disabled={disabled}
     />
   );
 }
 
-function ComposePage() {
+function ComposePage({
+  className,
+  disabled = false,
+}: {
+  className?: string;
+  disabled?: boolean;
+}) {
   return (
-    <div className="w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll">
+    <div
+      className={cn(
+        "w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll",
+        className
+      )}
+    >
       <div className="flex flex-row justify-between items-center p-4 w-full">
         <h1 className="text-2xl">Compose new writing</h1>
         <Image
@@ -896,10 +931,9 @@ function ComposePage() {
       <Button
         className="p-4 border-2 bg-nborange rounded-2xl text-black flex flex-row gap-4 w-full"
         onClick={() => {}}
+        disabled={disabled}
       >
-        <div className="bg-nborange size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
-          <Camera absoluteStrokeWidth strokeWidth={1} className="size-12" />
-        </div>
+        <Camera absoluteStrokeWidth strokeWidth={1} className="size-12" />
         <h2 className="text-lg">Take a photo</h2>
       </Button>
       <div className="flex flex-row justify-center w-full">
@@ -908,10 +942,9 @@ function ComposePage() {
       <Button
         className="p-4 border-2 bg-nbyellow rounded-2xl text-black flex flex-row gap-4 w-full"
         onClick={() => {}}
+        disabled={disabled}
       >
-        <div className="bg-nbyellow size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
-          <Pencil absoluteStrokeWidth strokeWidth={1} className="size-12" />
-        </div>
+        <Pencil absoluteStrokeWidth strokeWidth={1} className="size-12" />
         <h2 className="text-lg">Type in</h2>
       </Button>
       <Image
@@ -925,9 +958,20 @@ function ComposePage() {
   );
 }
 
-function ProfilePage() {
+function ProfilePage({
+  className,
+  disabled,
+}: {
+  className?: string;
+  disabled?: boolean;
+}) {
   return (
-    <div className="w-full h-full p-4 flex flex-col items-center gap-4">
+    <div
+      className={cn(
+        "w-full h-full p-4 flex flex-col items-center gap-4",
+        className
+      )}
+    >
       <div className="flex flex-row justify-between items-center p-4 w-full">
         <h1 className="text-2xl mr-auto">Your Profile</h1>
         <Image
@@ -985,7 +1029,12 @@ function ProfilePage() {
       </div> */}
       <div className="rounded-2xl flex flex-col items-center gap-4 w-full mb-16 mt-4">
         <span className="font-bold">Buy more tokens</span>
-        <Button onClick={() => {}} className="bg-nbgreen rounded-2xl w-full">
+        <Button
+          onClick={() => {}}
+          className="bg-nbgreen rounded-2xl w-full"
+          disabled={!!disabled}
+          aria-disabled={disabled}
+        >
           <div className="flex flex-row items-center gap-4 w-full justify-between">
             <Ticket className="size-12" absoluteStrokeWidth strokeWidth={1} />
             <div className="flex flex-col items-start">
@@ -1007,10 +1056,44 @@ export default function Main() {
 
   return (
     <main className="flex flex-col w-screen h-screen bg-nbbgblue text-black overflow-hidden">
-      {selectedPage === "review" && <ReviewPage />}
-      {selectedPage === "compose" && <ComposePage />}
-      {selectedPage === "profile" && <ProfilePage />}
-      <div className="fixed bottom-0 h-10 z-40 bg-nbbgblue left-0 right-0" />
+      <div className="relative w-full h-full">
+        <ReviewPage
+          className={cn(
+            "absolute left-0 right-0 top-0 bottom-0 transition-all duration-300",
+            selectedPage === "review"
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 pointer-events-none",
+            (selectedPage === "compose" || selectedPage === "profile") &&
+              "-translate-x-full"
+          )}
+          disabled={selectedPage !== "review"}
+        />
+
+        <ComposePage
+          className={cn(
+            "absolute left-0 right-0 top-0 bottom-0 transition-all duration-300",
+            selectedPage === "compose"
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 pointer-events-none",
+            selectedPage === "review" && "translate-x-full",
+            selectedPage === "profile" && "-translate-x-full"
+          )}
+          disabled={selectedPage !== "compose"}
+        />
+        <ProfilePage
+          className={cn(
+            "absolute left-0 right-0 top-0 bottom-0 transition-all duration-300",
+            selectedPage === "profile"
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 pointer-events-none",
+            (selectedPage === "review" || selectedPage === "compose") &&
+              "translate-x-full"
+          )}
+          disabled={selectedPage !== "profile"}
+        />
+      </div>
+
+      <div className="fixed bottom-0 h-10 z-40 bg-black left-4 right-4" />
       <Nav selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
     </main>
   );
