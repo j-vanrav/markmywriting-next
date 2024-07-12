@@ -122,12 +122,14 @@ function ReviewCard({
   opts,
   trigger,
   selected,
+  ...args
 }: {
   colour: CardColour;
   className?: string;
   opts: ReviewCard;
   trigger: (id: string) => void;
   selected: boolean;
+  disabled?: boolean;
 }) {
   const [pressed, setPressed] = useState(false);
   return (
@@ -148,6 +150,7 @@ function ReviewCard({
         HapticsClick();
         trigger(opts.id);
       }}
+      {...args}
     >
       <div
         className={cn(
@@ -693,14 +696,17 @@ function SelectCardPage({
               className={cn(
                 "h-0 transition-all duration-700",
                 visible && "h-24",
-                !visible && "-translate-x-full scale-0"
+                !visible && "-translate-x-full opacity-0 pointer-events-none"
               )}
+              aria-disabled={!visible}
             >
               <ReviewCard
                 colour={card.colour}
                 opts={card}
                 trigger={setSelectedCard}
                 selected={selectedCard === card.id}
+                disabled={!visible}
+                aria-disabled={!visible}
                 // className={cn(visible ? "visible" : "invisible duration-0")}
               />
             </div>
