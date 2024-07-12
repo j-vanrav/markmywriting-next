@@ -517,7 +517,7 @@ function SelectCardPage({
               }}
               size="md"
             >
-              <span className="flex flex-row items-start w-full gap-1">
+              <span className="flex flex-row items-center w-full gap-1">
                 <Circle
                   absoluteStrokeWidth
                   strokeWidth={1.5}
@@ -540,7 +540,7 @@ function SelectCardPage({
               }}
               size="md"
             >
-              <span className="flex flex-row items-start w-full gap-1">
+              <span className="flex flex-row items-center w-full gap-1">
                 <BotOff
                   absoluteStrokeWidth
                   strokeWidth={1.5}
@@ -563,7 +563,7 @@ function SelectCardPage({
               }}
               size="md"
             >
-              <span className="flex flex-row items-start w-full gap-1">
+              <span className="flex flex-row items-center w-full gap-1">
                 <BrainCircuit
                   absoluteStrokeWidth
                   strokeWidth={1.5}
@@ -586,7 +586,7 @@ function SelectCardPage({
               }}
               size="md"
             >
-              <span className="flex flex-row items-start w-full gap-1">
+              <span className="flex flex-row items-center w-full gap-1">
                 <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
                 Marked
               </span>
@@ -620,7 +620,7 @@ function SelectCardPage({
               }}
               size="sm"
             >
-              <span className="flex flex-row items-start w-full gap-1">
+              <span className="flex flex-row items-center w-full gap-1">
                 Date
                 <ArrowDown
                   absoluteStrokeWidth
@@ -643,7 +643,7 @@ function SelectCardPage({
               }}
               size="sm"
             >
-              <span className="flex flex-row items-start w-full gap-1">
+              <span className="flex flex-row items-center w-full gap-1">
                 Date
                 <ArrowUp
                   absoluteStrokeWidth
@@ -666,7 +666,7 @@ function SelectCardPage({
               }}
               size="sm"
             >
-              <span className="flex flex-row items-start w-full gap-1">
+              <span className="flex flex-row items-center w-full gap-1">
                 Score
                 <ArrowDown
                   absoluteStrokeWidth
@@ -689,7 +689,7 @@ function SelectCardPage({
               }}
               size="sm"
             >
-              <span className="flex flex-row items-start w-full gap-1">
+              <span className="flex flex-row items-center w-full gap-1">
                 Score
                 <ArrowUp
                   absoluteStrokeWidth
