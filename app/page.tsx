@@ -38,6 +38,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Camera as CCamera, CameraResultType } from "@capacitor/camera";
+import { cloneDeep } from "lodash";
 
 type PageName = "review" | "compose" | "profile";
 function NavButton({
@@ -996,6 +997,18 @@ const getBase64Image = async () => {
   }
 };
 
+function swapWithNext<T>(arr: T[], index: number): T[] {
+  if (index < 0 || index >= arr.length - 1) {
+    console.error("Index out of bounds or no next element to swap with.");
+    return arr;
+  }
+  const newArr = cloneDeep(arr);
+  const temp = newArr[index];
+  newArr[index] = newArr[index + 1];
+  newArr[index + 1] = temp;
+  return newArr;
+}
+
 function ImageCompose({
   images,
   setImages,
@@ -1006,7 +1019,7 @@ function ImageCompose({
   return (
     <>
       <AnimatePresence>
-        {images.map((i) => {
+        {images.map((i, idx) => {
           return (
             <motion.div
               key={`photo-${i.hash}`}
@@ -1029,6 +1042,30 @@ function ImageCompose({
               >
                 <X strokeWidth={1} className="size-12" />
               </Button>
+              <div className="absolute -bottom-2 -right-2 rounded-2xl flex flex-col">
+                {idx !== 0 && (
+                  <Button
+                    className={cn(
+                      "rounded-2xl p-2 bg-white",
+                      idx !== images.length - 1 && "rounded-b-none"
+                    )}
+                    onClick={() => setImages((p) => swapWithNext(p, idx - 1))}
+                  >
+                    <ArrowUp strokeWidth={1} className="size-12" />
+                  </Button>
+                )}
+                {idx !== images.length - 1 && (
+                  <Button
+                    className={cn(
+                      "rounded-2xl p-2 bg-white z-30",
+                      idx !== 0 && "rounded-t-none"
+                    )}
+                    onClick={() => setImages((p) => swapWithNext(p, idx))}
+                  >
+                    <ArrowDown strokeWidth={1} className="size-12" />
+                  </Button>
+                )}
+              </div>
             </motion.div>
           );
         })}
