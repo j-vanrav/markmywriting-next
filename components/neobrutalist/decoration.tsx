@@ -3,7 +3,7 @@
 import { useIntervalEffect } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const wrap_index = (v: number, max: number) => (v >= max ? 0 : v);
 
@@ -14,7 +14,7 @@ export default function Decoration({
   frames: [string, ...string[]];
   id: string;
 }) {
-  const fs = [...new Set([...frames])];
+  const fs = useMemo(() => [...new Set([...frames])], [frames]);
   const [pressed, setPressed] = useState(false);
   const [rotate, setRotate] = useState(false);
   const [currentFrame, setCurrentFrame] = useState(0);
