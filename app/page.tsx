@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/neobrutalist/button";
-import { cn, makeid } from "@/lib/utils";
+import { cn, makeid, not_undefined } from "@/lib/utils";
 import {
   ArrowDown,
   ArrowLeft,
@@ -20,6 +20,8 @@ import {
   Ticket,
   User,
   Squircle,
+  Plus,
+  X,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -35,6 +37,7 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { Camera as CCamera, CameraResultType } from "@capacitor/camera";
 
 type PageName = "review" | "compose" | "profile";
 function NavButton({
@@ -962,6 +965,89 @@ function ReviewPage({
   );
 }
 
+const imageHash = async (image: string) => {
+  const buf = await window.crypto.subtle.digest(
+    "SHA-1",
+    Buffer.from(image, "base64")
+  );
+  return new TextDecoder().decode(buf);
+};
+
+interface LocalImage {
+  base64: string;
+  hash: string;
+}
+const getBase64Image = async () => {
+  try {
+    const image = await CCamera.getPhoto({
+      quality: 100,
+      allowEditing: true,
+      resultType: CameraResultType.Base64,
+    });
+    if (not_undefined(image.base64String)) {
+      const hash = await imageHash(image.base64String);
+      console.log("new_image:" + hash);
+      return { base64: image.base64String, hash };
+    }
+    return undefined;
+  } catch (e) {
+    console.error(e);
+    return undefined;
+  }
+};
+
+function ImageCompose({
+  images,
+  setImages,
+}: {
+  images: LocalImage[];
+  setImages: (i: (prev: LocalImage[]) => LocalImage[]) => void;
+}) {
+  return (
+    <>
+      <AnimatePresence>
+        {images.map((i) => {
+          return (
+            <motion.div
+              key={`photo-${i.hash}`}
+              className="relative w-fit"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`data:image/jpeg;base64,${i.base64}`}
+                alt={"User uploaded image"}
+              />
+              <Button
+                className="absolute -top-2 -right-2 rounded-2xl p-2 bg-white"
+                onClick={() =>
+                  setImages((p) => p.filter((im) => im.hash !== i.hash))
+                }
+              >
+                <X strokeWidth={1} className="size-12" />
+              </Button>
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
+
+      <Button
+        className="bg-white rounded-2xl flex flex-row gap-2 items-center justify-center p-2"
+        onClick={async () => {
+          const image = await getBase64Image();
+          if (image?.base64) setImages((p) => [...p, image]);
+        }}
+      >
+        <Plus strokeWidth={1} className="size-12" />
+        <Camera strokeWidth={1} className="size-12" />
+      </Button>
+    </>
+  );
+}
+
 function ComposePage({
   className,
   disabled = false,
@@ -969,11 +1055,12 @@ function ComposePage({
   className?: string;
   disabled?: boolean;
 }) {
+  const [images, setImages] = useState([] as LocalImage[]);
   return (
     <motion.div
       key="compose-page"
       className={cn(
-        "w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll",
+        "w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll pb-24",
         className
       )}
       initial={{ opacity: 0 }}
@@ -981,12 +1068,14 @@ function ComposePage({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="flex flex-row justify-between items-center p-4 w-full">
-        <div className="relative mr-auto">
-          <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
-            Compose new writing
-          </h1>
-          {/* <svg
+      {images.length === 0 ? (
+        <>
+          <div className="flex flex-row justify-between items-center p-4 w-full">
+            <div className="relative mr-auto">
+              <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
+                Compose new writing
+              </h1>
+              {/* <svg
             width="512"
             height="512"
             viewBox="0 0 200 200"
@@ -995,60 +1084,75 @@ function ComposePage({
           >
             <path d="M100 40L107.199 63.809L122.961 44.5672L120.501 69.3188L142.426 57.5736L130.681 79.4995L155.433 77.039L136.191 92.8012L160 100L136.191 107.199L155.433 122.961L130.681 120.501L142.426 142.426L120.501 130.681L122.961 155.433L107.199 136.191L100 160L92.8012 136.191L77.039 155.433L79.4995 130.681L57.5736 142.426L69.3188 120.501L44.5672 122.961L63.809 107.199L40 100L63.809 92.8012L44.5672 77.039L69.3188 79.4995L57.5736 57.5736L79.4995 69.3188L77.039 44.5672L92.8012 63.809L100 40Z" />
           </svg> */}
-        </div>
-        <Decoration frames={["132", "32", "54", "71"]} id={makeid(4)} />
-      </div>
-      <Button
-        className="p-4 border-2 bg-white rounded-3xl text-black flex flex-row gap-4 justify-between w-full items-center"
-        onClick={() => {}}
-        disabled={disabled}
-      >
-        <div className="flex flex-row items-center justify-center rounded-xl bg-nborange p-4">
-          <Camera absoluteStrokeWidth strokeWidth={0.5} className="size-16" />
-        </div>
+            </div>
+            <Decoration frames={["132", "32", "54", "71"]} id={makeid(4)} />
+          </div>
+          <Button
+            className="p-4 border-2 bg-white rounded-3xl text-black flex flex-row gap-4 justify-between w-full items-center"
+            onClick={async () => {
+              const image = await getBase64Image();
+              if (image?.base64) setImages((p) => [...p, image]);
+            }}
+            disabled={disabled}
+          >
+            <div className="flex flex-row items-center justify-center rounded-xl bg-nborange p-4">
+              <Camera
+                absoluteStrokeWidth
+                strokeWidth={0.5}
+                className="size-16"
+              />
+            </div>
 
-        <h2 className="text-2xl font-light">Take a photo</h2>
-        <div />
-        {/* <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
+            <h2 className="text-2xl font-light">Take a photo</h2>
+            <div />
+            {/* <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
           <ArrowRight />
         </div> */}
-      </Button>
-      <div className="flex flex-row justify-around items-center w-full p-4">
-        <div className="scale-x-150">
-          <Image
-            src="/brutalist-elements/SVG/Frame-241.svg"
-            alt={"Shape 57"}
-            width={32}
-            height={32}
-            className="text-nborange fill-nborange rotate-90 scale-y-150 opacity-20"
-          />
-        </div>
+          </Button>
+          <div className="flex flex-row justify-around items-center w-full p-4">
+            <div className="scale-x-150">
+              <Image
+                src="/brutalist-elements/SVG/Frame-241.svg"
+                alt={"Shape 57"}
+                width={32}
+                height={32}
+                className="text-nborange fill-nborange rotate-90 scale-y-150 opacity-20"
+              />
+            </div>
 
-        <span className="text-lg font-bold">OR</span>
-        <div className="scale-x-150">
-          <Image
-            src="/brutalist-elements/SVG/Frame-241.svg"
-            alt={"Shape 57"}
-            width={32}
-            height={32}
-            className="text-nborange fill-nborange rotate-90 scale-y-150 opacity-20"
-          />
-        </div>
-      </div>
-      <Button
-        className="p-4 border-2 bg-white rounded-3xl text-black flex flex-row gap-4 justify-between w-full items-center"
-        onClick={() => {}}
-        disabled={disabled}
-      >
-        <div className="flex flex-row items-center justify-center rounded-xl bg-nbyellow p-4">
-          <Pencil absoluteStrokeWidth strokeWidth={0.5} className="size-16" />
-        </div>
-        <h2 className="text-2xl font-light">Type it in</h2>
-        <div />
-        {/* <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
+            <span className="text-lg font-bold">OR</span>
+            <div className="scale-x-150">
+              <Image
+                src="/brutalist-elements/SVG/Frame-241.svg"
+                alt={"Shape 57"}
+                width={32}
+                height={32}
+                className="text-nborange fill-nborange rotate-90 scale-y-150 opacity-20"
+              />
+            </div>
+          </div>
+          <Button
+            className="p-4 border-2 bg-white rounded-3xl text-black flex flex-row gap-4 justify-between w-full items-center"
+            onClick={() => {}}
+            disabled={disabled}
+          >
+            <div className="flex flex-row items-center justify-center rounded-xl bg-nbyellow p-4">
+              <Pencil
+                absoluteStrokeWidth
+                strokeWidth={0.5}
+                className="size-16"
+              />
+            </div>
+            <h2 className="text-2xl font-light">Type it in</h2>
+            <div />
+            {/* <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
           <ArrowRight />
         </div> */}
-      </Button>
+          </Button>
+        </>
+      ) : (
+        <ImageCompose images={images} setImages={setImages} />
+      )}
     </motion.div>
   );
 }

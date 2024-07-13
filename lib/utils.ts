@@ -37,3 +37,7 @@ export function makeid(length: number) {
   }
   return result;
 }
+
+export function not_undefined<T>(v?: T | undefined): v is T {
+  return v !== undefined;
+}
