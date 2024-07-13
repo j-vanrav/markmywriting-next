@@ -22,7 +22,7 @@ import {
   Squircle,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { HapticsClick } from "@/lib/client-utils";
 import { useOnClickOutside } from "@/lib/hooks";
 import Image from "next/image";
@@ -516,11 +516,15 @@ function SelectCardPage({
     return 0;
   };
   return (
-    <div
+    <motion.div
       className={cn(
         "w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden",
         className
       )}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
     >
       <div className="flex flex-row justify-between items-center p-4 gap-4">
         <div className="relative mr-auto">
@@ -881,7 +885,7 @@ function SelectCardPage({
           );
         })}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -898,11 +902,16 @@ function ReviewPage({
     setTimeout(() => setCardPage(selectedCard), 400);
   }, [selectedCard]);
   return cardPage !== "0" ? (
-    <div
+    <motion.div
+      key="review-page"
       className={cn(
         "w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden",
         className
       )}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
     >
       <div className="flex flex-row items-center gap-4">
         <Button
@@ -942,7 +951,7 @@ function ReviewPage({
           </svg> */}
         </div>
       </div>
-    </div>
+    </motion.div>
   ) : (
     <SelectCardPage
       selectedCard={selectedCard}
@@ -961,11 +970,16 @@ function ComposePage({
   disabled?: boolean;
 }) {
   return (
-    <div
+    <motion.div
+      key="compose-page"
       className={cn(
         "w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll",
         className
       )}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
     >
       <div className="flex flex-row justify-between items-center p-4 w-full">
         <div className="relative mr-auto">
@@ -1035,7 +1049,7 @@ function ComposePage({
           <ArrowRight />
         </div> */}
       </Button>
-    </div>
+    </motion.div>
   );
 }
 
@@ -1047,11 +1061,16 @@ function ProfilePage({
   disabled?: boolean;
 }) {
   return (
-    <div
+    <motion.div
+      key="profile-page"
       className={cn(
         "w-full h-full p-4 flex flex-col items-center gap-4",
         className
       )}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
     >
       <div className="flex flex-row justify-between items-center p-4 w-full">
         <div className="relative mr-auto">
@@ -1166,7 +1185,7 @@ function ProfilePage({
           </div>
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -1214,22 +1233,36 @@ export default function Main() {
       >
         <CarouselContent className="w-screen h-screen m-0">
           <CarouselItem className="relative w-full h-full">
-            <ReviewPage
-              className={cn("absolute left-0 right-0 top-0 bottom-0")}
-              disabled={selectedPage !== "review"}
-            />
+            <AnimatePresence>
+              {selectedPage === "review" && (
+                <ReviewPage
+                  className={cn("absolute left-0 right-0 top-0 bottom-0")}
+                  disabled={selectedPage !== "review"}
+                />
+              )}
+            </AnimatePresence>
           </CarouselItem>
+
           <CarouselItem className="relative w-full h-full">
-            <ComposePage
-              className={cn("absolute left-0 right-0 top-0 bottom-0")}
-              disabled={selectedPage !== "compose"}
-            />
+            <AnimatePresence>
+              {selectedPage === "compose" && (
+                <ComposePage
+                  className={cn("absolute left-0 right-0 top-0 bottom-0")}
+                  disabled={selectedPage !== "compose"}
+                />
+              )}
+            </AnimatePresence>
           </CarouselItem>
+
           <CarouselItem className="relative w-full h-full">
-            <ProfilePage
-              className={cn("absolute left-0 right-0 top-0 bottom-0")}
-              disabled={selectedPage !== "profile"}
-            />
+            <AnimatePresence>
+              {selectedPage === "profile" && (
+                <ProfilePage
+                  className={cn("absolute left-0 right-0 top-0 bottom-0")}
+                  disabled={selectedPage !== "profile"}
+                />
+              )}
+            </AnimatePresence>
           </CarouselItem>
         </CarouselContent>
         <CarouselPrevious />
