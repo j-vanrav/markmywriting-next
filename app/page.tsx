@@ -27,6 +27,14 @@ import { HapticsClick } from "@/lib/client-utils";
 import { useOnClickOutside } from "@/lib/hooks";
 import Image from "next/image";
 import Decoration from "@/components/neobrutalist/decoration";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 type PageName = "review" | "compose" | "profile";
 function NavButton({
@@ -1162,47 +1170,71 @@ function ProfilePage({
   );
 }
 
+const getPageIndex = (page: PageName): number =>
+  page === "review" ? 0 : page === "compose" ? 1 : 2;
+const getIndexPage = (index: number): PageName =>
+  index === 0 ? "review" : index === 1 ? "compose" : "profile";
+
 export default function Main() {
   const [selectedPage, setSelectedPage] = useState("compose" as PageName);
+  const selectedPageIndex = getPageIndex(selectedPage);
+  const [api, setApi] = React.useState<CarouselApi>();
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setSelectedPage(getIndexPage(api.selectedScrollSnap()));
+
+    api.on("select", () => {
+      setSelectedPage(getIndexPage(api.selectedScrollSnap()));
+    });
+  }, [api]);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+    if (api.selectedScrollSnap() !== selectedPageIndex) {
+      api?.scrollTo(selectedPageIndex);
+    }
+  }, [api, selectedPageIndex]);
 
   return (
-    <main className="flex flex-col w-screen h-screen bg-nbbgblue text-black overflow-hidden">
-      <div className="relative w-full h-full">
-        <ReviewPage
-          className={cn(
-            "absolute left-0 right-0 top-0 bottom-0 transition-all duration-300",
-            selectedPage === "review"
-              ? "opacity-100 translate-x-0"
-              : "opacity-0 pointer-events-none",
-            (selectedPage === "compose" || selectedPage === "profile") &&
-              "-translate-x-full"
-          )}
-          disabled={selectedPage !== "review"}
-        />
-
-        <ComposePage
-          className={cn(
-            "absolute left-0 right-0 top-0 bottom-0 transition-all duration-300",
-            selectedPage === "compose"
-              ? "opacity-100 translate-x-0"
-              : "opacity-0 pointer-events-none",
-            selectedPage === "review" && "translate-x-full",
-            selectedPage === "profile" && "-translate-x-full"
-          )}
-          disabled={selectedPage !== "compose"}
-        />
-        <ProfilePage
-          className={cn(
-            "absolute left-0 right-0 top-0 bottom-0 transition-all duration-300",
-            selectedPage === "profile"
-              ? "opacity-100 translate-x-0"
-              : "opacity-0 pointer-events-none",
-            (selectedPage === "review" || selectedPage === "compose") &&
-              "translate-x-full"
-          )}
-          disabled={selectedPage !== "profile"}
-        />
-      </div>
+    <main
+      className={cn(
+        "flex flex-col w-screen h-screen bg-nbbgblue text-black overflow-hidden"
+      )}
+    >
+      <Carousel
+        setApi={setApi}
+        opts={{ startIndex: 1 }}
+        className="w-full h-full"
+      >
+        <CarouselContent className="w-screen h-screen m-0">
+          <CarouselItem className="relative w-full h-full">
+            <ReviewPage
+              className={cn("absolute left-0 right-0 top-0 bottom-0")}
+              disabled={selectedPage !== "review"}
+            />
+          </CarouselItem>
+          <CarouselItem className="relative w-full h-full">
+            <ComposePage
+              className={cn("absolute left-0 right-0 top-0 bottom-0")}
+              disabled={selectedPage !== "compose"}
+            />
+          </CarouselItem>
+          <CarouselItem className="relative w-full h-full">
+            <ProfilePage
+              className={cn("absolute left-0 right-0 top-0 bottom-0")}
+              disabled={selectedPage !== "profile"}
+            />
+          </CarouselItem>
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
 
       <div className="fixed bottom-0 h-10 z-40 bg-black left-4 right-4" />
       <Nav selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
