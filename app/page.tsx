@@ -24,9 +24,14 @@ import {
   X,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  Reorder,
+  useMotionValue,
+} from "framer-motion";
 import { HapticsClick } from "@/lib/client-utils";
-import { useOnClickOutside } from "@/lib/hooks";
+import { useOnClickOutside, useRaisedShadow } from "@/lib/hooks";
 import Image from "next/image";
 import Decoration from "@/components/neobrutalist/decoration";
 import {
@@ -1009,6 +1014,66 @@ function swapWithNext<T>(arr: T[], index: number): T[] {
   return newArr;
 }
 
+function ImageItem({
+  image,
+  index,
+  images,
+  setImages,
+}: {
+  image: LocalImage;
+  index: number;
+  images: LocalImage[];
+  setImages: (i: (prev: LocalImage[]) => LocalImage[]) => void;
+}) {
+  const y = useMotionValue(0);
+  const boxShadow = useRaisedShadow(y);
+  return (
+    <Reorder.Item
+      className="relative w-fit"
+      value={image}
+      style={{ boxShadow, y }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`data:image/jpeg;base64,${image.base64}`}
+        alt={"User uploaded image"}
+      />
+      <Button
+        className="absolute -top-2 -right-2 rounded-2xl p-2 bg-white"
+        onClick={() =>
+          setImages((p) => p.filter((im) => im.hash !== image.hash))
+        }
+      >
+        <X strokeWidth={1} className="size-12" />
+      </Button>
+      <div className="absolute -bottom-2 -right-2 rounded-2xl flex flex-col">
+        {index !== 0 && (
+          <Button
+            className={cn(
+              "rounded-2xl p-2 bg-white",
+              index !== images.length - 1 && "rounded-b-none"
+            )}
+            onClick={() => setImages((p) => swapWithNext(p, index - 1))}
+          >
+            <ArrowUp strokeWidth={1} className="size-12" />
+          </Button>
+        )}
+        {index !== images.length - 1 && (
+          <Button
+            className={cn(
+              "rounded-2xl p-2 bg-white z-30",
+              index !== 0 && "rounded-t-none"
+            )}
+            onClick={() => setImages((p) => swapWithNext(p, index))}
+          >
+            <ArrowDown strokeWidth={1} className="size-12" />
+          </Button>
+        )}
+      </div>
+    </Reorder.Item>
+  );
+}
+
 function ImageCompose({
   images,
   setImages,
@@ -1018,58 +1083,23 @@ function ImageCompose({
 }) {
   return (
     <>
-      <AnimatePresence>
+      <Reorder.Group
+        axis="y"
+        values={images}
+        onReorder={(v) => setImages(() => v)}
+      >
         {images.map((i, idx) => {
           return (
-            <motion.div
+            <ImageItem
               key={`photo-${i.hash}`}
-              className="relative w-fit"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`data:image/jpeg;base64,${i.base64}`}
-                alt={"User uploaded image"}
-              />
-              <Button
-                className="absolute -top-2 -right-2 rounded-2xl p-2 bg-white"
-                onClick={() =>
-                  setImages((p) => p.filter((im) => im.hash !== i.hash))
-                }
-              >
-                <X strokeWidth={1} className="size-12" />
-              </Button>
-              <div className="absolute -bottom-2 -right-2 rounded-2xl flex flex-col">
-                {idx !== 0 && (
-                  <Button
-                    className={cn(
-                      "rounded-2xl p-2 bg-white",
-                      idx !== images.length - 1 && "rounded-b-none"
-                    )}
-                    onClick={() => setImages((p) => swapWithNext(p, idx - 1))}
-                  >
-                    <ArrowUp strokeWidth={1} className="size-12" />
-                  </Button>
-                )}
-                {idx !== images.length - 1 && (
-                  <Button
-                    className={cn(
-                      "rounded-2xl p-2 bg-white z-30",
-                      idx !== 0 && "rounded-t-none"
-                    )}
-                    onClick={() => setImages((p) => swapWithNext(p, idx))}
-                  >
-                    <ArrowDown strokeWidth={1} className="size-12" />
-                  </Button>
-                )}
-              </div>
-            </motion.div>
+              image={i}
+              index={idx}
+              images={images}
+              setImages={setImages}
+            />
           );
         })}
-      </AnimatePresence>
+      </Reorder.Group>
 
       <Button
         className="bg-white rounded-2xl flex flex-row gap-2 items-center justify-center p-2"
