@@ -13,7 +13,7 @@ import {
   Slash,
   Squircle,
 } from "lucide-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { HapticsClick } from "@/lib/client-utils";
 import { useOnClickOutside } from "@/lib/hooks";
@@ -346,7 +346,7 @@ function SelectCardPage({
           className="rounded-full bg-white size-12 min-w-12 min-h-12 flex flex-row items-center justify-center"
           disabled={disabled}
         >
-          <ListFilter className="size-7 min-w-7" />
+          <ListFilter strokeWidth={1.5} className="size-7 min-w-7" />
         </TapButton>
       </div>
       <AnimatePresence>
@@ -696,12 +696,17 @@ function SelectCardPage({
 export default function ReviewPage({
   className,
   disabled = false,
+  setMiniatureNav,
 }: {
   className?: string;
   disabled?: boolean;
+  setMiniatureNav: (_: boolean) => void;
 }) {
   const [selectedCard, setSelectedCard] = useState("0");
   const reviewCard = reviewCards.find((c) => c.id === selectedCard);
+  useEffect(() => {
+    setMiniatureNav(selectedCard !== "0");
+  }, [selectedCard]);
   return (
     <motion.div
       key={"review-page"}
@@ -749,7 +754,10 @@ export default function ReviewPage({
                   onClick={() => setSelectedCard("0")}
                   disabled={disabled}
                 >
-                  <ArrowLeft className="size-7 min-w-7 min-h-7" />
+                  <ArrowLeft
+                    strokeWidth={1.5}
+                    className="size-7 min-w-7 min-h-7"
+                  />
                 </TapButton>
               </div>
               <ReviewCard opts={reviewCard} trigger={() => {}} />

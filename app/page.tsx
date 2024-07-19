@@ -22,6 +22,7 @@ const getIndexPage = (index: number): PageName =>
   index === 0 ? "review" : index === 1 ? "compose" : "profile";
 
 export default function Main() {
+  const [miniatureNav, setMiniatureNav] = useState(false);
   const [selectedPage, setSelectedPage] = useState("compose" as PageName);
   const selectedPageIndex = getPageIndex(selectedPage);
   const [api, setApi] = React.useState<CarouselApi>();
@@ -43,6 +44,7 @@ export default function Main() {
       return;
     }
     if (api.selectedScrollSnap() !== selectedPageIndex) {
+      setMiniatureNav(false);
       api?.scrollTo(selectedPageIndex);
     }
   }, [api, selectedPageIndex]);
@@ -65,6 +67,7 @@ export default function Main() {
                 <ReviewPage
                   className={cn("absolute left-0 right-0 top-0 bottom-0")}
                   disabled={selectedPage !== "review"}
+                  setMiniatureNav={setMiniatureNav}
                 />
               )}
             </AnimatePresence>
@@ -76,6 +79,7 @@ export default function Main() {
                 <ComposePage
                   className={cn("absolute left-0 right-0 top-0 bottom-0")}
                   disabled={selectedPage !== "compose"}
+                  setMiniatureNav={setMiniatureNav}
                 />
               )}
             </AnimatePresence>
@@ -96,8 +100,17 @@ export default function Main() {
         <CarouselNext />
       </Carousel>
 
-      <div className="fixed bottom-0 h-10 z-40 bg-black left-4 right-4" />
-      <Nav selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
+      <div
+        className={cn(
+          "fixed bottom-0 left-4 right-4 z-40 bg-black rounded-t-2xl transition-all",
+          miniatureNav ? "h-11" : "h-14"
+        )}
+      />
+      <Nav
+        selectedPage={selectedPage}
+        setSelectedPage={setSelectedPage}
+        miniature={miniatureNav}
+      />
     </main>
   );
 }

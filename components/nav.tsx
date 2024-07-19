@@ -10,10 +10,12 @@ function NavButton({
   selectedPage,
   name,
   trigger,
+  miniature = false,
 }: {
   selectedPage: PageName;
   name: PageName;
   trigger: (name: PageName) => void;
+  miniature?: boolean;
 }) {
   return (
     <TapButton
@@ -22,7 +24,8 @@ function NavButton({
         // selectedPage === name && "w-48",
         name === "review" && "bg-nbgreen",
         name === "compose" && "bg-nborange",
-        name === "profile" && "bg-nbpurple"
+        name === "profile" && "bg-nbpurple",
+        miniature && "h-4 min-w-4"
       )}
       onClick={() => {
         HapticsClick();
@@ -30,11 +33,13 @@ function NavButton({
       }}
       layout
       style={{
-        width: selectedPage === name ? 192 : 64,
+        width:
+          selectedPage === name ? (miniature ? 64 : 192) : miniature ? 16 : 64,
       }}
       transition={{ damping: 30, stiffness: 600 }}
     >
       {name === "review" &&
+        !miniature &&
         (selectedPage !== name ? (
           <NotebookPen
             absoluteStrokeWidth
@@ -48,6 +53,7 @@ function NavButton({
           <span className="font-medium text-2xl">Review</span>
         ))}
       {name === "compose" &&
+        !miniature &&
         (selectedPage !== name ? (
           <Camera
             absoluteStrokeWidth
@@ -61,6 +67,7 @@ function NavButton({
           <span className="font-medium text-2xl">Compose</span>
         ))}
       {name === "profile" &&
+        !miniature &&
         (selectedPage !== name ? (
           <User
             absoluteStrokeWidth
@@ -93,28 +100,38 @@ function NavButton({
 export default function Nav({
   selectedPage,
   setSelectedPage,
+  miniature = false,
 }: {
   selectedPage: PageName;
   setSelectedPage: (name: PageName) => void;
+  miniature?: boolean;
 }) {
   return (
     <nav className="fixed bottom-0 w-full p-2 px-4 flex flex-row justify-center z-50">
-      <div className="rounded-full bg-black p-1 gap-1 flex flex-row text-black w-full justify-between">
+      <div
+        className={cn(
+          "rounded-full bg-black p-1 gap-1 flex flex-row text-black w-full justify-between",
+          miniature && "w-64 mx-auto"
+        )}
+      >
         <LayoutGroup>
           <NavButton
             selectedPage={selectedPage}
             name={"review"}
             trigger={setSelectedPage}
+            miniature={miniature}
           />
           <NavButton
             selectedPage={selectedPage}
             name={"compose"}
             trigger={setSelectedPage}
+            miniature={miniature}
           />
           <NavButton
             selectedPage={selectedPage}
             name={"profile"}
             trigger={setSelectedPage}
+            miniature={miniature}
           />
         </LayoutGroup>
       </div>
