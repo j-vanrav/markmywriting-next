@@ -16,11 +16,11 @@ import {
   Squircle,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { HapticsClick } from "@/lib/client-utils";
 import { useOnClickOutside } from "@/lib/hooks";
 import Decoration from "@/components/neobrutalist/decoration";
-import TapButton from "./tap-button";
+import TapButton, { tapButtonAttr } from "./tap-button";
 
 type CardColour = "yellow" | "orange" | "purple" | "green" | "blue";
 type MarkingStatus = "marked" | "marking" | "unmarked";
@@ -29,152 +29,105 @@ function ReviewCard({
   className,
   opts,
   trigger,
-  selected,
   ...args
 }: {
   colour: CardColour;
   className?: string;
   opts: ReviewCard;
   trigger: (id: string) => void;
-  selected: boolean;
   disabled?: boolean;
 }) {
-  const [pressed, setPressed] = useState(false);
   return (
-    <button
-      className={cn(
-        "translate-x-0 transition-all w-full z-50",
-        pressed && "scale-90 -translate-y-6",
-        selected && "-translate-y-12 scale-110 z-50",
-        className
-      )}
-      onPointerDown={() => setPressed(true)}
-      onPointerUp={() => setPressed(false)}
-      onPointerLeave={() => setPressed(false)}
-      onTouchStart={() => setPressed(true)}
-      onTouchCancel={() => setPressed(false)}
-      onTouchMove={() => setPressed(false)}
-      onClick={() => {
-        HapticsClick();
-        trigger(opts.id);
-      }}
-      {...args}
+    <motion.div
+      layoutId={`review-card-${opts.id}`}
+      key={`review-card-${opts.id}`}
+      {...tapButtonAttr}
+      transition={{ damping: 30 }}
     >
-      <div
-        className={cn(
-          "w-full h-4 rounded-t-2xl -translate-y-3 absolute left-0 right-0",
-          opts.marked === "unmarked" && "bg-nbyellow",
-          opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
-          opts.marked === "marking" && "bg-nbblue",
-          opts.marked === "marked" && "bg-nbpurple"
-        )}
-      />
-      <div
-        className={cn(
-          "w-full bg-nbyellow h-32 flex flex-col justify-between items-start pb-6 px-4",
-          opts.marked === "unmarked" && "bg-nbyellow",
-          opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
-          opts.marked === "marking" && "bg-nbblue",
-          opts.marked === "marked" && "bg-nbpurple"
-        )}
+      <button
+        className={cn("translate-x-0 transition-all w-full z-50", className)}
+        onClick={() => {
+          HapticsClick();
+          trigger(opts.id);
+        }}
+        {...args}
       >
-        <div className="flex flex-row justify-between w-full items-start">
-          <div className="flex flex-row items-center gap-2 text-xl">
-            {opts.fromCamera ? (
-              <Camera
-                absoluteStrokeWidth
-                strokeWidth={1.5}
-                className="size-6"
-              />
-            ) : (
-              <Pencil
-                absoluteStrokeWidth
-                strokeWidth={1.5}
-                className="size-6"
-              />
-            )}
-            The Box
-          </div>
+        <div
+          className={cn(
+            "w-full bg-nbyellow h-16 flex flex-row justify-between items-center rounded-2xl p-4",
+            opts.marked === "unmarked" && "bg-nbyellow",
+            opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
+            opts.marked === "marking" && "bg-nbblue",
+            opts.marked === "marked" && "bg-nbpurple"
+          )}
+        >
+          <div className="flex flex-col justify-between w-full items-start">
+            <div className="flex flex-row items-center gap-2 text-xl">
+              {opts.fromCamera ? (
+                <Camera
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-6"
+                />
+              ) : (
+                <Pencil
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-6"
+                />
+              )}
+              The Box
+            </div>
 
-          <span className="text-sm opacity-70">
-            {opts.creationDate.toLocaleDateString()}
-          </span>
+            <span className="text-sm opacity-70">
+              {opts.creationDate.toLocaleDateString()}
+            </span>
+          </div>
+          <div className="flex flex-row justify-between items-center gap-2 text-sm">
+            {opts.marked === "unmarked" && (
+              <div className="flex flex-row items-center gap-1 bg-black text-white rounded-full px-2">
+                <BotOff
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-4"
+                />
+                Unmarked
+              </div>
+            )}
+            {opts.marked === "marking" && (
+              <div className="flex flex-row items-center gap-1">
+                <BrainCircuit
+                  absoluteStrokeWidth
+                  strokeWidth={1.5}
+                  className="size-4 animate-pulse-strong"
+                />
+                <span className="animate-pulse-strong">Marking...</span>
+              </div>
+            )}
+            {/* {opts.marked === "marked" && (
+            <div className="flex flex-row items-center gap-1 rounded-full bg-black text-white p-1">
+              <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-6" />
+            </div>
+          )} */}
+            {opts.marked === "marked" && (
+              <div className="relative bg-black rounded-full text-white size-12 min-w-12 min-h-12">
+                <span className="absolute top-1.5 left-1.5 text-xs">
+                  {opts.score}
+                </span>
+                <Slash
+                  absoluteStrokeWidth
+                  strokeWidth={1}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                />
+                <span className="absolute bottom-1.5 right-1.5 text-xs">
+                  47
+                </span>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex flex-row justify-between w-full items-end gap-1 text-sm mb-4">
-          {opts.marked === "marked" && (
-            <div className="flex flex-row items-center gap-1">
-              <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-4" />
-              Marked
-            </div>
-          )}
-          {opts.marked === "unmarked" && (
-            <div className="flex flex-row items-center gap-1 bg-black text-white rounded-full px-2">
-              <BotOff
-                absoluteStrokeWidth
-                strokeWidth={1.5}
-                className="size-4"
-              />
-              Unmarked
-            </div>
-          )}
-          {opts.marked === "marking" && (
-            <div className="flex flex-row items-center gap-1">
-              <BrainCircuit
-                absoluteStrokeWidth
-                strokeWidth={1.5}
-                className="size-4 animate-pulse-strong"
-              />
-              <span className="animate-pulse-strong">Marking...</span>
-            </div>
-          )}
-          {opts.marked === "marked" && (
-            <div className="relative bg-black rounded-full text-white size-12">
-              <span className="absolute top-1.5 left-1.5 text-xs">
-                {opts.score}
-              </span>
-              <Slash
-                absoluteStrokeWidth
-                strokeWidth={1}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              />
-              <span className="absolute bottom-1.5 right-1.5 text-xs">47</span>
-            </div>
-          )}
-          {opts.marked === "unmarked" && (
-            <div className="flex flex-row items-center justify-center rounded-full text-black size-8">
-              <ArrowRight
-                absoluteStrokeWidth
-                strokeWidth={1.5}
-                className="size-6"
-              />
-            </div>
-          )}
-        </div>
-        {/* <span className="justify-self-end">200 words</span>
-        <div />
-        <div className="justify-self-end flex flex-row items-center gap-1 h-5">
-          {opts.fromCamera && (
-            <>
-              <Camera
-                absoluteStrokeWidth
-                strokeWidth={1.5}
-                className="size-5"
-              />
-              From camera
-            </>
-          )}
-        </div> */}
-      </div>
-      <div
-        className={cn(
-          "w-full h-4 rounded-b-2xl -translate-y-1 absolute left-0 right-0",
-          opts.marked === "unmarked" && "bg-nbyellow",
-          opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
-          opts.marked === "marking" && "bg-nbblue",
-          opts.marked === "marked" && "bg-nbpurple"
-        )}
-      />
-    </button>
+      </button>
+    </motion.div>
   );
 }
 
@@ -723,44 +676,41 @@ function SelectCardPage({
 
       <div
         className={cn(
-          "z-10 relative flex-col justify-center py-6 text-lg",
+          "z-10 flex flex-col justify-center py-6 text-lg gap-1 mb-16",
           selectedCard !== "0" && "z-30"
         )}
       >
-        {reviewCards.sort(sortFn).map((card) => {
-          const markingFilter =
-            selectedTab === "all" ||
-            (selectedTab === "marking" && card.marked === "marking") ||
-            (selectedTab === "unmarked" && card.marked === "unmarked") ||
-            (selectedTab === "marked" && card.marked === "marked");
-          const cameraFilter =
-            filterCamera === "all" ||
-            (filterCamera === "camera" && card.fromCamera) ||
-            (filterCamera === "written" && !card.fromCamera);
-          const visible = !showFilters || (markingFilter && cameraFilter);
-          return (
-            <div
-              key={`reviewcard-${card.id}`}
-              className={cn(
-                "h-0 transition-all duration-700",
-                visible && "h-32",
-                !visible && "-translate-x-full opacity-0 pointer-events-none"
-              )}
-              aria-disabled={!visible}
-            >
-              <ReviewCard
-                colour={card.colour}
-                opts={card}
-                trigger={setSelectedCard}
-                selected={selectedCard === card.id}
-                disabled={!visible}
-                aria-disabled={!visible}
-                className="z-50"
-                // className={cn(visible ? "visible" : "invisible duration-0")}
-              />
-            </div>
-          );
-        })}
+        <LayoutGroup>
+          <AnimatePresence>
+            {reviewCards
+              .sort(sortFn)
+              .filter((c) => c.id !== selectedCard)
+              .filter((c) => {
+                const markingFilter =
+                  selectedTab === "all" ||
+                  (selectedTab === "marking" && c.marked === "marking") ||
+                  (selectedTab === "unmarked" && c.marked === "unmarked") ||
+                  (selectedTab === "marked" && c.marked === "marked");
+                const cameraFilter =
+                  filterCamera === "all" ||
+                  (filterCamera === "camera" && c.fromCamera) ||
+                  (filterCamera === "written" && !c.fromCamera);
+                const visible = !showFilters || (markingFilter && cameraFilter);
+                return visible;
+              })
+              .map((card) => {
+                return (
+                  <ReviewCard
+                    key={`k-review-card-${card.id}`}
+                    colour={card.colour}
+                    opts={card}
+                    trigger={setSelectedCard}
+                    className="z-50"
+                  />
+                );
+              })}
+          </AnimatePresence>
+        </LayoutGroup>
       </div>
     </motion.div>
   );
@@ -774,43 +724,62 @@ export default function ReviewPage({
   disabled?: boolean;
 }) {
   const [selectedCard, setSelectedCard] = useState("0");
-  const [cardPage, setCardPage] = useState("0");
-  useEffect(() => {
-    setTimeout(() => setCardPage(selectedCard), 400);
-  }, [selectedCard]);
-  return cardPage !== "0" ? (
-    <motion.div
-      key="review-page"
-      className={cn(
-        "w-screen h-full p-4 pb-14 overflow-y-scroll overflow-x-hidden",
-        className
-      )}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      <div className="flex flex-row items-center gap-4">
-        <TapButton
-          className="size-12 rounded-full p-0 flex flex-row items-center justify-center bg-white"
-          onClick={() => setSelectedCard("0")}
-          disabled={disabled}
-        >
-          <ArrowLeft className="size-7 min-w-7 min-h-7" />
-        </TapButton>
-        <div className="relative mr-auto">
-          <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
-            Reviewing: {cardPage}
-          </h1>
-        </div>
-      </div>
-    </motion.div>
-  ) : (
-    <SelectCardPage
-      selectedCard={selectedCard}
-      setSelectedCard={setSelectedCard}
-      className={className as any}
-      disabled={disabled}
-    />
+  const reviewCard = reviewCards.find((c) => c.id === selectedCard);
+  return (
+    <LayoutGroup>
+      <AnimatePresence>
+        {selectedCard === "0" && (
+          <SelectCardPage
+            selectedCard={selectedCard}
+            setSelectedCard={setSelectedCard}
+            className={className as any}
+            disabled={disabled}
+          />
+        )}
+
+        {reviewCard && (
+          <motion.div
+            key="review-page"
+            className={cn(
+              "absolute w-screen h-screen p-4 pb-14 overflow-y-scroll overflow-x-hidden flex flex-col",
+              className
+            )}
+            layout
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                duration: 0.05,
+              },
+            }}
+          >
+            <div className="flex flex-row items-center gap-4">
+              <TapButton
+                className="size-12 rounded-full p-0 flex flex-row items-center justify-center bg-white"
+                onClick={() => setSelectedCard("0")}
+                disabled={disabled}
+              >
+                <ArrowLeft className="size-7 min-w-7 min-h-7" />
+              </TapButton>
+              <div className="relative mr-auto">
+                <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
+                  Reviewing: {selectedCard}
+                </h1>
+              </div>
+            </div>
+            <ReviewCard
+              colour={reviewCard.colour}
+              opts={reviewCard}
+              trigger={() => {}}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </LayoutGroup>
   );
 }
