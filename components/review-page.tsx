@@ -348,7 +348,6 @@ function SelectCardPage({
         >
           <ListFilter className="size-7 min-w-7" />
         </TapButton>
-        <Decoration frames={["90", "29", "78", "83"]} id={makeid(4)} />
       </div>
       <AnimatePresence>
         {showFilters && (
