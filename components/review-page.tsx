@@ -20,6 +20,7 @@ import { motion } from "framer-motion";
 import { HapticsClick } from "@/lib/client-utils";
 import { useOnClickOutside } from "@/lib/hooks";
 import Decoration from "@/components/neobrutalist/decoration";
+import TapButton from "./tap-button";
 
 type CardColour = "yellow" | "orange" | "purple" | "green" | "blue";
 type MarkingStatus = "marked" | "marking" | "unmarked";
@@ -422,13 +423,13 @@ function SelectCardPage({
           </svg> */}
         </div>
 
-        <Button
+        <TapButton
           onClick={() => setShowFilters((p) => !p)}
-          className="rounded-2xl bg-white size-12 flex flex-row items-center justify-center"
+          className="rounded-full bg-white size-12 flex flex-row items-center justify-center"
           disabled={disabled}
         >
           <ListFilter className="size-7 min-w-7" />
-        </Button>
+        </TapButton>
         <Decoration frames={["90", "29", "78", "83"]} id={makeid(4)} />
       </div>
 
@@ -790,41 +791,17 @@ export default function ReviewPage({
       transition={{ duration: 0.4 }}
     >
       <div className="flex flex-row items-center gap-4">
-        <Button
-          className="size-12 rounded-2xl p-0 flex flex-row items-center justify-center bg-white"
+        <TapButton
+          className="size-12 rounded-full p-0 flex flex-row items-center justify-center bg-white"
           onClick={() => setSelectedCard("0")}
           disabled={disabled}
         >
           <ArrowLeft className="size-7 min-w-7 min-h-7" />
-        </Button>
+        </TapButton>
         <div className="relative mr-auto">
           <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
             Reviewing: {cardPage}
           </h1>
-          {/* <svg
-            width="512"
-            height="512"
-            viewBox="0 0 200 200"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute left-0 top-0 -z-10 fill-current text-nbgreen -translate-y-1/2 -translate-x-1/2 opacity-20"
-          >
-            <path d="M160 70L160 40L130 40L160 70Z" />
-            <path d="M130 70L130 40L100 40L130 70Z" />
-            <path d="M100 70L100 40L70 40L100 70Z" />
-            <path d="M70 70L70 40L40 40L70 70Z" />
-            <path d="M70 100L70 70L40 70L70 100Z" />
-            <path d="M70 130L70 100L40 100L70 130Z" />
-            <path d="M70 160L70 130L40 130L70 160Z" />
-            <path d="M100 100L100 70L70 70L100 100Z" />
-            <path d="M100 130L100 100L70 100L100 130Z" />
-            <path d="M100 160L100 130L70 130L100 160Z" />
-            <path d="M130 100L130 70L100 70L130 100Z" />
-            <path d="M130 130L130 100L100 100L130 130Z" />
-            <path d="M130 160L130 130L100 130L130 160Z" />
-            <path d="M160 100L160 70L130 70L160 100Z" />
-            <path d="M160 130L160 100L130 100L160 130Z" />
-            <path d="M160 160L160 130L130 130L160 160Z" />
-          </svg> */}
         </div>
       </div>
     </motion.div>
