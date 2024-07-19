@@ -71,22 +71,27 @@ const config = {
         nbyellow: {
           DEFAULT: "hsl(var(--nbyellow))",
           foreground: "hsl(var(--nbforeground))",
+          background: "hsl(var(--nbyellowlight))",
         },
         nborange: {
           DEFAULT: "hsl(var(--nborange))",
           foreground: "hsl(var(--nbforeground))",
+          background: "hsl(var(--nborangelight))",
         },
         nbpurple: {
           DEFAULT: "hsl(var(--nbpurple))",
           foreground: "hsl(var(--nbforeground))",
+          background: "hsl(var(--nbpurplelight))",
         },
         nbgreen: {
           DEFAULT: "hsl(var(--nbgreen))",
           foreground: "hsl(var(--nbforeground))",
+          background: "hsl(var(--nbgreenlight))",
         },
         nbblue: {
           DEFAULT: "hsl(var(--nbblue))",
           foreground: "hsl(var(--nbforeground))",
+          background: "hsl(var(--nbbluelight))",
         },
       },
       borderRadius: {

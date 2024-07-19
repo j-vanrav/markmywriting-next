@@ -168,7 +168,7 @@ export default function ComposePage({
     <motion.div
       key="compose-page"
       className={cn(
-        "bg-black w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll pb-24",
+        "w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll pb-24",
         className
       )}
       initial={{ opacity: 0 }}

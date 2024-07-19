@@ -52,7 +52,10 @@ export default function Main() {
   return (
     <main
       className={cn(
-        "flex flex-col w-screen h-screen bg-nbbgblue text-black overflow-hidden"
+        "flex flex-col w-screen h-screen text-black overflow-hidden transition-colors",
+        selectedPage === "compose" && "bg-black",
+        selectedPage === "review" && "bg-nbgreen-background",
+        selectedPage === "profile" && "bg-nbpurple-background"
       )}
     >
       <Carousel

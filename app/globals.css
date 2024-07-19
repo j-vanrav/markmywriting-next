@@ -78,10 +78,15 @@
   :root {
     --nbbgblue: 162.67 63.38% 86.08%;
     --nbyellow: 52.71 95.89% 71.37%;
+    --nbyellowlight: 52.71 95.89% 80%;
     --nborange: 32.09 100% 66.27%;
+    --nborangelight: 32.09 100% 80%;
     --nbpurple: 252.63 100% 73.92%;
+    --nbpurplelight: 252.63 100% 80%;
     --nbgreen: 156.35 59.83% 55.1%;
+    --nbgreenlight: 156.35 59.83% 70%;
     --nbblue: 201.63 72.88% 76.86%;
+    --nbbluelight: 201.63 72.88% 80%;
     --nbforeground: 0 0% 0%;
   }
 }
