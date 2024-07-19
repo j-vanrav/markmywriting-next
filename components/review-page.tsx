@@ -307,9 +307,9 @@ function SelectCardPage({
 }) {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedTab, setSelectedTab] = useState("all" as ReviewTabs);
-  const [filterCollapsed, setFilterCollapsed] = useState(false);
+  const [filterCollapsed, setFilterCollapsed] = useState(true);
   const [sortMode, setSortMode] = useState("date-desc" as SortMode);
-  const [sortCollapsed, setSortCollapsed] = useState(false);
+  const [sortCollapsed, setSortCollapsed] = useState(true);
   const [filterCamera, setFilterCamera] = useState("all" as FilterCameraMode);
   const filterTabsRef = useRef(null);
   useOnClickOutside(filterTabsRef, () => {
