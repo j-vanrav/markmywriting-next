@@ -1,12 +1,21 @@
 "use client";
 import Button from "@/components/neobrutalist/button";
 import { cn, getBase64Image, makeid, swapWithNext } from "@/lib/utils";
-import { ArrowDown, ArrowUp, Camera, Pencil, Plus, X } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  Camera,
+  GripHorizontal,
+  Pencil,
+  Plus,
+  X,
+} from "lucide-react";
 import React, { useState } from "react";
 import {
   AnimatePresence,
   motion,
   Reorder,
+  useDragControls,
   useMotionValue,
 } from "framer-motion";
 import { useRaisedShadow } from "@/lib/hooks";
@@ -25,16 +34,26 @@ function ImageItem({
 }) {
   const y = useMotionValue(0);
   const boxShadow = useRaisedShadow(y);
+  const controls = useDragControls();
   return (
     <Reorder.Item
       className="relative w-fit"
       value={image}
       style={{ boxShadow, y }}
+      dragListener={false}
+      dragControls={controls}
     >
+      <TapButton
+        className="absolute bg-white rounded-full -left-6 bottom-0 p-2"
+        onPointerDown={(e) => controls.start(e)}
+      >
+        <GripHorizontal strokeWidth={1} className="size-8" />
+      </TapButton>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`data:image/jpeg;base64,${image.base64}`}
         alt={"User uploaded image"}
+        className="pointer-events-none"
       />
       <TapButton
         className="absolute -top-0 -right-6 rounded-full p-2 bg-white"
@@ -81,7 +100,7 @@ function ImageCompose({
 }) {
   return (
     <motion.div
-      className="flex flex-col items-center rounded-full p-4 gap-4"
+      className="flex flex-col items-center rounded-full p-8 gap-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
