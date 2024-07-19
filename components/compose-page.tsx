@@ -132,14 +132,6 @@ export default function ComposePage({
     >
       {images.length === 0 ? (
         <>
-          <div className="flex flex-row justify-between items-center p-4 w-full">
-            <div className="relative mr-auto">
-              <h1 className="relative left-0 top-0 text-2xl mr-auto z-10">
-                Compose writing
-              </h1>
-            </div>
-            <Decoration frames={["132", "32", "54", "71"]} id={makeid(4)} />
-          </div>
           <div className="flex flex-col  rounded-full p-4 gap-4 mb-16">
             <TapButton className="rounded-full bg-black text-white size-40 flex flex-col items-center justify-center">
               <Camera absoluteStrokeWidth strokeWidth={1} className="size-16" />

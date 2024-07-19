@@ -35,7 +35,7 @@ export default function Decoration({
       onTouchCancel={() => setPressed(false)}
       onTouchMove={() => setPressed(false)}
       onClick={animate}
-      className="relative w-16 min-w-16 h-16 min-h-16"
+      className="relative w-12 min-w-12 h-12 min-h-12"
     >
       {fs.map((f, i) => (
         <Image
