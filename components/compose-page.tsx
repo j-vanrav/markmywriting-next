@@ -1,21 +1,11 @@
 "use client";
-import Button from "@/components/neobrutalist/button";
-import { cn, getBase64Image, makeid, swapWithNext } from "@/lib/utils";
-import {
-  ArrowDown,
-  ArrowUp,
-  Camera,
-  GripHorizontal,
-  Pencil,
-  Plus,
-  X,
-} from "lucide-react";
+import { cn, getBase64Image, swapWithNext } from "@/lib/utils";
+import { ArrowDown, ArrowUp, Camera, Pencil, Plus, X } from "lucide-react";
 import React, { useState } from "react";
 import {
   AnimatePresence,
   motion,
   Reorder,
-  useDragControls,
   useMotionValue,
 } from "framer-motion";
 import { useRaisedShadow } from "@/lib/hooks";
@@ -34,21 +24,13 @@ function ImageItem({
 }) {
   const y = useMotionValue(0);
   const boxShadow = useRaisedShadow(y);
-  const controls = useDragControls();
   return (
     <Reorder.Item
       className="relative w-fit"
       value={image}
       style={{ boxShadow, y }}
       dragListener={false}
-      dragControls={controls}
     >
-      <TapButton
-        className="absolute bg-white rounded-full -left-6 bottom-0 p-2"
-        onPointerDown={(e) => controls.start(e)}
-      >
-        <GripHorizontal strokeWidth={1} className="size-8" />
-      </TapButton>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`data:image/jpeg;base64,${image.base64}`}
