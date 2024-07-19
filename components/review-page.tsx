@@ -20,16 +20,13 @@ import { useOnClickOutside } from "@/lib/hooks";
 import Decoration from "@/components/neobrutalist/decoration";
 import TapButton, { tapButtonAttr } from "./tap-button";
 
-type CardColour = "yellow" | "orange" | "purple" | "green" | "blue";
 type MarkingStatus = "marked" | "marking" | "unmarked";
 function ReviewCard({
-  colour,
   className,
   opts,
   trigger,
   ...args
 }: {
-  colour: CardColour;
   className?: string;
   opts: ReviewCard;
   trigger: (id: string) => void;
@@ -55,11 +52,7 @@ function ReviewCard({
       >
         <div
           className={cn(
-            "w-full bg-nbyellow h-16 flex flex-row justify-between items-center rounded-2xl p-4",
-            opts.marked === "unmarked" && "bg-nbyellow",
-            opts.marked === "unmarked" && opts.fromCamera && "bg-nborange",
-            opts.marked === "marking" && "bg-nbblue",
-            opts.marked === "marked" && "bg-nbpurple"
+            "w-full bg-white h-16 flex flex-row justify-between items-center rounded-2xl p-4"
           )}
         >
           <div className="flex flex-col justify-between w-full items-start">
@@ -86,7 +79,7 @@ function ReviewCard({
           </div>
           <div className="flex flex-row justify-between items-center gap-2 text-sm">
             {opts.marked === "unmarked" && (
-              <div className="flex flex-row items-center gap-1 bg-black text-white rounded-full px-2">
+              <div className="flex flex-row items-center gap-1 bg-nborange rounded-full px-2">
                 <BotOff
                   absoluteStrokeWidth
                   strokeWidth={1.5}
@@ -96,7 +89,7 @@ function ReviewCard({
               </div>
             )}
             {opts.marked === "marking" && (
-              <div className="flex flex-row items-center gap-1">
+              <div className="flex flex-row items-center gap-1 bg-nbblue rounded-full px-2">
                 <BrainCircuit
                   absoluteStrokeWidth
                   strokeWidth={1.5}
@@ -111,7 +104,12 @@ function ReviewCard({
             </div>
           )} */}
             {opts.marked === "marked" && (
-              <div className="relative bg-black rounded-full text-white size-12 min-w-12 min-h-12">
+              <div
+                className={cn(
+                  "relative rounded-full size-12 min-w-12 min-h-12",
+                  (opts?.score ?? 0) >= 24 ? "bg-nbgreen" : "bg-nbyellow"
+                )}
+              >
                 <span className="absolute top-1.5 left-1.5 text-xs">
                   {opts.score}
                 </span>
@@ -207,8 +205,7 @@ type ReviewCard = {
   prompt: string;
   fromCamera: boolean;
   id: string;
-  colour: CardColour;
-  score: number;
+  score?: number;
 };
 const reviewCards: ReviewCard[] = [
   {
@@ -218,8 +215,6 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: true,
     id: "1",
-    colour: "yellow",
-    score: 15,
   },
   {
     marked: "marking",
@@ -228,8 +223,6 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: false,
     id: "2",
-    colour: "orange",
-    score: 16,
   },
   {
     marked: "marked",
@@ -238,7 +231,6 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: false,
     id: "3",
-    colour: "green",
     score: 10,
   },
   {
@@ -248,8 +240,6 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: false,
     id: "4",
-    colour: "purple",
-    score: 25,
   },
   {
     marked: "marking",
@@ -258,8 +248,6 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: true,
     id: "5",
-    colour: "blue",
-    score: 40,
   },
   {
     marked: "unmarked",
@@ -268,8 +256,6 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: false,
     id: "6",
-    colour: "yellow",
-    score: 30,
   },
   {
     marked: "marking",
@@ -278,8 +264,6 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: false,
     id: "7",
-    colour: "orange",
-    score: 5,
   },
   {
     marked: "marked",
@@ -288,8 +272,7 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: false,
     id: "8",
-    colour: "green",
-    score: 20,
+    score: 40,
   },
   {
     marked: "unmarked",
@@ -298,8 +281,6 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: true,
     id: "9",
-    colour: "purple",
-    score: 20,
   },
   {
     marked: "marking",
@@ -308,8 +289,6 @@ const reviewCards: ReviewCard[] = [
     prompt: "The Box",
     fromCamera: true,
     id: "10",
-    colour: "blue",
-    score: 35,
   },
 ];
 type ReviewTabs = "all" | "unmarked" | "marking" | "marked";
@@ -346,8 +325,8 @@ function SelectCardPage({
       return b.creationDate.getTime() - a.creationDate.getTime();
     if (sortMode === "date-asc")
       return a.creationDate.getTime() - b.creationDate.getTime();
-    if (sortMode === "score-desc") return b.score - a.score;
-    if (sortMode === "score-asc") return a.score - b.score;
+    if (sortMode === "score-desc") return (b?.score ?? 0) - (a?.score ?? 0);
+    if (sortMode === "score-asc") return (a?.score ?? 0) - (b?.score ?? 0);
     return 0;
   };
   return (
@@ -420,7 +399,7 @@ function SelectCardPage({
                   <TabAnimated
                     id={"filter-tabs"}
                     className={cn(
-                      "bg-white rounded-full absolute top-1/4",
+                      "bg-nborange rounded-full absolute top-1/4",
                       selectedTab === "unmarked" ? "z-10" : "z-0"
                     )}
                     active={selectedTab === "unmarked"}
@@ -444,7 +423,7 @@ function SelectCardPage({
                   <TabAnimated
                     id={"filter-tabs"}
                     className={cn(
-                      "bg-white rounded-full absolute top-1/2",
+                      "bg-nbblue rounded-full absolute top-1/2",
                       selectedTab === "marking" ? "z-10" : "z-0"
                     )}
                     active={selectedTab === "marking"}
@@ -468,7 +447,7 @@ function SelectCardPage({
                   <TabAnimated
                     id={"filter-tabs"}
                     className={cn(
-                      "bg-white rounded-full absolute top-3/4",
+                      "bg-nbgreen rounded-full absolute top-3/4",
                       selectedTab === "marked" ? "z-10" : "z-0"
                     )}
                     active={selectedTab === "marked"}
@@ -690,14 +669,18 @@ function SelectCardPage({
                   filterCamera === "all" ||
                   (filterCamera === "camera" && c.fromCamera) ||
                   (filterCamera === "written" && !c.fromCamera);
-                const visible = !showFilters || (markingFilter && cameraFilter);
+                const sortFilter =
+                  (sortMode !== "score-asc" && sortMode !== "score-desc") ||
+                  c.score !== undefined;
+                const visible =
+                  !showFilters || (markingFilter && cameraFilter && sortFilter);
+
                 return visible;
               })
               .map((card) => {
                 return (
                   <ReviewCard
                     key={`k-review-card-${card.id}`}
-                    colour={card.colour}
                     opts={card}
                     trigger={setSelectedCard}
                     className="z-50"
@@ -770,11 +753,7 @@ export default function ReviewPage({
                   <ArrowLeft className="size-7 min-w-7 min-h-7" />
                 </TapButton>
               </div>
-              <ReviewCard
-                colour={reviewCard.colour}
-                opts={reviewCard}
-                trigger={() => {}}
-              />
+              <ReviewCard opts={reviewCard} trigger={() => {}} />
             </motion.div>
           )}
         </AnimatePresence>
