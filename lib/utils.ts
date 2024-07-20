@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Camera, CameraResultType } from "@capacitor/camera";
 import { cloneDeep } from "lodash";
+import SHA1 from "crypto-js/sha1";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -45,12 +46,11 @@ export function not_undefined<T>(v?: T | undefined): v is T {
   return v !== undefined;
 }
 
+/**
+ * SubtleCrypto is better but wasn't working in firefox>mobile view
+ */
 export const imageHash = async (image: string) => {
-  const buf = await window.crypto.subtle.digest(
-    "SHA-1",
-    Buffer.from(image, "base64")
-  );
-  return new TextDecoder().decode(buf);
+  return SHA1(image).toString();
 };
 
 export const getBase64Image = async () => {

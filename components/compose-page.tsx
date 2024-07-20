@@ -19,6 +19,7 @@ import {
 } from "framer-motion";
 import { useRaisedShadow } from "@/lib/hooks";
 import TapButton from "./tap-button";
+import { cloneDeep } from "lodash";
 
 function ImageItem({
   image,
@@ -49,7 +50,7 @@ function ImageItem({
       <TapButton
         className="absolute -top-0 -right-5 rounded-full p-1 bg-nbblue"
         onClick={() =>
-          setImages((p) => p.filter((im) => im.hash !== image.hash))
+          setImages((p) => cloneDeep(p.filter((im) => im.hash !== image.hash)))
         }
       >
         <X strokeWidth={1} className="size-8" />
@@ -109,7 +110,7 @@ function ImageCompose({
         <Reorder.Group
           axis="y"
           values={images}
-          onReorder={(v) => setImages(() => v)}
+          onReorder={(v) => setImages(() => cloneDeep(v))}
           className="flex flex-col gap-4"
         >
           {images.map((i, idx) => {
@@ -138,9 +139,15 @@ function ImageCompose({
           className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6"
           onClick={async () => {
             const image = await getBase64Image();
-            if (image?.base64) setImages((p) => [...p, image]);
+            if (image?.base64)
+              setImages((p) =>
+                !!p.find((li) => li.hash === image.hash)
+                  ? p
+                  : [...cloneDeep(p), image]
+              );
           }}
         >
+          <Camera strokeWidth={1} className="size-12" />
           <Plus strokeWidth={1} className="size-12" />
         </TapButton>
         <TapButton className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6">
@@ -163,7 +170,7 @@ export default function ComposePage({
   const [images, setImages] = useState([] as LocalImage[]);
   useEffect(() => {
     setMiniatureNav(images.length > 0);
-  }, [images]);
+  }, [images, setMiniatureNav]);
   return (
     <motion.div
       key="compose-page"
@@ -190,7 +197,12 @@ export default function ComposePage({
                 className="rounded-full bg-nborange text-black size-56 flex flex-col items-center justify-center"
                 onClick={async () => {
                   const image = await getBase64Image();
-                  if (image?.base64) setImages((p) => [...p, image]);
+                  if (image?.base64)
+                    setImages((p) =>
+                      !!p.find((li) => li.hash === image.hash)
+                        ? p
+                        : [...cloneDeep(p), image]
+                    );
                 }}
               >
                 <Camera
