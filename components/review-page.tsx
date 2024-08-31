@@ -154,8 +154,8 @@ function TabAnimated<T extends string>({
     <motion.div
       className={cn(
         "grid h-8 w-32 grid-cols-1 items-center",
-        size === "md" && "w-32",
-        size === "sm" && "w-24",
+        size === "md" && "w-28",
+        size === "sm" && "w-20",
         size === "icon" && "w-8",
         className,
         disabled && "pointer-events-none"
@@ -170,8 +170,8 @@ function TabAnimated<T extends string>({
           key={"tabs-highlight-" + id}
           className={cn(
             "z-0 col-span-1 col-start-1 h-8 rounded-full bg-black",
-            size === "md" && "w-32",
-            size === "sm" && "w-24",
+            size === "md" && "w-28",
+            size === "sm" && "w-20",
             size === "icon" && "h-8",
             disabled && "pointer-events-none"
           )}
@@ -354,14 +354,14 @@ function SelectCardPage({
           <>
             <div
               className={cn(
-                "relative w-full flex flex-row justify-start px-4 gap-2 transition-all duration-300",
+                "relative w-full flex flex-row justify-start gap-1 transition-all duration-300",
                 showFilters ? "h-12 opacity-100 z-20" : "h-0 opacity-0 z-0"
               )}
             >
               <div
                 ref={filterTabsRef}
                 className={cn(
-                  "h-fit w-36 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
+                  "h-fit w-32 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
                   filterCollapsed ? "h-12" : "h-36"
                 )}
               >
@@ -386,13 +386,13 @@ function SelectCardPage({
                     size="md"
                     disabled={!showFilters || disabled}
                   >
-                    <span className="flex flex-row items-center w-full gap-1">
-                      <Squircle
+                    <span className="flex flex-row items-center justify-center w-full gap-1">
+                      All
+                      {/* <Squircle
                         absoluteStrokeWidth
                         strokeWidth={1.5}
                         className="size-4 invisible"
-                      />
-                      All
+                      /> */}
                     </span>
                   </TabAnimated>
                   <TabAnimated
@@ -458,7 +458,7 @@ function SelectCardPage({
                     size="md"
                     disabled={!showFilters || disabled}
                   >
-                    <span className="flex flex-row items-center w-full gap-1">
+                    <span className="flex flex-row items-center w-full  gap-1">
                       <Bot
                         absoluteStrokeWidth
                         strokeWidth={1.5}
@@ -472,7 +472,7 @@ function SelectCardPage({
               <div
                 ref={sortTabsRef}
                 className={cn(
-                  "h-fit w-28 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
+                  "h-fit w-24 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
                   sortCollapsed ? "h-12" : "h-36"
                 )}
               >
@@ -497,7 +497,7 @@ function SelectCardPage({
                     size="sm"
                     disabled={!showFilters || disabled}
                   >
-                    <span className="flex flex-row items-center w-full gap-1">
+                    <span className="flex flex-row items-center w-full justify-between gap-1">
                       Date
                       <ArrowDown
                         absoluteStrokeWidth
@@ -521,7 +521,7 @@ function SelectCardPage({
                     size="sm"
                     disabled={!showFilters || disabled}
                   >
-                    <span className="flex flex-row items-center w-full gap-1">
+                    <span className="flex flex-row items-center w-full justify-between gap-1">
                       Date
                       <ArrowUp
                         absoluteStrokeWidth
@@ -545,7 +545,7 @@ function SelectCardPage({
                     size="sm"
                     disabled={!showFilters || disabled}
                   >
-                    <span className="flex flex-row items-center w-full gap-1">
+                    <span className="flex flex-row items-center w-full justify-between gap-1">
                       Score
                       <ArrowDown
                         absoluteStrokeWidth
@@ -569,7 +569,7 @@ function SelectCardPage({
                     size="sm"
                     disabled={!showFilters || disabled}
                   >
-                    <span className="flex flex-row items-center w-full gap-1">
+                    <span className="flex flex-row items-center w-full justify-between gap-1">
                       Score
                       <ArrowUp
                         absoluteStrokeWidth
@@ -580,13 +580,6 @@ function SelectCardPage({
                   </TabAnimated>
                 </div>
               </div>
-            </div>
-            <div
-              className={cn(
-                "relative w-full flex flex-row justify-start px-4 gap-2 transition-all duration-300",
-                showFilters ? "h-12 opacity-100 z-10" : "h-0 opacity-0 z-0"
-              )}
-            >
               <div
                 className={cn(
                   "w-28 h-12 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden"
