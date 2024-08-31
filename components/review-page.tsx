@@ -56,28 +56,15 @@ function ReviewCard({
           )}
         >
           <div className="flex flex-col justify-between w-full items-start">
-            <div className="flex flex-row items-center gap-2 text-xl">
-              {opts.fromCamera ? (
-                <Camera
-                  absoluteStrokeWidth
-                  strokeWidth={1.5}
-                  className="size-6"
-                />
-              ) : (
-                <Pencil
-                  absoluteStrokeWidth
-                  strokeWidth={1.5}
-                  className="size-6"
-                />
-              )}
-              The Box
+            <div className="flex flex-row items-center gap-2 font-bold text-base">
+              {opts.prompt}
             </div>
 
             <span className="text-sm opacity-70">
               {opts.creationDate.toLocaleDateString()}
             </span>
           </div>
-          <div className="flex flex-row justify-between items-center gap-2 text-sm">
+          <div className="flex flex-row justify-between items-center gap-4 text-sm">
             {opts.marked === "unmarked" && (
               <div className="flex flex-row items-center gap-1 bg-nborange rounded-full px-2">
                 <BotOff
@@ -122,6 +109,19 @@ function ReviewCard({
                   47
                 </span>
               </div>
+            )}
+            {opts.fromCamera ? (
+              <Camera
+                absoluteStrokeWidth
+                strokeWidth={1.5}
+                className="size-5 opacity-70"
+              />
+            ) : (
+              <Pencil
+                absoluteStrokeWidth
+                strokeWidth={1.5}
+                className="size-5 opacity-70"
+              />
             )}
           </div>
         </div>
@@ -220,7 +220,7 @@ const reviewCards: ReviewCard[] = [
     marked: "marking",
     wordCount: 300,
     creationDate: new Date("2024-06-04"),
-    prompt: "The Box",
+    prompt: "Imagine",
     fromCamera: false,
     id: "2",
   },
@@ -228,7 +228,7 @@ const reviewCards: ReviewCard[] = [
     marked: "marked",
     wordCount: 450,
     creationDate: new Date("2024-06-02"),
-    prompt: "The Box",
+    prompt: "Flight",
     fromCamera: false,
     id: "3",
     score: 10,
@@ -237,7 +237,7 @@ const reviewCards: ReviewCard[] = [
     marked: "unmarked",
     wordCount: 100,
     creationDate: new Date("2024-02-01"),
-    prompt: "The Box",
+    prompt: "Getting Warm",
     fromCamera: false,
     id: "4",
   },
@@ -245,7 +245,7 @@ const reviewCards: ReviewCard[] = [
     marked: "marking",
     wordCount: 600,
     creationDate: new Date("2024-01-01"),
-    prompt: "The Box",
+    prompt: "Wanted",
     fromCamera: true,
     id: "5",
   },
@@ -253,7 +253,7 @@ const reviewCards: ReviewCard[] = [
     marked: "unmarked",
     wordCount: 200,
     creationDate: new Date("2023-06-05"),
-    prompt: "The Box",
+    prompt: "Playing Outside",
     fromCamera: false,
     id: "6",
   },
@@ -261,7 +261,7 @@ const reviewCards: ReviewCard[] = [
     marked: "marking",
     wordCount: 300,
     creationDate: new Date("2022-06-05"),
-    prompt: "The Box",
+    prompt: "Night",
     fromCamera: false,
     id: "7",
   },
@@ -269,7 +269,7 @@ const reviewCards: ReviewCard[] = [
     marked: "marked",
     wordCount: 450,
     creationDate: new Date("2021-02-01"),
-    prompt: "The Box",
+    prompt: "Water",
     fromCamera: false,
     id: "8",
     score: 40,
