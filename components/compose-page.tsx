@@ -175,7 +175,7 @@ export default function ComposePage({
     <motion.div
       key="compose-page"
       className={cn(
-        "w-full h-full p-4 flex flex-col items-center gap-4 overflow-y-scroll pb-24",
+        "w-full h-full p-4 flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24",
         className
       )}
       initial={{ opacity: 0 }}
@@ -187,39 +187,46 @@ export default function ComposePage({
         {images.length === 0 ? (
           <>
             <motion.div
-              className="flex flex-col items-center rounded-full p-4 pt-8 gap-12"
+              className="relative rounded-full p-4 pt-8 gap-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <TapButton
-                className="rounded-full bg-nborange text-black size-56 flex flex-col items-center justify-center"
-                onClick={async () => {
-                  const image = await getBase64Image();
-                  if (image?.base64)
-                    setImages((p) =>
-                      !!p.find((li) => li.hash === image.hash)
-                        ? p
-                        : [...cloneDeep(p), image]
-                    );
-                }}
-              >
-                <Camera
-                  absoluteStrokeWidth
-                  strokeWidth={1}
-                  className="size-16"
-                />
-                <span className="font-extrabold">Take photo</span>
-              </TapButton>
-              <TapButton className="rounded-full bg-white size-40 flex flex-col items-center justify-center">
-                <Pencil
-                  absoluteStrokeWidth
-                  strokeWidth={1}
-                  className="size-16"
-                />
-                <span className="font-extrabold">Type in</span>
-              </TapButton>
+              <div className="absolute size-60 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 bg-white rounded-full" />
+              <div className="absolute size-28 left-[250%] top-[250%] -translate-x-1/2 -translate-y-1/2 bg-white rounded-full" />
+              <div className="z-20 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+                <TapButton
+                  className="rounded-full bg-nborange text-black size-56 flex flex-col items-center justify-center"
+                  onClick={async () => {
+                    const image = await getBase64Image();
+                    if (image?.base64)
+                      setImages((p) =>
+                        !!p.find((li) => li.hash === image.hash)
+                          ? p
+                          : [...cloneDeep(p), image]
+                      );
+                  }}
+                >
+                  <Camera
+                    absoluteStrokeWidth
+                    strokeWidth={1}
+                    className="size-16"
+                  />
+                  <span className="font-extrabold">Take photo</span>
+                </TapButton>
+              </div>
+
+              <div className="absolute z-30 left-[250%] top-[250%] -translate-x-1/2 -translate-y-1/2">
+                <TapButton className=" rounded-full bg-nborange size-24 flex flex-col items-center justify-center gap-[2px]">
+                  <Pencil
+                    absoluteStrokeWidth
+                    strokeWidth={1.5}
+                    className="size-8"
+                  />
+                  <span className="font-extrabold text-sm">Type in</span>
+                </TapButton>
+              </div>
             </motion.div>
           </>
         ) : (
