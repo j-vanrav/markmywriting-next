@@ -160,10 +160,10 @@ function TabAnimated<T extends string>({
         className,
         disabled && "pointer-events-none"
       )}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
+      // initial={{ opacity: 0 }}
+      // animate={{ opacity: 1 }}
+      // exit={{ opacity: 0 }}
+      // transition={{ duration: 0.2 }}
     >
       {active && (
         <motion.div
@@ -340,22 +340,36 @@ function SelectCardPage({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="flex flex-row justify-between items-center gap-4 px-4">
+      <div className="flex flex-row justify-end items-center gap-4 px-4">
         <TapButton
           onClick={() => setShowFilters((p) => !p)}
           className="rounded-full bg-white size-12 min-w-12 min-h-12 flex flex-row items-center justify-center"
           disabled={disabled}
         >
-          <ListFilter strokeWidth={1.5} className="size-7 min-w-7" />
+          <AnimatePresence>
+            {showFilters ? (
+              <motion.div>
+                <ListFilter strokeWidth={1.5} className="size-7 min-w-7" />
+              </motion.div>
+            ) : (
+              <motion.div>
+                <ListFilter strokeWidth={1.5} className="size-7 min-w-7" />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </TapButton>
       </div>
       <AnimatePresence>
         {showFilters && (
           <>
-            <div
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
               className={cn(
-                "relative w-full flex flex-row justify-start gap-1 transition-all duration-300",
-                showFilters ? "h-12 opacity-100 z-20" : "h-0 opacity-0 z-0"
+                "relative w-full flex flex-row justify-start gap-1"
+                // showFilters ? "h-12 opacity-100 z-20" : "h-0 opacity-0 z-0"
               )}
             >
               <div
@@ -635,7 +649,7 @@ function SelectCardPage({
                   </TabAnimated>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </>
         )}
       </AnimatePresence>
