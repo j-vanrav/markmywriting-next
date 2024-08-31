@@ -23,8 +23,8 @@ export default function ProfilePage({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="bg-white rounded-2xl p-3 flex flex-row w-full items-center gap-4">
-        <div className="bg-nbpurple size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
+      <div className="bg-fgd rounded-2xl p-3 flex flex-row w-full items-center gap-4">
+        <div className="bg-cpy text-fgd size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
           <Mail />
         </div>
         <div className="flex flex-col">
@@ -32,8 +32,8 @@ export default function ProfilePage({
           <span>mail@example.com</span>
         </div>
       </div>
-      <div className="bg-white rounded-2xl p-3 flex flex-row w-full items-center gap-4">
-        <div className="bg-nbblue size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
+      <div className="bg-fgd rounded-2xl p-3 flex flex-row w-full items-center gap-4">
+        <div className="bg-cpy text-fgd size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
           <Calendar />
         </div>
         <div className="flex flex-col">
@@ -41,8 +41,8 @@ export default function ProfilePage({
           <span>{new Date().toDateString()}</span>
         </div>
       </div>
-      <div className="bg-white rounded-2xl p-3 flex flex-row w-full items-center gap-4">
-        <div className="bg-nbgreen size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
+      <div className="bg-fgd rounded-2xl p-3 flex flex-row w-full items-center gap-4">
+        <div className="bg-cpy text-fgd size-12 min-w-12 rounded-md flex flex-row justify-center items-center">
           <Ticket />
         </div>
         <div className="flex flex-col">
@@ -50,7 +50,7 @@ export default function ProfilePage({
           <span>12</span>
         </div>
       </div>
-      {/* <div className="bg-white rounded-2xl p-4 flex flex-col w-full gap-2">
+      {/* <div className="bg-fgd rounded-2xl p-4 flex flex-col w-full gap-2">
           <div className="flex flex-row items-center gap-2">
             <Mail />
             <span className="text-sm">Email</span>
@@ -72,7 +72,7 @@ export default function ProfilePage({
         <span className="font-bold">Buy more tokens</span>
         <Button
           onClick={() => {}}
-          className="bg-nbgreen rounded-2xl w-full"
+          className="bg-srydark rounded-2xl w-full text-fgd"
           disabled={!!disabled}
           aria-disabled={disabled}
         >
@@ -82,7 +82,7 @@ export default function ProfilePage({
               <span>20 Tokens</span>
               <span className="text-xl font-bold">$10</span>
             </div>
-            <div className="bg-black rounded-full flex flex-row items-center justify-center text-white size-8">
+            <div className="bg-fgd rounded-full flex flex-row items-center justify-center text-cpy size-8">
               <ArrowRight />
             </div>
           </div>

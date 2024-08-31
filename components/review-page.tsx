@@ -52,7 +52,7 @@ function ReviewCard({
       >
         <div
           className={cn(
-            "w-full bg-white h-16 flex flex-row justify-between items-center rounded-2xl p-4"
+            "w-full bg-fgd h-16 flex flex-row justify-between items-center rounded-2xl p-4"
           )}
         >
           <div className="flex flex-col justify-between w-full items-start">
@@ -86,7 +86,7 @@ function ReviewCard({
               </div>
             )}
             {/* {opts.marked === "marked" && (
-            <div className="flex flex-row items-center gap-1 rounded-full bg-black text-white p-1">
+            <div className="flex flex-row items-center gap-1 rounded-full bg-cpy text-fgd p-1">
               <Bot absoluteStrokeWidth strokeWidth={1.5} className="size-6" />
             </div>
           )} */}
@@ -169,7 +169,7 @@ function TabAnimated<T extends string>({
         <motion.div
           key={"tabs-highlight-" + id}
           className={cn(
-            "z-0 col-span-1 col-start-1 h-8 rounded-full bg-black",
+            "z-0 col-span-1 col-start-1 h-8 rounded-full bg-cpy",
             size === "md" && "w-32",
             size === "sm" && "w-24",
             size === "icon" && "h-8",
@@ -184,7 +184,7 @@ function TabAnimated<T extends string>({
         onClick={() => select(name)}
         className={cn(
           "z-40 col-span-1 col-start-1 inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-          active && "-mt-8 text-white",
+          active && "-mt-8 text-fgd",
           size === "icon" &&
             "flex flex-row items-center justify-center text-xs",
           disabled && "pointer-events-none"
@@ -343,7 +343,7 @@ function SelectCardPage({
       <div className="flex flex-row justify-between items-center gap-4 px-4">
         <TapButton
           onClick={() => setShowFilters((p) => !p)}
-          className="rounded-full bg-white size-12 min-w-12 min-h-12 flex flex-row items-center justify-center"
+          className="rounded-full bg-fgd size-12 min-w-12 min-h-12 flex flex-row items-center justify-center"
           disabled={disabled}
         >
           <ListFilter strokeWidth={1.5} className="size-7 min-w-7" />
@@ -361,7 +361,7 @@ function SelectCardPage({
               <div
                 ref={filterTabsRef}
                 className={cn(
-                  "h-fit w-36 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
+                  "h-fit w-36 p-2 bg-fgd rounded-3xl transition-all duration-300 overflow-hidden",
                   filterCollapsed ? "h-12" : "h-36"
                 )}
               >
@@ -374,7 +374,7 @@ function SelectCardPage({
                   <TabAnimated
                     id={"filter-tabs"}
                     className={cn(
-                      "bg-white rounded-full absolute top-0",
+                      "bg-fgd rounded-full absolute top-0",
                       selectedTab === "all" ? "z-10" : "z-0"
                     )}
                     active={selectedTab === "all"}
@@ -472,7 +472,7 @@ function SelectCardPage({
               <div
                 ref={sortTabsRef}
                 className={cn(
-                  "h-fit w-28 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden",
+                  "h-fit w-28 p-2 bg-fgd rounded-3xl transition-all duration-300 overflow-hidden",
                   sortCollapsed ? "h-12" : "h-36"
                 )}
               >
@@ -485,7 +485,7 @@ function SelectCardPage({
                   <TabAnimated
                     id={"sort-tabs"}
                     className={cn(
-                      "bg-white rounded-full absolute top-0",
+                      "bg-fgd rounded-full absolute top-0",
                       sortMode === "date-desc" ? "z-20" : "z-10"
                     )}
                     active={sortMode === "date-desc"}
@@ -509,7 +509,7 @@ function SelectCardPage({
                   <TabAnimated
                     id={"sort-tabs"}
                     className={cn(
-                      "bg-white rounded-full absolute top-1/4",
+                      "bg-fgd rounded-full absolute top-1/4",
                       sortMode === "date-asc" ? "z-20" : "z-10"
                     )}
                     active={sortMode === "date-asc"}
@@ -533,7 +533,7 @@ function SelectCardPage({
                   <TabAnimated
                     id={"sort-tabs"}
                     className={cn(
-                      "bg-white rounded-full absolute top-1/2",
+                      "bg-fgd rounded-full absolute top-1/2",
                       sortMode === "score-desc" ? "z-20" : "z-10"
                     )}
                     active={sortMode === "score-desc"}
@@ -557,7 +557,7 @@ function SelectCardPage({
                   <TabAnimated
                     id={"sort-tabs"}
                     className={cn(
-                      "bg-white rounded-full absolute top-3/4",
+                      "bg-fgd rounded-full absolute top-3/4",
                       sortMode === "score-asc" ? "z-20" : "z-10"
                     )}
                     active={sortMode === "score-asc"}
@@ -589,7 +589,7 @@ function SelectCardPage({
             >
               <div
                 className={cn(
-                  "w-28 h-12 p-2 bg-white rounded-3xl transition-all duration-300 overflow-hidden"
+                  "w-28 h-12 p-2 bg-fgd rounded-3xl transition-all duration-300 overflow-hidden"
                 )}
               >
                 <div
@@ -599,7 +599,7 @@ function SelectCardPage({
                 >
                   <TabAnimated
                     id={"filter-camera-tabs"}
-                    className={cn("bg-white rounded-full")}
+                    className={cn("bg-fgd rounded-full")}
                     active={filterCamera === "all"}
                     name={"all"}
                     select={setFilterCamera}
@@ -612,7 +612,7 @@ function SelectCardPage({
                   </TabAnimated>
                   <TabAnimated
                     id={"filter-camera-tabs"}
-                    className={cn("bg-white rounded-full")}
+                    className={cn("bg-fgd rounded-full")}
                     active={filterCamera === "camera"}
                     name={"camera"}
                     select={setFilterCamera}
@@ -627,7 +627,7 @@ function SelectCardPage({
                   </TabAnimated>
                   <TabAnimated
                     id={"filter-camera-tabs"}
-                    className={cn("bg-white rounded-full")}
+                    className={cn("bg-fgd rounded-full")}
                     active={filterCamera === "written"}
                     name={"written"}
                     select={setFilterCamera}
@@ -750,7 +750,7 @@ export default function ReviewPage({
             >
               <div className="flex flex-row items-center gap-4 px-4">
                 <TapButton
-                  className="size-12 rounded-full p-0 flex flex-row items-center justify-center bg-white"
+                  className="size-12 rounded-full p-0 flex flex-row items-center justify-center bg-fgd"
                   onClick={() => setSelectedCard("0")}
                   disabled={disabled}
                 >

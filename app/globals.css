@@ -88,6 +88,25 @@
     --nbblue: 201.63 72.88% 76.86%;
     --nbbluelight: 201.63 72.88% 80%;
     --nbforeground: 0 0% 0%;
+
+    --blpaleazure: 197.23 94.39% 79.02%;
+    --bltropicalindigo: 236.81 62.67% 70.59%;
+    --bliris: 256.36 51.97% 49.8%;
+    --blindigo: 269 75% 31.37%;
+    --blrussianviolet: 288.26 76.67% 11.76%;
+
+    --fgd: 0 0% 98%;
+    --bgd: 240 7% 94%;
+    --brd: 240 8% 88%;
+    --cpy: 250 8% 15%;
+    --cpylight: 244 8% 40%;
+    --cpylight2: 244 7% 55%;
+    --pry: 262 83% 58%;
+    --prylight: 262 83% 68%;
+    --prydark: 262 84% 48%;
+    --sry: 352 83% 58%;
+    --srylight: 353 83% 68%;
+    --srydark: 352 84% 48%;
   }
 }
 

@@ -93,6 +93,57 @@ const config = {
           foreground: "hsl(var(--nbforeground))",
           background: "hsl(var(--nbbluelight))",
         },
+        blpaleazure: {
+          DEFAULT: "hsl(var(--blpaleazure))",
+        },
+        bltropicalindigo: {
+          DEFAULT: "hsl(var(--bltropicalindigo))",
+        },
+        bliris: {
+          DEFAULT: "hsl(var(--bliris))",
+        },
+        blindigo: {
+          DEFAULT: "hsl(var(--blindigo))",
+        },
+        blrussianviolet: {
+          DEFAULT: "hsl(var(--blrussianviolet))",
+        },
+        fgd: {
+          DEFAULT: "hsl(var(--fgd))",
+        },
+        bgd: {
+          DEFAULT: "hsl(var(--bgd))",
+        },
+        brd: {
+          DEFAULT: "hsl(var(--brd))",
+        },
+        cpy: {
+          DEFAULT: "hsl(var(--cpy))",
+        },
+        cpylight: {
+          DEFAULT: "hsl(var(--cpylight))",
+        },
+        cpylight2: {
+          DEFAULT: "hsl(var(--cpylight2))",
+        },
+        pry: {
+          DEFAULT: "hsl(var(--pry))",
+        },
+        prylight: {
+          DEFAULT: "hsl(var(--prylight))",
+        },
+        prydark: {
+          DEFAULT: "hsl(var(--prydark))",
+        },
+        sry: {
+          DEFAULT: "hsl(var(--sry))",
+        },
+        srylight: {
+          DEFAULT: "hsl(var(--srylight))",
+        },
+        srydark: {
+          DEFAULT: "hsl(var(--srydark))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
