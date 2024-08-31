@@ -92,7 +92,7 @@ function ImageCompose({
 }) {
   return (
     <motion.div
-      className="flex flex-col items-center rounded-full px-4 gap-4"
+      className="flex flex-col items-center py-4 px-8 pb-28 gap-4 overflow-y-scroll"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -175,7 +175,7 @@ export default function ComposePage({
     <motion.div
       key="compose-page"
       className={cn(
-        "w-full h-full p-4 flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24",
+        "w-full h-full flex flex-col items-center justify-center gap-4 overflow-hidden",
         className
       )}
       initial={{ opacity: 0 }}
