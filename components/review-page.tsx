@@ -12,6 +12,7 @@ import {
   ListFilter,
   Slash,
   Squircle,
+  X,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
@@ -346,17 +347,20 @@ function SelectCardPage({
           className="rounded-full bg-white size-12 min-w-12 min-h-12 flex flex-row items-center justify-center"
           disabled={disabled}
         >
-          <AnimatePresence>
-            {showFilters ? (
-              <motion.div>
-                <ListFilter strokeWidth={1.5} className="size-7 min-w-7" />
-              </motion.div>
-            ) : (
-              <motion.div>
-                <ListFilter strokeWidth={1.5} className="size-7 min-w-7" />
-              </motion.div>
+          <X
+            strokeWidth={1.5}
+            className={cn(
+              "size-7 min-w-7 absolute transition-opacity",
+              showFilters ? "opacity-100" : "opacity-0"
             )}
-          </AnimatePresence>
+          />
+          <ListFilter
+            strokeWidth={1.5}
+            className={cn(
+              "size-7 min-w-7 absolute transition-opacity",
+              showFilters ? "opacity-0" : "opacity-100"
+            )}
+          />
         </TapButton>
       </div>
       <AnimatePresence>
