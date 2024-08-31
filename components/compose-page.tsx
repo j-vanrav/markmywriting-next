@@ -100,7 +100,7 @@ function ImageCompose({
     >
       <div className="flex flex-row justify-start w-full">
         <TapButton
-          className="bg-fgd text-cpy rounded-full flex flex-row gap-2 items-center justify-center p-2"
+          className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2"
           onClick={() => setImages(() => [])}
         >
           <ArrowLeft strokeWidth={1} className="size-8" />
@@ -136,7 +136,7 @@ function ImageCompose({
 
       <div className="flex flex-row gap-6">
         <TapButton
-          className="bg-fgd text-cpy rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6"
+          className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6"
           onClick={async () => {
             const image = await getBase64Image();
             if (image?.base64)
@@ -150,7 +150,7 @@ function ImageCompose({
           <Camera strokeWidth={1} className="size-12" />
           <Plus strokeWidth={1} className="size-12" />
         </TapButton>
-        <TapButton className="bg-fgd text-cpy rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6">
+        <TapButton className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6">
           <CheckCheck strokeWidth={1} className="size-12" />
         </TapButton>
       </div>
@@ -197,7 +197,7 @@ export default function ComposePage({
               {/* <div className="absolute size-28 left-[250%] top-[250%] -translate-x-1/2 -translate-y-1/2 bg-brd rounded-full" /> */}
               <div className="z-20 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                 <TapButton
-                  className="rounded-full bg-pry text-fgd size-56 flex flex-col items-center justify-center"
+                  className="rounded-full bg-black text-white size-56 flex flex-col items-center justify-center"
                   onClick={async () => {
                     const image = await getBase64Image();
                     if (image?.base64)
@@ -218,7 +218,7 @@ export default function ComposePage({
               </div>
 
               <div className="absolute z-30 left-[250%] top-[250%] -translate-x-1/2 -translate-y-1/2">
-                <TapButton className="rounded-full bg-cpylight2 text-fgd size-24 flex flex-col items-center justify-center gap-[2px]">
+                <TapButton className="rounded-full bg-black text-white size-24 flex flex-col items-center justify-center gap-[2px]">
                   <Pencil
                     absoluteStrokeWidth
                     strokeWidth={1.5}

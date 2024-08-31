@@ -22,10 +22,10 @@ function NavButton({
       className={cn(
         "rounded-full h-16 min-w-16 flex flex-row justify-center items-center transition-colors",
         // selectedPage === name && "w-48",
-        name === "review" && "bg-cpylight2",
-        name === "compose" && "bg-cpylight2",
-        name === "profile" && "bg-cpylight2",
-        selectedPage === name && "bg-cpylight",
+        name === "review" && "bg-gray-500",
+        name === "compose" && "bg-gray-500",
+        name === "profile" && "bg-gray-500",
+        selectedPage === name && "bg-gray-300",
         miniature && "h-4 min-w-4"
       )}
       onClick={() => {
@@ -111,7 +111,7 @@ export default function Nav({
     <nav className="fixed bottom-0 w-full p-2 px-4 flex flex-row justify-center z-50">
       <div
         className={cn(
-          "rounded-full bg-cpylight p-1 gap-1 flex flex-row text-fgd w-full justify-between",
+          "rounded-full bg-black p-1 gap-1 flex flex-row text-black w-full justify-between",
           miniature && "w-64 mx-auto"
         )}
       >

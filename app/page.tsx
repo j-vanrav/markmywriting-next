@@ -52,10 +52,10 @@ export default function Main() {
   return (
     <main
       className={cn(
-        "flex flex-col w-screen h-screen text-cpy overflow-hidden transition-colors",
-        selectedPage === "review" && "bg-bgd",
-        selectedPage === "compose" && "bg-cpy",
-        selectedPage === "profile" && "bg-bgd"
+        "flex flex-col w-screen h-screen text-black overflow-hidden transition-colors",
+        selectedPage === "review" && "bg-gray-200",
+        selectedPage === "compose" && "bg-gray-200",
+        selectedPage === "profile" && "bg-gray-200"
       )}
     >
       <Carousel
@@ -105,7 +105,7 @@ export default function Main() {
 
       <div
         className={cn(
-          "fixed bottom-0 left-4 right-4 z-40 bg-cpylight rounded-t-2xl transition-all",
+          "fixed bottom-0 left-4 right-4 z-40 bg-black rounded-t-2xl transition-all",
           miniatureNav ? "h-11" : "h-14"
         )}
       />

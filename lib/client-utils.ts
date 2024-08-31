@@ -6,4 +6,7 @@ export const HapticsSelection = async () => {
   await Haptics.selectionEnd();
 };
 
-export const HapticsClick = () => Haptics.vibrate({ duration: 1 });
+export const HapticsClick = () =>
+  Haptics.vibrate({ duration: 1 }).catch(() =>
+    console.error("Haptics not available")
+  );
