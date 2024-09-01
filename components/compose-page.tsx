@@ -154,11 +154,8 @@ function ImageCompose({
         <TapButton
           onClick={async () => {
             if (images.length < 10) {
-              const result = await fetch("/api/test", {
-                method: "POST",
-                body: JSON.stringify({ images }),
-              });
-              console.log(await result.json());
+              const result = await fetch("/api/hello");
+              console.log(await result.text());
             }
           }}
           className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6"
