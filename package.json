@@ -15,6 +15,7 @@
     "@capacitor/core": "^6.1.1",
     "@capacitor/haptics": "^6.0.0",
     "@capacitor/ios": "^6.1.1",
+    "@hono/zod-validator": "^0.2.2",
     "@million/lint": "1.0.0-rc.81",
     "@radix-ui/react-collapsible": "^1.1.0",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -43,7 +44,8 @@
     "swr": "^2.2.5",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.1"
+    "vaul": "^0.9.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@capacitor/cli": "^6.1.1",

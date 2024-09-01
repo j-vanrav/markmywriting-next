@@ -6,7 +6,6 @@ import {
   ArrowUp,
   Camera,
   CheckCheck,
-  CircleHelp,
   Pencil,
   Plus,
   X,
@@ -21,6 +20,7 @@ import {
 import { useRaisedShadow } from "@/lib/hooks";
 import TapButton from "./tap-button";
 import { cloneDeep } from "lodash";
+import { RPCClient } from "@/lib/hono-rpc-client";
 
 function ImageItem({
   image,
@@ -153,8 +153,15 @@ function ImageCompose({
         </TapButton>
         <TapButton
           onClick={async () => {
-            if (images.length < 10) {
-              const result = await fetch("/api/hello");
+            if (images.length >= 1 && images.length < 10) {
+              console.log(images);
+              const result = await RPCClient.api.transcribe_images.$post({
+                json: { images: images as [LocalImage, ...LocalImage[]] },
+              });
+              // const result = await fetch("/api/transcribe_images", {
+              //   method: "POST",
+              //   body: JSON.stringify({ images: images }),
+              // });
               console.log(await result.text());
             }
           }}
