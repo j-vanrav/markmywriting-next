@@ -151,7 +151,18 @@ function ImageCompose({
           <Camera strokeWidth={1} className="size-12" />
           <Plus strokeWidth={1} className="size-12" />
         </TapButton>
-        <TapButton className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6">
+        <TapButton
+          onClick={async () => {
+            if (images.length < 10) {
+              const result = await fetch("/api/test", {
+                method: "POST",
+                body: JSON.stringify({ images }),
+              });
+              console.log(await result.json());
+            }
+          }}
+          className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6"
+        >
           <CheckCheck strokeWidth={1} className="size-12" />
         </TapButton>
       </div>
