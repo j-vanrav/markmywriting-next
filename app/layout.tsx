@@ -20,15 +20,14 @@ const fontNunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "BJJ Online",
-  description: "The online BJJ technique repository",
+  title: "MarkMyWriting",
+  description: "Mark your writing with AI.",
   authors: [{ url: "https://blog.jvr.app", name: "James Van Ravestein" }],
   openGraph: {
     type: "website",
-    title: "BJJ Online",
-    description: "The online BJJ technique repository",
-    siteName: "BJJ Online",
-    images: [{ url: "https://elo-bjj.jvr.app/opengraph-image.png" }],
+    title: "MarkMyWriting",
+    description: "Mark your writing with AI.",
+    siteName: "MarkMyWriting",
   },
 };
 
