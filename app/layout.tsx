@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Inter, Nunito } from "next/font/google";
 
 import { cn } from "@/lib/utils";
-import TailwindIndicator from "@/components/tailwind-indicator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const fontSans = Inter({
