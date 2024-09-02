@@ -6,6 +6,7 @@ import {
   ArrowUp,
   Camera,
   CheckCheck,
+  Loader2,
   Pencil,
   Plus,
   X,
@@ -21,6 +22,7 @@ import { useRaisedShadow } from "@/lib/hooks";
 import TapButton from "./tap-button";
 import { cloneDeep } from "lodash";
 import { RPCClient } from "@/lib/hono-rpc-client";
+import { Textarea } from "./ui/textarea";
 
 function ImageItem({
   image,
@@ -87,10 +89,13 @@ function ImageItem({
 function ImageCompose({
   images,
   setImages,
+  setText,
 }: {
   images: LocalImage[];
   setImages: (i: (prev: LocalImage[]) => LocalImage[]) => void;
+  setText: (s: (prev: string | null) => string | null) => void;
 }) {
+  const [loading, setLoading] = useState(false);
   return (
     <motion.div
       className="flex flex-col items-center py-4 px-8 pb-28 gap-4 overflow-y-scroll"
@@ -135,38 +140,83 @@ function ImageCompose({
         </Reorder.Group>
       </AnimatePresence>
 
-      <div className="flex flex-row gap-6">
-        <TapButton
-          className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6"
-          onClick={async () => {
-            const image = await getBase64Image();
-            if (image?.base64)
-              setImages((p) =>
-                !!p.find((li) => li.hash === image.hash)
-                  ? p
-                  : [...cloneDeep(p), image]
-              );
-          }}
-        >
-          <Camera strokeWidth={1} className="size-12" />
-          <Plus strokeWidth={1} className="size-12" />
-        </TapButton>
+      <div className="flex flex-row justify-between gap-6 w-full">
+        {!loading ? (
+          <TapButton
+            className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6"
+            onClick={async () => {
+              const image = await getBase64Image();
+              if (image?.base64)
+                setImages((p) =>
+                  !!p.find((li) => li.hash === image.hash)
+                    ? p
+                    : [...cloneDeep(p), image]
+                );
+            }}
+          >
+            <Camera strokeWidth={1} className="size-12" />
+            <Plus strokeWidth={1} className="size-12" />
+          </TapButton>
+        ) : (
+          <div />
+        )}
+
         <TapButton
           onClick={async () => {
             if (images.length >= 1 && images.length < 10) {
-              console.log(images);
+              setLoading(true);
               const result = await RPCClient.api.transcribe_images.$post({
                 json: { images: images as [LocalImage, ...LocalImage[]] },
               });
-              // const result = await fetch("/api/transcribe_images", {
-              //   method: "POST",
-              //   body: JSON.stringify({ images: images }),
-              // });
-              console.log(await result.text());
+              const json = await result.json();
+              setText(() => json.message.transcription);
+              setLoading(false);
             }
           }}
           className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6"
         >
+          {loading ? (
+            <Loader2 strokeWidth={1} className="size-12 animate-spin" />
+          ) : (
+            <CheckCheck strokeWidth={1} className="size-12" />
+          )}
+        </TapButton>
+      </div>
+    </motion.div>
+  );
+}
+
+function TextCompose({
+  text,
+  setText,
+}: {
+  text: string;
+  setText: (s: (prev: string | null) => string | null) => void;
+}) {
+  return (
+    <motion.div
+      className="flex flex-col items-center py-4 px-8 pb-28 gap-4 overflow-y-scroll w-full h-full"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      <div className="flex flex-row justify-start w-full">
+        <TapButton
+          className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2"
+          onClick={() => setText(() => null)}
+        >
+          <ArrowLeft strokeWidth={1} className="size-8" />
+        </TapButton>
+      </div>
+      <textarea
+        className="rounded-lg bg-white w-full h-full p-2 resize-none"
+        value={text}
+        onChange={(e) => setText(() => e.target.value)}
+      />
+
+      <div className="flex flex-row justify-end gap-6 w-full">
+        <TapButton className="bg-white text-black rounded-full flex flex-row gap-2 items-center justify-center p-2 px-6">
           <CheckCheck strokeWidth={1} className="size-12" />
         </TapButton>
       </div>
@@ -185,9 +235,10 @@ export default function ComposePage({
 }) {
   const [showHelp, setShowHelp] = useState(false);
   const [images, setImages] = useState([] as LocalImage[]);
+  const [text, setText] = useState(null as string | null);
   useEffect(() => {
-    setMiniatureNav(images.length > 0 || showHelp);
-  }, [images, showHelp, setMiniatureNav]);
+    setMiniatureNav(images.length > 0 || showHelp || text !== null);
+  }, [images, showHelp, text, setMiniatureNav]);
   return (
     <motion.div
       key="compose-page"
@@ -222,7 +273,7 @@ export default function ComposePage({
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {!showHelp && images.length === 0 && (
+        {text === null && !showHelp && images.length === 0 && (
           <motion.div
             className="absolute -translate-y-52"
             initial={{ opacity: 0 }}
@@ -242,7 +293,7 @@ export default function ComposePage({
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {!showHelp && images.length === 0 && (
+        {text === null && !showHelp && images.length === 0 && (
           <motion.div
             className="absolute rounded-full p-4 pt-8 gap-12"
             initial={{ opacity: 0 }}
@@ -275,7 +326,10 @@ export default function ComposePage({
             </div>
 
             <div className="absolute z-30 left-[250%] top-[250%] -translate-x-1/2 -translate-y-1/2">
-              <TapButton className="rounded-full bg-gray-900 text-white size-24 flex flex-col items-center justify-center gap-[2px]">
+              <TapButton
+                onClick={() => setText(() => "")}
+                className="rounded-full bg-gray-900 text-white size-24 flex flex-col items-center justify-center gap-[2px]"
+              >
                 <Pencil
                   absoluteStrokeWidth
                   strokeWidth={1.5}
@@ -288,8 +342,17 @@ export default function ComposePage({
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {!showHelp && images.length !== 0 && (
-          <ImageCompose images={images} setImages={setImages} />
+        {text === null && !showHelp && images.length !== 0 && (
+          <ImageCompose
+            images={images}
+            setImages={setImages}
+            setText={setText}
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {!showHelp && text !== null && (
+          <TextCompose text={text} setText={setText} />
         )}
       </AnimatePresence>
     </motion.div>
