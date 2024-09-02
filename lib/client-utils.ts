@@ -1,3 +1,5 @@
+"use client";
+
 import { Haptics } from "@capacitor/haptics";
 
 export const HapticsSelection = async () => {
